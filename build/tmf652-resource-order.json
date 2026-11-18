@@ -1,0 +1,312 @@
+{
+  "id": "RES-ORD-TENANT-DELTA",
+  "externalId": "ORD-2026-TENANT-DELTA",
+  "href": "/tmf-api/resourceOrdering/v4/resourceOrder/RES-ORD-TENANT-DELTA",
+  "state": "completed",
+  "description": "TMF652 Infrastructure Execution Order bound to ./blueprints/03-5g-upf-network-slice/terraform",
+  "@type": "ResourceOrder",
+  "resourceOrderItem": [
+    {
+      "id": "item-res-spec-001",
+      "action": "add",
+      "resource": {
+        "name": "res-spec-001-tenant-delta",
+        "capabilityTier": "STANDARD_GCP_GKE",
+        "resourceSpecification": {
+          "id": "res-spec-001",
+          "name": "Telco3gppMultiPlaneVpcSpec"
+        },
+        "resourceCharacteristic": [
+          {
+            "name": "region",
+            "value": "us-central1"
+          },
+          {
+            "name": "sgi_subnet_cidr",
+            "value": "10.90.1.0/24"
+          },
+          {
+            "name": "n3_subnet_cidr",
+            "value": "10.90.2.0/24"
+          },
+          {
+            "name": "n4_subnet_cidr",
+            "value": "10.90.3.0/24"
+          },
+          {
+            "name": "oam_subnet_cidr",
+            "value": "10.10.0.0/24"
+          },
+          {
+            "name": "nic_bandwidth_gbps",
+            "value": 100
+          },
+          {
+            "name": "gtpu_pfcp_firewall",
+            "value": true
+          },
+          {
+            "name": "iac_binding",
+            "value": {
+              "iac_engine": "terraform",
+              "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+              "provider": "hashicorp/google ~> 5.30"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "item-res-spec-002",
+      "action": "add",
+      "resource": {
+        "name": "res-spec-002-tenant-delta",
+        "capabilityTier": "TELCO_OPTIMIZED_K8S",
+        "resourceSpecification": {
+          "id": "res-spec-002",
+          "name": "TelcoDeterministicComputeNumaCpuSpec"
+        },
+        "resourceCharacteristic": [
+          {
+            "name": "machine_family",
+            "value": "c3-standard-16"
+          },
+          {
+            "name": "cpu_count",
+            "value": 16
+          },
+          {
+            "name": "ram_gb",
+            "value": 64
+          },
+          {
+            "name": "cpu_manager_policy",
+            "value": "static"
+          },
+          {
+            "name": "topology_manager_policy",
+            "value": "single-numa-node"
+          },
+          {
+            "name": "numa_nodes",
+            "value": 2
+          },
+          {
+            "name": "bios_cstate_pstate_locked",
+            "value": false
+          },
+          {
+            "name": "worker_instances",
+            "value": 2
+          },
+          {
+            "name": "iac_binding",
+            "value": {
+              "iac_engine": "terraform+kubernetes",
+              "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+              "k8s_scheduler_profile": "guaranteed-static-single-numa"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "item-res-spec-003",
+      "action": "add",
+      "resource": {
+        "name": "res-spec-003-tenant-delta",
+        "capabilityTier": "TELCO_OPTIMIZED_K8S",
+        "resourceSpecification": {
+          "id": "res-spec-003",
+          "name": "TelcoHugePagesMemorySpec"
+        },
+        "resourceCharacteristic": [
+          {
+            "name": "hugepages_enabled",
+            "value": true
+          },
+          {
+            "name": "hugepage_size",
+            "value": "1Gi"
+          },
+          {
+            "name": "hugepages_total_gb",
+            "value": 16
+          },
+          {
+            "name": "iac_binding",
+            "value": {
+              "iac_engine": "kubernetes+gke-node-config",
+              "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+              "k8s_resource_key": "hugepages-1Gi"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "item-res-spec-004",
+      "action": "add",
+      "resource": {
+        "name": "res-spec-004-tenant-delta",
+        "capabilityTier": "SPECIALIZED_HW_GDC_BAREMETAL",
+        "resourceSpecification": {
+          "id": "res-spec-004",
+          "name": "SriovDpdkIommuAccelerationSpec"
+        },
+        "resourceCharacteristic": [
+          {
+            "name": "dataplane_mode",
+            "value": "SR-IOV"
+          },
+          {
+            "name": "dpdk_enabled",
+            "value": true
+          },
+          {
+            "name": "sriov_vf_count",
+            "value": 4
+          },
+          {
+            "name": "iommu_vtd_enabled",
+            "value": true
+          },
+          {
+            "name": "nic_pmd_driver",
+            "value": "net_gvnic / net_ice_vf"
+          },
+          {
+            "name": "iac_binding",
+            "value": {
+              "iac_engine": "kubernetes-sriov-device-plugin",
+              "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+              "device_plugin": "intel.com/sriov_netdevice"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "item-res-spec-005",
+      "action": "add",
+      "resource": {
+        "name": "res-spec-005-tenant-delta",
+        "capabilityTier": "TELCO_OPTIMIZED_K8S",
+        "resourceSpecification": {
+          "id": "res-spec-005",
+          "name": "MultusMultiNetworkCniSpec"
+        },
+        "resourceCharacteristic": [
+          {
+            "name": "multus_enabled",
+            "value": true
+          },
+          {
+            "name": "secondary_interfaces",
+            "value": [
+              "net1-n3-gtpu",
+              "net2-n4-pfcp",
+              "net3-n6-sgi"
+            ]
+          },
+          {
+            "name": "primary_cni",
+            "value": "GKE-Dataplane-V2-Cilium-eBPF"
+          },
+          {
+            "name": "iac_binding",
+            "value": {
+              "iac_engine": "terraform+k8s-nad",
+              "blueprint_path": "./blueprints/02-hybrid-vnf-cnf-multus",
+              "crd_manifest": "./blueprints/02-hybrid-vnf-cnf-multus/k8s-manifests/gke-network-attachment-definition.yaml"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "item-res-spec-007",
+      "action": "add",
+      "resource": {
+        "name": "res-spec-007-tenant-delta",
+        "capabilityTier": "SPECIALIZED_HW_GDC_BAREMETAL",
+        "resourceSpecification": {
+          "id": "res-spec-007",
+          "name": "TelcoFecSmartNicDpuCryptoSpec"
+        },
+        "resourceCharacteristic": [
+          {
+            "name": "fec_accelerator",
+            "value": "None"
+          },
+          {
+            "name": "smartnic_dpu_model",
+            "value": "Google-Titanium-IPU-Native"
+          },
+          {
+            "name": "gtpu_hw_offload",
+            "value": false
+          },
+          {
+            "name": "crypto_offload_engine",
+            "value": "GCP-Native-AES-GCM"
+          },
+          {
+            "name": "iac_binding",
+            "value": {
+              "iac_engine": "k8s-device-plugins",
+              "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+              "device_plugin": "intel-device-plugins-for-kubernetes (qat/sriov-fec)"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "item-res-spec-010",
+      "action": "add",
+      "resource": {
+        "name": "res-spec-010-tenant-delta",
+        "capabilityTier": "STANDARD_GCP_GKE",
+        "resourceSpecification": {
+          "id": "res-spec-010",
+          "name": "OdaCanvasMultiTenantSliceSpec"
+        },
+        "resourceCharacteristic": [
+          {
+            "name": "gke_cluster_name",
+            "value": "oda-canvas-mt-gke"
+          },
+          {
+            "name": "ebpf_isolation_policy",
+            "value": true
+          },
+          {
+            "name": "oda_components",
+            "value": [
+              "TMFC001-ProductCatalog",
+              "TMFC006-ServiceCatalog",
+              "TMFC007-ResourceCatalog"
+            ]
+          },
+          {
+            "name": "storage_class",
+            "value": "premium-rwo"
+          },
+          {
+            "name": "disk_size_gb",
+            "value": 50
+          },
+          {
+            "name": "iac_binding",
+            "value": {
+              "iac_engine": "terraform+kustomize+helm",
+              "blueprint_path": "./blueprints/01-oda-canvas-multitenant",
+              "tenant_template": "./blueprints/01-oda-canvas-multitenant/tenants/tenant-template"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

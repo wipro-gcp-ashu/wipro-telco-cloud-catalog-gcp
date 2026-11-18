@@ -1,0 +1,79 @@
+{
+  "id": "cfs-005-vran-oran-radio",
+  "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-005-vran-oran-radio",
+  "name": "vRAN_ORAN_DistributedUnit_CFS",
+  "description": "Customer-Facing O-RAN / vRAN Distributed & Central Unit (O-DU / O-CU) Cell-Site Infrastructure with PTP/SyncE Timing & FEC Layer-1 Acceleration",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "isBundle": false,
+  "@type": "CustomerFacingServiceSpecification",
+  "@baseType": "ServiceSpecification",
+  "serviceSpecCharacteristic": [
+    {
+      "name": "oran_split_option",
+      "description": "3GPP / O-RAN Functional Split",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "O-RAN-Split-7.2x"
+        },
+        {
+          "isDefault": false,
+          "value": "3GPP-Split-2-CU"
+        }
+      ]
+    },
+    {
+      "name": "sector_carrier_capacity",
+      "description": "Radio sectors & MIMO configuration",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "3-Sector-64T64R-100MHz"
+        },
+        {
+          "isDefault": false,
+          "value": "3-Sector-4T4R-20MHz"
+        }
+      ]
+    },
+    {
+      "name": "latency_tier",
+      "description": "Fronthaul latency budget (<100 µs one-way)",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "Ultra-Low"
+        }
+      ]
+    }
+  ],
+  "serviceSpecRelationship": [
+    {
+      "id": "rfs-profile-telco-vran",
+      "name": "TELCO_vRAN_ORAN_RealTime_Infra_Profile_RFS",
+      "relationshipType": "decomposesInto",
+      "role": "primaryResourceFacingProfile",
+      "@referredType": "ResourceFacingServiceSpecification"
+    },
+    {
+      "id": "rfs-profile-telco-edge",
+      "name": "TELCO_FarEdge_NEBS_Hardware_Profile_RFS",
+      "relationshipType": "decomposesInto",
+      "role": "physicalSiteProfile",
+      "@referredType": "ResourceFacingServiceSpecification"
+    }
+  ]
+}

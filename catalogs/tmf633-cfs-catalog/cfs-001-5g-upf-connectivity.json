@@ -1,0 +1,150 @@
+{
+  "id": "cfs-001-5g-upf-connectivity",
+  "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-001-5g-upf-connectivity",
+  "name": "5G_UPF_HighPerformance_Connectivity_CFS",
+  "description": "Flagship Worked Example: Customer-Facing 5G User Plane Function (UPF) Service translating SLA tiers (Throughput, Latency, HA, Placement) into the TELCO-UPF RFS Hardware & Network Recipe",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "isBundle": false,
+  "@type": "CustomerFacingServiceSpecification",
+  "@baseType": "ServiceSpecification",
+  "serviceSpecCharacteristic": [
+    {
+      "name": "throughput_tier",
+      "description": "Guaranteed aggregate 5G user-plane throughput",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "10Gbps"
+        },
+        {
+          "isDefault": false,
+          "value": "1Gbps"
+        },
+        {
+          "isDefault": false,
+          "value": "40Gbps"
+        },
+        {
+          "isDefault": false,
+          "value": "100Gbps"
+        }
+      ]
+    },
+    {
+      "name": "latency_tier",
+      "description": "Packet processing latency SLA",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "Ultra-Low"
+        },
+        {
+          "isDefault": false,
+          "value": "Standard"
+        }
+      ]
+    },
+    {
+      "name": "redundancy",
+      "description": "High availability topology",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "active-standby"
+        },
+        {
+          "isDefault": false,
+          "value": "single-node"
+        },
+        {
+          "isDefault": false,
+          "value": "active-active-multizone"
+        }
+      ]
+    },
+    {
+      "name": "deployment_placement",
+      "description": "Cloud region vs. Edge placement",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "GCP-Regional-Cloud"
+        },
+        {
+          "isDefault": false,
+          "value": "GDC-Edge-BareMetal"
+        }
+      ]
+    },
+    {
+      "name": "decomposition_policy_rules",
+      "description": "TMFC003 Declarative CFS-to-RFS Hardware Recipe Rules",
+      "valueType": "array",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": [
+            {
+              "ruleId": "RULE-UPF-LATENCY-01",
+              "condition": "cfs.latency_tier == 'Ultra-Low'",
+              "actions": [
+                "rfs('rfs-profile-telco-upf').compute_acceleration_profile = 'ULTRA_LOW_LATENCY_NUMA_DPDK_SRIOV'",
+                "resource('res-spec-002').numa_nodes = 2",
+                "resource('res-spec-002').cpu_manager_policy = 'static'",
+                "resource('res-spec-003').hugepages_enabled = true",
+                "resource('res-spec-004').dpdk_enabled = true",
+                "resource('res-spec-004').dataplane_mode = 'SR-IOV-DPDK'",
+                "resource('res-spec-005').multus_enabled = true"
+              ]
+            },
+            {
+              "ruleId": "RULE-UPF-THRU-02",
+              "condition": "cfs.throughput_tier in ['10Gbps', '40Gbps', '100Gbps']",
+              "actions": [
+                "resource('res-spec-002').cpu_count = 16",
+                "resource('res-spec-002').ram_gb = 64",
+                "resource('res-spec-007').smartnic_dpu_model = 'Google-Titanium-IPU-Native'"
+              ]
+            },
+            {
+              "ruleId": "RULE-UPF-HA-03",
+              "condition": "cfs.redundancy == 'active-standby'",
+              "actions": [
+                "resource('res-spec-002').worker_instances = 2"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "serviceSpecRelationship": [
+    {
+      "id": "rfs-profile-telco-upf",
+      "name": "TELCO_5G_UPF_HighPerf_Infra_Profile_RFS",
+      "relationshipType": "decomposesInto",
+      "role": "primaryResourceFacingProfile",
+      "@referredType": "ResourceFacingServiceSpecification"
+    }
+  ]
+}

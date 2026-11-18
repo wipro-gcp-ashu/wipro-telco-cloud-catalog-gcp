@@ -1,0 +1,18 @@
+{
+  "id": "prod-spec-vran-oran-du-005",
+  "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-vran-oran-du-005",
+  "name": "5G vRAN / O-RAN Distributed Unit (O-DU) Edge Platform Specification",
+  "description": "Real-Time O-RAN 7.2x Infrastructure Blueprint with IEEE 1588v2 PTP, SyncE, GNSS Timing, Intel vRAN Boost / ACC100 FEC & Locked BIOS C-States",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "ProductSpecification",
+  "serviceSpecification": [
+    {
+      "id": "cfs-005-vran-oran-radio",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-005-vran-oran-radio",
+      "name": "vRAN_ORAN_DistributedUnit_CFS",
+      "version": "2.0",
+      "@referredType": "CustomerFacingServiceSpecification"
+    }
+  ]
+}

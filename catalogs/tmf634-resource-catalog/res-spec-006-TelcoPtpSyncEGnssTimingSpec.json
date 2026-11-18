@@ -1,0 +1,130 @@
+{
+  "id": "res-spec-006",
+  "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-006",
+  "name": "TelcoPtpSyncEGnssTimingSpec",
+  "description": "TMF634 Carrier Timing & Synchronization Specification: IEEE 1588v2 PTP Hardware Timestamping, SyncE & GNSS/GPS Reference",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "PhysicalResourceSpecification",
+  "@baseType": "ResourceSpecification",
+  "category": "TelcoTimingAndSync",
+  "capabilityTier": "SPECIALIZED_HW_GDC_BAREMETAL",
+  "resourceSpecCharacteristic": [
+    {
+      "name": "ptp_profile",
+      "description": "IEEE 1588v2 Telecom PTP Profile",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "ITU-T G.8275.1 (Full Timing Support)"
+        },
+        {
+          "isDefault": false,
+          "value": "ITU-T G.8275.2"
+        },
+        {
+          "isDefault": false,
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "name": "hw_timestamping",
+      "description": "Require NIC hardware timestamping (ptp4l + phc2sys)",
+      "valueType": "boolean",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": true
+        },
+        {
+          "isDefault": false,
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "synce_enabled",
+      "description": "Require Synchronous Ethernet (ITU-T G.8262) physical frequency lock",
+      "valueType": "boolean",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": true
+        },
+        {
+          "isDefault": false,
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "gnss_gps_feed",
+      "description": "Require local Stratum-1 GNSS/GPS rooftop antenna or T-GM grandmaster",
+      "valueType": "boolean",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": true
+        },
+        {
+          "isDefault": false,
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "max_phase_error_ns",
+      "description": "Maximum allowed phase accuracy drift (nanoseconds)",
+      "valueType": "integer",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": 1500
+        },
+        {
+          "isDefault": false,
+          "value": 500
+        },
+        {
+          "isDefault": false,
+          "value": 3000
+        }
+      ]
+    },
+    {
+      "name": "iac_binding",
+      "description": "Execution blueprint binding",
+      "valueType": "object",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": {
+            "iac_engine": "k8s-ptp-operator+edge-bom",
+            "blueprint_path": "./blueprints/01-oda-canvas-multitenant",
+            "operator": "ptp.openshift.io/v1-linuxptp-daemon"
+          }
+        }
+      ]
+    }
+  ]
+}

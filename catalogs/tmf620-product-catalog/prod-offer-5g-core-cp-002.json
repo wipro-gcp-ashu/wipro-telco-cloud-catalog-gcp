@@ -1,0 +1,40 @@
+{
+  "id": "prod-offer-5g-core-cp-002",
+  "href": "/tmf-api/productCatalogManagement/v4/productOffering/prod-offer-5g-core-cp-002",
+  "name": "5G Core Control Plane Cloud Platform (3GPP SBA)",
+  "description": "Cloud-Native GKE Hosting Platform for 5G SA Control Plane Functions (AMF, SMF, NRF, UDM, AUSF, PCF, NSSF) with Multi-Zone HA & Managed Prometheus",
+  "lifecycleStatus": "Active",
+  "version": "2.0",
+  "isBundle": false,
+  "isSellable": true,
+  "@type": "ProductOffering",
+  "productSpecification": {
+    "id": "prod-spec-5g-core-cp-002",
+    "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-5g-core-cp-002",
+    "name": "5G Core Control Plane Cloud Platform (3GPP SBA) Specification",
+    "@referredType": "ProductSpecification"
+  },
+  "productOfferingTerm": [
+    {
+      "name": "12-Month Carrier SLA (99.999% Availability)",
+      "description": "Zero-touch TM Forum TMF622 -> TMF641 -> TMF652 automated GCP/GKE provisioning",
+      "duration": {
+        "amount": 12,
+        "units": "Month"
+      }
+    }
+  ],
+  "productOfferingPrice": [
+    {
+      "id": "pop-prod-offer-5g-core-cp-002",
+      "name": "Monthly Platform Subscription",
+      "priceType": "recurring",
+      "recurringChargePeriodType": "monthly",
+      "recurringChargePeriodLength": 1,
+      "price": {
+        "unit": "USD",
+        "value": 3800
+      }
+    }
+  ]
+}

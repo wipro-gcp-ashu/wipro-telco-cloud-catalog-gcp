@@ -1,0 +1,194 @@
+{
+  "documentTitle": "Wipro Telco Cloud Infrastructure Capability-Mapping Matrix on Google Cloud (GCP / GKE / GDC Edge)",
+  "version": "2.0",
+  "alignedStandards": [
+    "TM Forum ODA IG1228",
+    "TM Forum SID GB922",
+    "3GPP Rel-17 5G SBA",
+    "O-RAN WG6 Cloudification"
+  ],
+  "tiers": {
+    "STANDARD_GCP_GKE": "Tier 1: Native Managed GCP / GKE Standard",
+    "TELCO_OPTIMIZED_K8S": "Tier 2: Telco-Optimized GKE / Kubernetes Configuration",
+    "SPECIALIZED_HW_GDC_BAREMETAL": "Tier 3: Specialized Hardware / Google Distributed Cloud (GDC) Bare Metal",
+    "PHYSICAL_OEM_PARTNER_EDGE": "Tier 4: Physical Telco Edge / OEM Partner Infrastructure"
+  },
+  "capabilities": [
+    {
+      "id": "CAP-01",
+      "requirement": "SR-IOV & Direct Device Access",
+      "category": "High-Performance Networking",
+      "workloadNeed": "Bypass virtual switch (vSwitch) for sub-2ms latency in 5G UPF, Packet Core & high-PPS CNFs",
+      "gcpGkeApproach": "GKE / GDC Bare Metal SR-IOV Network Device Plugin; Cloud C3/C4 gVNIC Tier-1 networking (up to 200 Gbps) for cloud-native equivalent",
+      "dependencyOrLimitation": "True PCIe VF passthrough requires bare-metal/GDC Edge nodes with Intel E810 / NVIDIA ConnectX NICs; standard cloud VMs use gVNIC",
+      "tierClassification": "SPECIALIZED_HW_GDC_BAREMETAL",
+      "recommendedPositioning": "Position gVNIC Tier-1 on GCP Region for cloud UPF; position GDC Edge / Anthos Bare Metal with SR-IOV NICs for deterministic edge UPF",
+      "tmf634ResourceSpecId": "res-spec-004"
+    },
+    {
+      "id": "CAP-02",
+      "requirement": "DPDK-Compatible NICs & Poll-Mode Drivers (PMD)",
+      "category": "High-Performance Networking",
+      "workloadNeed": "Kernel-bypass user-space packet processing for line-rate MPPS throughput",
+      "gcpGkeApproach": "DPDK user-space containers running on GKE C3/C4 compute-optimized nodes (gVNIC PMD) or GDC Bare Metal (vfio-pci PMD) with HugePages & pinned CPUs",
+      "dependencyOrLimitation": "Requires validated PMD drivers (gVNIC / ice / mlx5), pre-allocated HugePages, and whole-core CPU isolation",
+      "tierClassification": "TELCO_OPTIMIZED_K8S",
+      "recommendedPositioning": "Provide validated TELCO-HP-CNF & TELCO-UPF profiles bundling DPDK + HugePages + Static CPU Manager",
+      "tmf634ResourceSpecId": "res-spec-004"
+    },
+    {
+      "id": "CAP-03",
+      "requirement": "IOMMU / Intel VT-d / AMD-Vi",
+      "category": "High-Performance Networking",
+      "workloadNeed": "Hardware-isolated Direct Memory Access (DMA) for safe VF assignment to user-space CNFs",
+      "gcpGkeApproach": "Enabled in host BIOS & kernel (intel_iommu=on iommu=pt) on GDC Bare Metal / qualified edge worker nodes",
+      "dependencyOrLimitation": "Abstracted by hypervisor in public cloud VMs; directly controllable only on bare-metal / GDC Edge servers",
+      "tierClassification": "SPECIALIZED_HW_GDC_BAREMETAL",
+      "recommendedPositioning": "Enforce as a mandatory Day-0 node hardware qualification check in TELCO-HP-CNF and TELCO-UPF bare-metal profiles",
+      "tmf634ResourceSpecId": "res-spec-004"
+    },
+    {
+      "id": "CAP-04",
+      "requirement": "IEEE 1588v2 PTP Hardware Timestamping",
+      "category": "Telco Timing & Synchronization",
+      "workloadNeed": "Nanosecond-grade phase & time accuracy (±1.5 µs) for O-RAN 7.2x fronthaul & TDD slot sync",
+      "gcpGkeApproach": "Kubernetes linuxptp (ptp4l / phc2sys) DaemonSet operator managing PTP-capable NICs on GDC Edge / Bare Metal",
+      "dependencyOrLimitation": "Requires physical PTP-capable NICs (e.g., Intel E810-XXVDA4T), T-BC/T-GM boundary clock switches, and hardware timestamping",
+      "tierClassification": "SPECIALIZED_HW_GDC_BAREMETAL",
+      "recommendedPositioning": "Map strictly to TELCO-vRAN distributed edge / bare-metal blueprint with certified timing NICs",
+      "tmf634ResourceSpecId": "res-spec-006"
+    },
+    {
+      "id": "CAP-05",
+      "requirement": "SyncE & GNSS / GPS Timing Reference",
+      "category": "Telco Timing & Synchronization",
+      "workloadNeed": "Physical-layer frequency synchronization and primary Stratum-1 timing source at cell/DU sites",
+      "gcpGkeApproach": "Cloud-managed telemetry & alarm collection via Managed Prometheus; physical GNSS receiver / SyncE card on edge server",
+      "dependencyOrLimitation": "Requires physical rooftop GNSS/GPS antenna feed, coax/timing card, and SyncE-capable TOR switch",
+      "tierClassification": "PHYSICAL_OEM_PARTNER_EDGE",
+      "recommendedPositioning": "Position as a site-level physical OEM/facility prerequisite inside TELCO-vRAN and TELCO-EDGE profiles",
+      "tmf634ResourceSpecId": "res-spec-006"
+    },
+    {
+      "id": "CAP-06",
+      "requirement": "NUMA Alignment & Single-Socket Affinity",
+      "category": "Telco-Grade Compute Configuration",
+      "workloadNeed": "Eliminate cross-socket QPI/UPI interconnect latency between CPU cores, RAM, and PCIe NICs",
+      "gcpGkeApproach": "Kubernetes Topology Manager (single-numa-node policy) + CPU Manager + Memory Manager on GKE dedicated node pools",
+      "dependencyOrLimitation": "Best determinism achieved on C3/C4 dedicated nodes or bare metal where full socket/PCIe NUMA topology is exposed",
+      "tierClassification": "TELCO_OPTIMIZED_K8S",
+      "recommendedPositioning": "Standardize single-numa-node Topology Manager policy in TELCO-HP-CNF, TELCO-UPF, and TELCO-vRAN",
+      "tmf634ResourceSpecId": "res-spec-002"
+    },
+    {
+      "id": "CAP-07",
+      "requirement": "HugePages (2 MB & 1 GB)",
+      "category": "Telco-Grade Compute Configuration",
+      "workloadNeed": "Eliminate TLB cache misses for zero-copy DPDK packet ring buffers",
+      "gcpGkeApproach": "Supported on GKE Linux node pools (node-system-config hugepages-2Mi / hugepages-1Gi) and requested in Pod resources",
+      "dependencyOrLimitation": "Must be pre-reserved on dedicated telco node pools (not shared with general BSS/IT microservices)",
+      "tierClassification": "TELCO_OPTIMIZED_K8S",
+      "recommendedPositioning": "Provision dedicated HugePages node pool via Terraform in TELCO-HP-CNF and TELCO-UPF recipes",
+      "tmf634ResourceSpecId": "res-spec-003"
+    },
+    {
+      "id": "CAP-08",
+      "requirement": "CPU Isolation, Pinning & Guaranteed QoS",
+      "category": "Telco-Grade Compute Configuration",
+      "workloadNeed": "Zero context-switching and zero noisy-neighbor jitter for real-time packet polling threads",
+      "gcpGkeApproach": "GKE kubelet static CPU Manager policy + Guaranteed Pod QoS (integer CPU requests == limits) + node taints/affinities",
+      "dependencyOrLimitation": "Requires dedicated telco worker pools with reserved system/kube CPUs",
+      "tierClassification": "TELCO_OPTIMIZED_K8S",
+      "recommendedPositioning": "Enforce Guaranteed QoS + static CPU Manager in all high-performance CNF and UPF RFS profiles",
+      "tmf634ResourceSpecId": "res-spec-002"
+    },
+    {
+      "id": "CAP-09",
+      "requirement": "Deterministic BIOS, P-State & C-State Control",
+      "category": "Telco-Grade Compute Configuration",
+      "workloadNeed": "Prevent CPU sleep-state wake latency spikes and turbo-frequency jitter in 5G L1 / UPF",
+      "gcpGkeApproach": "Host BIOS performance profile (C-states disabled, P-state locked) & RT kernel on GDC Bare Metal / OEM servers",
+      "dependencyOrLimitation": "Not user-modifiable on shared public cloud hypervisors; requires bare-metal or dedicated edge hardware",
+      "tierClassification": "SPECIALIZED_HW_GDC_BAREMETAL",
+      "recommendedPositioning": "Classify as bare-metal/edge BIOS profile tuning in TELCO-vRAN and carrier-grade edge UPF",
+      "tmf634ResourceSpecId": "res-spec-002"
+    },
+    {
+      "id": "CAP-10",
+      "requirement": "FEC / vRAN Accelerators (Intel vRAN Boost / ACC100)",
+      "category": "Special Telco Acceleration & Offload",
+      "workloadNeed": "Hardware offload of 5G NR Layer-1 LDPC Forward Error Correction within sub-millisecond symbol budgets",
+      "gcpGkeApproach": "Kubernetes SriovFecClusterConfig / Intel Device Plugins on GDC Edge / Bare Metal with 4th Gen Xeon vRAN Boost or ACC100",
+      "dependencyOrLimitation": "Requires physical Intel Xeon Granite/Sapphire Rapids EE (vRAN Boost), ACC100, Qualcomm X100, or Marvell OCTEON cards",
+      "tierClassification": "SPECIALIZED_HW_GDC_BAREMETAL",
+      "recommendedPositioning": "Position exclusively in TELCO-vRAN O-DU edge profile via certified OEM server BOM",
+      "tmf634ResourceSpecId": "res-spec-007"
+    },
+    {
+      "id": "CAP-11",
+      "requirement": "SmartNICs / DPUs & GTP-U Hardware Offload",
+      "category": "Special Telco Acceleration & Offload",
+      "workloadNeed": "Offload GTP-U encapsulation/decapsulation, OVS/eBPF flow tables, and East-West firewalling from host x86 cores",
+      "gcpGkeApproach": "Google Titanium IPU offloads Andromeda VPC/gVNIC in GCP regions; NVIDIA BlueField-3 / Intel IPU device plugins at edge",
+      "dependencyOrLimitation": "Custom programmable P4/DOCA pipelines require vendor DPU hardware on bare-metal/edge nodes",
+      "tierClassification": "SPECIALIZED_HW_GDC_BAREMETAL",
+      "recommendedPositioning": "Include optional SmartNIC/DPU acceleration track in TELCO-UPF for >100 Gbps edge user-plane sites",
+      "tmf634ResourceSpecId": "res-spec-007"
+    },
+    {
+      "id": "CAP-12",
+      "requirement": "IPSec, MACsec & TLS Crypto Offload (Intel QAT)",
+      "category": "Special Telco Acceleration & Offload",
+      "workloadNeed": "Line-rate N3/backhaul IPSec & fronthaul MACsec encryption without burning CNF vCPUs",
+      "gcpGkeApproach": "Google Cloud native encryption-in-transit + Cloud VPN/MACsec Cloud Interconnect; Intel QAT / DPU crypto plugin on bare metal",
+      "dependencyOrLimitation": "Packet-level inline IPSec/MACsec wire offload at cell/edge sites requires Intel QAT or crypto-enabled SmartNIC",
+      "tierClassification": "SPECIALIZED_HW_GDC_BAREMETAL",
+      "recommendedPositioning": "Use GCP native Cloud Interconnect MACsec in region; add Intel QAT plugin in TELCO-UPF / TELCO-vRAN edge profiles",
+      "tmf634ResourceSpecId": "res-spec-007"
+    },
+    {
+      "id": "CAP-13",
+      "requirement": "Multus CNI & Multi-Network Pod Interfaces",
+      "category": "Multi-Network Connectivity",
+      "workloadNeed": "Strict traffic plane separation across OAM, 3GPP Signaling (N2/N4), Timing/Sync, and User Plane (N3/N6/SGi)",
+      "gcpGkeApproach": "GKE Multi-Networking (Dataplane V2 secondary VPC NICs) & Multus CNI NetworkAttachmentDefinitions (net1..net4)",
+      "dependencyOrLimitation": "GKE Multi-Networking requires dedicated multi-VPC node pools and subnet planning",
+      "tierClassification": "TELCO_OPTIMIZED_K8S",
+      "recommendedPositioning": "Core architectural pillar already modeled in our Hybrid VNF/CNF & 5G UPF Terraform/K8s blueprints",
+      "tmf634ResourceSpecId": "res-spec-005"
+    },
+    {
+      "id": "CAP-14",
+      "requirement": "High-Density 25 / 100 / 200 / 400 GbE Connectivity",
+      "category": "Multi-Network Connectivity",
+      "workloadNeed": "High-capacity eCPRI fronthaul, F1 midhaul, N3/N6 backhaul, and core data-network breakout",
+      "gcpGkeApproach": "GCP Tier-1 Networking (up to 200 Gbps per C3/C4 VM) + Dedicated Cloud Interconnect (100G/400G ports)",
+      "dependencyOrLimitation": "Physical QSFP28/QSFP-DD optical transceivers at far-edge depend on OEM server NIC & TOR switch",
+      "tierClassification": "STANDARD_GCP_GKE",
+      "recommendedPositioning": "Map regional 100G/200G workloads to GCP Tier-1 C3/C4; map cell-site 25G/100G optics to TELCO-EDGE",
+      "tmf634ResourceSpecId": "res-spec-001"
+    },
+    {
+      "id": "CAP-15",
+      "requirement": "NEBS Level 3 Environmental Compliance",
+      "category": "Telco Edge Hardware Characteristics",
+      "workloadNeed": " Extended temperature (-5°C to +55°C), seismic Zone-4, fire, and EMC resilience in Telco Central Offices",
+      "gcpGkeApproach": "Google Distributed Cloud (GDC) Edge / Anthos Bare Metal deployed on NEBS Level 3 certified OEM servers (Dell XR8000 / HPE DL110 / Nokia AirFrame)",
+      "dependencyOrLimitation": "Purely physical hardware & enclosure certification — not a cloud software feature",
+      "tierClassification": "PHYSICAL_OEM_PARTNER_EDGE",
+      "recommendedPositioning": "Capture as mandatory OEM hardware BOM attribute in TELCO-EDGE specification",
+      "tmf634ResourceSpecId": "res-spec-008"
+    },
+    {
+      "id": "CAP-16",
+      "requirement": "Short-Depth Chassis (300–450mm) & -48V DC Power",
+      "category": "Telco Edge Hardware Characteristics",
+      "workloadNeed": "Fit cramped cell-site cabinets and run directly off telecom battery plants (-48V DC)",
+      "gcpGkeApproach": "Managed remotely via Google Cloud Fleet (GKE Enterprise / GDC Connected) over OEM short-depth -48V DC servers",
+      "dependencyOrLimitation": "Requires purpose-built telco edge OEM hardware and site power/rack engineering",
+      "tierClassification": "PHYSICAL_OEM_PARTNER_EDGE",
+      "recommendedPositioning": "Bundle with NEBS Level 3 inside TELCO-EDGE profile with Dell/HPE/Supermicro partner reference BOM",
+      "tmf634ResourceSpecId": "res-spec-008"
+    }
+  ]
+}

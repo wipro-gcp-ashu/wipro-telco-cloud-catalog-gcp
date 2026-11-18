@@ -1,0 +1,354 @@
+{
+  "productOfferings": [
+    {
+      "id": "prod-offer-5g-core-cp-002",
+      "href": "/tmf-api/productCatalogManagement/v4/productOffering/prod-offer-5g-core-cp-002",
+      "name": "5G Core Control Plane Cloud Platform (3GPP SBA)",
+      "description": "Cloud-Native GKE Hosting Platform for 5G SA Control Plane Functions (AMF, SMF, NRF, UDM, AUSF, PCF, NSSF) with Multi-Zone HA & Managed Prometheus",
+      "lifecycleStatus": "Active",
+      "version": "2.0",
+      "isBundle": false,
+      "isSellable": true,
+      "@type": "ProductOffering",
+      "productSpecification": {
+        "id": "prod-spec-5g-core-cp-002",
+        "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-5g-core-cp-002",
+        "name": "5G Core Control Plane Cloud Platform (3GPP SBA) Specification",
+        "@referredType": "ProductSpecification"
+      },
+      "productOfferingTerm": [
+        {
+          "name": "12-Month Carrier SLA (99.999% Availability)",
+          "description": "Zero-touch TM Forum TMF622 -> TMF641 -> TMF652 automated GCP/GKE provisioning",
+          "duration": {
+            "amount": 12,
+            "units": "Month"
+          }
+        }
+      ],
+      "productOfferingPrice": [
+        {
+          "id": "pop-prod-offer-5g-core-cp-002",
+          "name": "Monthly Platform Subscription",
+          "priceType": "recurring",
+          "recurringChargePeriodType": "monthly",
+          "recurringChargePeriodLength": 1,
+          "price": {
+            "unit": "USD",
+            "value": 3800
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod-offer-5g-upf-hp-001",
+      "href": "/tmf-api/productCatalogManagement/v4/productOffering/prod-offer-5g-upf-hp-001",
+      "name": "High-Performance 5G UPF Cloud Infrastructure Slice",
+      "description": "Flagship Self-Provisioned 5G User Plane Function (UPF) Infrastructure on GCP/GDC with N3/N4/N6 Subnets, SR-IOV, DPDK, HugePages & Single-NUMA Pinning",
+      "lifecycleStatus": "Active",
+      "version": "2.0",
+      "isBundle": false,
+      "isSellable": true,
+      "@type": "ProductOffering",
+      "productSpecification": {
+        "id": "prod-spec-5g-upf-hp-001",
+        "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-5g-upf-hp-001",
+        "name": "High-Performance 5G UPF Cloud Infrastructure Slice Specification",
+        "@referredType": "ProductSpecification"
+      },
+      "productOfferingTerm": [
+        {
+          "name": "12-Month Carrier SLA (99.999% Availability)",
+          "description": "Zero-touch TM Forum TMF622 -> TMF641 -> TMF652 automated GCP/GKE provisioning",
+          "duration": {
+            "amount": 12,
+            "units": "Month"
+          }
+        }
+      ],
+      "productOfferingPrice": [
+        {
+          "id": "pop-prod-offer-5g-upf-hp-001",
+          "name": "Monthly Platform Subscription",
+          "priceType": "recurring",
+          "recurringChargePeriodType": "monthly",
+          "recurringChargePeriodLength": 1,
+          "price": {
+            "unit": "USD",
+            "value": 2450
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod-offer-hybrid-vnf-cnf-003",
+      "href": "/tmf-api/productCatalogManagement/v4/productOffering/prod-offer-hybrid-vnf-cnf-003",
+      "name": "Hybrid VNF + CNF Multi-Network Service Chain",
+      "description": "Unified Brownfield-to-Cloud-Native Orchestration chaining Dual-NIC Compute Engine VNFs with Multus Multi-Interface GKE CNFs",
+      "lifecycleStatus": "Active",
+      "version": "2.0",
+      "isBundle": false,
+      "isSellable": true,
+      "@type": "ProductOffering",
+      "productSpecification": {
+        "id": "prod-spec-hybrid-vnf-cnf-003",
+        "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-hybrid-vnf-cnf-003",
+        "name": "Hybrid VNF + CNF Multi-Network Service Chain Specification",
+        "@referredType": "ProductSpecification"
+      },
+      "productOfferingTerm": [
+        {
+          "name": "12-Month Carrier SLA (99.999% Availability)",
+          "description": "Zero-touch TM Forum TMF622 -> TMF641 -> TMF652 automated GCP/GKE provisioning",
+          "duration": {
+            "amount": 12,
+            "units": "Month"
+          }
+        }
+      ],
+      "productOfferingPrice": [
+        {
+          "id": "pop-prod-offer-hybrid-vnf-cnf-003",
+          "name": "Monthly Platform Subscription",
+          "priceType": "recurring",
+          "recurringChargePeriodType": "monthly",
+          "recurringChargePeriodLength": 1,
+          "price": {
+            "unit": "USD",
+            "value": 1950
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod-offer-oda-mt-slice-004",
+      "href": "/tmf-api/productCatalogManagement/v4/productOffering/prod-offer-oda-mt-slice-004",
+      "name": "Multi-Tenant TM Forum ODA Canvas Partner Slice",
+      "description": "Zero-Touch Isolated MVNO / Enterprise B2B Tenant Slice on Shared Private GKE ODA Canvas with Cilium eBPF, Cloud Armor WAF & Workload Identity",
+      "lifecycleStatus": "Active",
+      "version": "2.0",
+      "isBundle": false,
+      "isSellable": true,
+      "@type": "ProductOffering",
+      "productSpecification": {
+        "id": "prod-spec-oda-mt-slice-004",
+        "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-oda-mt-slice-004",
+        "name": "Multi-Tenant TM Forum ODA Canvas Partner Slice Specification",
+        "@referredType": "ProductSpecification"
+      },
+      "productOfferingTerm": [
+        {
+          "name": "12-Month Carrier SLA (99.999% Availability)",
+          "description": "Zero-touch TM Forum TMF622 -> TMF641 -> TMF652 automated GCP/GKE provisioning",
+          "duration": {
+            "amount": 12,
+            "units": "Month"
+          }
+        }
+      ],
+      "productOfferingPrice": [
+        {
+          "id": "pop-prod-offer-oda-mt-slice-004",
+          "name": "Monthly Platform Subscription",
+          "priceType": "recurring",
+          "recurringChargePeriodType": "monthly",
+          "recurringChargePeriodLength": 1,
+          "price": {
+            "unit": "USD",
+            "value": 1200
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod-offer-telco-far-edge-006",
+      "href": "/tmf-api/productCatalogManagement/v4/productOffering/prod-offer-telco-far-edge-006",
+      "name": "Telco Far-Edge & NEBS Level 3 MEC Platform",
+      "description": "Central-Office & Cell-Site Edge Infrastructure Blueprint on NEBS Level 3 Short-Depth -48V DC OEM Servers managed via Google Distributed Cloud",
+      "lifecycleStatus": "Active",
+      "version": "2.0",
+      "isBundle": false,
+      "isSellable": true,
+      "@type": "ProductOffering",
+      "productSpecification": {
+        "id": "prod-spec-telco-far-edge-006",
+        "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-telco-far-edge-006",
+        "name": "Telco Far-Edge & NEBS Level 3 MEC Platform Specification",
+        "@referredType": "ProductSpecification"
+      },
+      "productOfferingTerm": [
+        {
+          "name": "12-Month Carrier SLA (99.999% Availability)",
+          "description": "Zero-touch TM Forum TMF622 -> TMF641 -> TMF652 automated GCP/GKE provisioning",
+          "duration": {
+            "amount": 12,
+            "units": "Month"
+          }
+        }
+      ],
+      "productOfferingPrice": [
+        {
+          "id": "pop-prod-offer-telco-far-edge-006",
+          "name": "Monthly Platform Subscription",
+          "priceType": "recurring",
+          "recurringChargePeriodType": "monthly",
+          "recurringChargePeriodLength": 1,
+          "price": {
+            "unit": "USD",
+            "value": 3100
+          }
+        }
+      ]
+    },
+    {
+      "id": "prod-offer-vran-oran-du-005",
+      "href": "/tmf-api/productCatalogManagement/v4/productOffering/prod-offer-vran-oran-du-005",
+      "name": "5G vRAN / O-RAN Distributed Unit (O-DU) Edge Platform",
+      "description": "Real-Time O-RAN 7.2x Infrastructure Blueprint with IEEE 1588v2 PTP, SyncE, GNSS Timing, Intel vRAN Boost / ACC100 FEC & Locked BIOS C-States",
+      "lifecycleStatus": "Active",
+      "version": "2.0",
+      "isBundle": false,
+      "isSellable": true,
+      "@type": "ProductOffering",
+      "productSpecification": {
+        "id": "prod-spec-vran-oran-du-005",
+        "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-vran-oran-du-005",
+        "name": "5G vRAN / O-RAN Distributed Unit (O-DU) Edge Platform Specification",
+        "@referredType": "ProductSpecification"
+      },
+      "productOfferingTerm": [
+        {
+          "name": "12-Month Carrier SLA (99.999% Availability)",
+          "description": "Zero-touch TM Forum TMF622 -> TMF641 -> TMF652 automated GCP/GKE provisioning",
+          "duration": {
+            "amount": 12,
+            "units": "Month"
+          }
+        }
+      ],
+      "productOfferingPrice": [
+        {
+          "id": "pop-prod-offer-vran-oran-du-005",
+          "name": "Monthly Platform Subscription",
+          "priceType": "recurring",
+          "recurringChargePeriodType": "monthly",
+          "recurringChargePeriodLength": 1,
+          "price": {
+            "unit": "USD",
+            "value": 4200
+          }
+        }
+      ]
+    }
+  ],
+  "productSpecifications": [
+    {
+      "id": "prod-spec-5g-core-cp-002",
+      "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-5g-core-cp-002",
+      "name": "5G Core Control Plane Cloud Platform (3GPP SBA) Specification",
+      "description": "Cloud-Native GKE Hosting Platform for 5G SA Control Plane Functions (AMF, SMF, NRF, UDM, AUSF, PCF, NSSF) with Multi-Zone HA & Managed Prometheus",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "@type": "ProductSpecification",
+      "serviceSpecification": [
+        {
+          "id": "cfs-002-5g-core-control-plane",
+          "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-002-5g-core-control-plane",
+          "name": "5G_Core_ControlPlane_Cloud_CFS",
+          "version": "2.0",
+          "@referredType": "CustomerFacingServiceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "prod-spec-5g-upf-hp-001",
+      "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-5g-upf-hp-001",
+      "name": "High-Performance 5G UPF Cloud Infrastructure Slice Specification",
+      "description": "Flagship Self-Provisioned 5G User Plane Function (UPF) Infrastructure on GCP/GDC with N3/N4/N6 Subnets, SR-IOV, DPDK, HugePages & Single-NUMA Pinning",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "@type": "ProductSpecification",
+      "serviceSpecification": [
+        {
+          "id": "cfs-001-5g-upf-connectivity",
+          "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-001-5g-upf-connectivity",
+          "name": "5G_UPF_HighPerformance_Connectivity_CFS",
+          "version": "2.0",
+          "@referredType": "CustomerFacingServiceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "prod-spec-hybrid-vnf-cnf-003",
+      "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-hybrid-vnf-cnf-003",
+      "name": "Hybrid VNF + CNF Multi-Network Service Chain Specification",
+      "description": "Unified Brownfield-to-Cloud-Native Orchestration chaining Dual-NIC Compute Engine VNFs with Multus Multi-Interface GKE CNFs",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "@type": "ProductSpecification",
+      "serviceSpecification": [
+        {
+          "id": "cfs-003-hybrid-vnf-cnf-chain",
+          "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-003-hybrid-vnf-cnf-chain",
+          "name": "Hybrid_VNF_CNF_ServiceChain_CFS",
+          "version": "2.0",
+          "@referredType": "CustomerFacingServiceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "prod-spec-oda-mt-slice-004",
+      "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-oda-mt-slice-004",
+      "name": "Multi-Tenant TM Forum ODA Canvas Partner Slice Specification",
+      "description": "Zero-Touch Isolated MVNO / Enterprise B2B Tenant Slice on Shared Private GKE ODA Canvas with Cilium eBPF, Cloud Armor WAF & Workload Identity",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "@type": "ProductSpecification",
+      "serviceSpecification": [
+        {
+          "id": "cfs-004-oda-multitenant-slice",
+          "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-004-oda-multitenant-slice",
+          "name": "ODA_Canvas_MultiTenant_Partner_CFS",
+          "version": "2.0",
+          "@referredType": "CustomerFacingServiceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "prod-spec-telco-far-edge-006",
+      "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-telco-far-edge-006",
+      "name": "Telco Far-Edge & NEBS Level 3 MEC Platform Specification",
+      "description": "Central-Office & Cell-Site Edge Infrastructure Blueprint on NEBS Level 3 Short-Depth -48V DC OEM Servers managed via Google Distributed Cloud",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "@type": "ProductSpecification",
+      "serviceSpecification": [
+        {
+          "id": "cfs-006-telco-mec-far-edge",
+          "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-006-telco-mec-far-edge",
+          "name": "Telco_FarEdge_MEC_Platform_CFS",
+          "version": "2.0",
+          "@referredType": "CustomerFacingServiceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "prod-spec-vran-oran-du-005",
+      "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-vran-oran-du-005",
+      "name": "5G vRAN / O-RAN Distributed Unit (O-DU) Edge Platform Specification",
+      "description": "Real-Time O-RAN 7.2x Infrastructure Blueprint with IEEE 1588v2 PTP, SyncE, GNSS Timing, Intel vRAN Boost / ACC100 FEC & Locked BIOS C-States",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "@type": "ProductSpecification",
+      "serviceSpecification": [
+        {
+          "id": "cfs-005-vran-oran-radio",
+          "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-005-vran-oran-radio",
+          "name": "vRAN_ORAN_DistributedUnit_CFS",
+          "version": "2.0",
+          "@referredType": "CustomerFacingServiceSpecification"
+        }
+      ]
+    }
+  ]
+}

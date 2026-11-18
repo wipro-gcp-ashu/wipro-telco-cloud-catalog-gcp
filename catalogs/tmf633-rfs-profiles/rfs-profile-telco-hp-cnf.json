@@ -1,0 +1,95 @@
+{
+  "id": "rfs-profile-telco-hp-cnf",
+  "profileCode": "TELCO-HP-CNF",
+  "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/rfs-profile-telco-hp-cnf",
+  "name": "TELCO_HP_CNF_Infra_Profile_RFS",
+  "description": "Standardized RFS Recipe for Packet-Processing CNFs & Hybrid VNF/CNF Chains: Multus CNI, HugePages (2Mi/1Gi), Static CPU Pinning, Single-NUMA, SR-IOV & DPDK",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "isBundle": false,
+  "@type": "ResourceFacingServiceSpecification",
+  "@baseType": "ServiceSpecification",
+  "deploymentTarget": "Telco-Optimized GKE Node Pool (C3/C4 Tier-1) or GDC Bare Metal",
+  "serviceSpecCharacteristic": [
+    {
+      "name": "profile_code",
+      "description": "Standardized Wipro Telco Infrastructure Profile Code",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "TELCO-HP-CNF"
+        }
+      ]
+    },
+    {
+      "name": "orchestration_blueprint",
+      "description": "Target Terraform/K8s blueprint path",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "./blueprints/02-hybrid-vnf-cnf-multus"
+        }
+      ]
+    },
+    {
+      "name": "compute_acceleration_profile",
+      "description": "Compute profile mode",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "HIGH_PERF_MULTUS_HUGEPAGES_DPDK"
+        }
+      ]
+    }
+  ],
+  "resourceSpecification": [
+    {
+      "id": "res-spec-001",
+      "name": "Telco3gppMultiPlaneVpcSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-002",
+      "name": "TelcoDeterministicComputeNumaCpuSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-003",
+      "name": "TelcoHugePagesMemorySpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-004",
+      "name": "SriovDpdkIommuAccelerationSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-005",
+      "name": "MultusMultiNetworkCniSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-009",
+      "name": "HybridDualNicVnfApplianceSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    }
+  ]
+}

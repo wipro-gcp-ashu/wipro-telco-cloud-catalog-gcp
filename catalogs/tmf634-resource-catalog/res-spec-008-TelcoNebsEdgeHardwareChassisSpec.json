@@ -1,0 +1,130 @@
+{
+  "id": "res-spec-008",
+  "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-008",
+  "name": "TelcoNebsEdgeHardwareChassisSpec",
+  "description": "TMF634 Physical Far-Edge / Central-Office OEM Server Specification: NEBS Level 3, Short-Depth Rack (300-450mm) & -48V DC Telecom Power",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "PhysicalResourceSpecification",
+  "@baseType": "ResourceSpecification",
+  "category": "TelcoPhysicalEdgeInfrastructure",
+  "capabilityTier": "PHYSICAL_OEM_PARTNER_EDGE",
+  "resourceSpecCharacteristic": [
+    {
+      "name": "nebs_compliance",
+      "description": "Telcordia GR-63-CORE / GR-1089-CORE compliance level",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "NEBS-Level-3-Certified"
+        },
+        {
+          "isDefault": false,
+          "value": "Standard-DataCenter-ASHRAE-A2"
+        }
+      ]
+    },
+    {
+      "name": "chassis_depth_mm",
+      "description": "Short-depth telecom cabinet server form factor (mm)",
+      "valueType": "integer",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": 430
+        },
+        {
+          "isDefault": false,
+          "value": 300
+        },
+        {
+          "isDefault": false,
+          "value": 450
+        },
+        {
+          "isDefault": false,
+          "value": 800
+        }
+      ]
+    },
+    {
+      "name": "power_supply_type",
+      "description": "Cell-site / Central Office power input",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "-48V-DC-Redundant"
+        },
+        {
+          "isDefault": false,
+          "value": "110-240V-AC-Redundant"
+        }
+      ]
+    },
+    {
+      "name": "validated_oem_bom",
+      "description": "Certified OEM Partner Edge Server Model",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "Dell-PowerEdge-XR8000 / HPE-ProLiant-DL110-Gen11"
+        },
+        {
+          "isDefault": false,
+          "value": "Nokia-AirFrame-OpenEdge"
+        },
+        {
+          "isDefault": false,
+          "value": "Supermicro-Hyper-E"
+        }
+      ]
+    },
+    {
+      "name": "gcp_management_plane",
+      "description": "Google Cloud Edge Fleet Control Plane",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "Google-Distributed-Cloud-Connected (GDC Edge)"
+        }
+      ]
+    },
+    {
+      "name": "iac_binding",
+      "description": "Execution blueprint binding",
+      "valueType": "object",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": {
+            "iac_engine": "gdc-fleet-terraform+oem-bom",
+            "blueprint_path": "./blueprints/01-oda-canvas-multitenant/terraform",
+            "fleet_registration": "gkehub.googleapis.com"
+          }
+        }
+      ]
+    }
+  ]
+}

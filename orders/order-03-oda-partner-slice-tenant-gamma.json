@@ -1,0 +1,41 @@
+{
+  "externalId": "ORD-2026-TENANT-GAMMA",
+  "priority": "2",
+  "description": "Multi-Tenant ODA Canvas MVNO Partner Onboarding Order invoking Blueprint 01",
+  "@type": "ProductOrder",
+  "relatedParty": [
+    {
+      "id": "ORG-GAMMA",
+      "name": "Gamma Digital MVNO",
+      "role": "Customer",
+      "@referredType": "Organization"
+    }
+  ],
+  "productOrderItem": [
+    {
+      "id": "100",
+      "action": "add",
+      "quantity": 1,
+      "productOffering": {
+        "id": "prod-offer-oda-mt-slice-004",
+        "name": "Multi-Tenant TM Forum ODA Canvas Partner Slice"
+      },
+      "product": {
+        "productCharacteristic": [
+          {
+            "name": "tenant_id",
+            "value": "tenant-gamma"
+          },
+          {
+            "name": "region",
+            "value": "us-central1"
+          },
+          {
+            "name": "partner_tier",
+            "value": "Enterprise-MVNO-Gold"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "id": "res-spec-001",
+  "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-001",
+  "name": "Telco3gppMultiPlaneVpcSpec",
+  "description": "TMF634 Multi-Plane Telco VPC & High-Bandwidth Interconnect Specification (OAM, Signaling N4, User-Plane N3, External Data SGi/N6, 25G-400GbE)",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "LogicalResourceSpecification",
+  "@baseType": "ResourceSpecification",
+  "category": "TelcoCloudNetworking",
+  "capabilityTier": "STANDARD_GCP_GKE",
+  "resourceSpecCharacteristic": [
+    {
+      "name": "region",
+      "description": "Target GCP deployment region",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "us-central1"
+        },
+        {
+          "isDefault": false,
+          "value": "us-east4"
+        },
+        {
+          "isDefault": false,
+          "value": "europe-west1"
+        },
+        {
+          "isDefault": false,
+          "value": "asia-south1"
+        }
+      ]
+    },
+    {
+      "name": "sgi_subnet_cidr",
+      "description": "3GPP SGi / N6 External Data Network Subnet CIDR",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "10.210.1.0/24"
+        }
+      ]
+    },
+    {
+      "name": "n3_subnet_cidr",
+      "description": "3GPP N3 RAN-to-UPF GTP-U User-Plane Subnet CIDR",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "10.210.2.0/24"
+        }
+      ]
+    },
+    {
+      "name": "n4_subnet_cidr",
+      "description": "3GPP N4 SMF-to-UPF PFCP Control-Plane Subnet CIDR",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "10.210.3.0/24"
+        }
+      ]
+    },
+    {
+      "name": "oam_subnet_cidr",
+      "description": "Telco OAM Management & Telemetry Plane CIDR",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "10.10.0.0/24"
+        }
+      ]
+    },
+    {
+      "name": "nic_bandwidth_gbps",
+      "description": "Interface bandwidth tier (10 / 25 / 100 / 200 / 400 GbE)",
+      "valueType": "integer",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": 100
+        },
+        {
+          "isDefault": false,
+          "value": 10
+        },
+        {
+          "isDefault": false,
+          "value": 25
+        },
+        {
+          "isDefault": false,
+          "value": 200
+        },
+        {
+          "isDefault": false,
+          "value": 400
+        }
+      ]
+    },
+    {
+      "name": "gtpu_pfcp_firewall",
+      "description": "Enable 3GPP UDP/2152 (GTP-U) & UDP/8805 (PFCP) firewall rules",
+      "valueType": "boolean",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "iac_binding",
+      "description": "Execution blueprint binding",
+      "valueType": "object",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": {
+            "iac_engine": "terraform",
+            "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+            "provider": "hashicorp/google ~> 5.30"
+          }
+        }
+      ]
+    }
+  ]
+}

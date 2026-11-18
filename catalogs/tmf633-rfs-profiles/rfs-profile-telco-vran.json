@@ -1,0 +1,95 @@
+{
+  "id": "rfs-profile-telco-vran",
+  "profileCode": "TELCO-vRAN",
+  "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/rfs-profile-telco-vran",
+  "name": "TELCO_vRAN_ORAN_RealTime_Infra_Profile_RFS",
+  "description": "Standardized RFS Recipe for 5G vRAN / O-RAN Distributed Unit (O-DU): IEEE 1588v2 PTP Hardware Timestamping, SyncE, GNSS, Intel vRAN Boost / ACC100 FEC, Locked BIOS C-State & Real-Time CPU Pinning",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "isBundle": false,
+  "@type": "ResourceFacingServiceSpecification",
+  "@baseType": "ServiceSpecification",
+  "deploymentTarget": "Google Distributed Cloud (GDC) Bare Metal / Certified OEM vRAN Server",
+  "serviceSpecCharacteristic": [
+    {
+      "name": "profile_code",
+      "description": "Standardized Wipro Telco Infrastructure Profile Code",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "TELCO-vRAN"
+        }
+      ]
+    },
+    {
+      "name": "orchestration_blueprint",
+      "description": "Target Edge Fleet / Terraform blueprint path",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "./blueprints/01-oda-canvas-multitenant"
+        }
+      ]
+    },
+    {
+      "name": "compute_acceleration_profile",
+      "description": "Real-Time L1 PHY Acceleration Profile",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "REALTIME_PTP_SYNCE_FEC_ACC100"
+        }
+      ]
+    }
+  ],
+  "resourceSpecification": [
+    {
+      "id": "res-spec-002",
+      "name": "TelcoDeterministicComputeNumaCpuSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-003",
+      "name": "TelcoHugePagesMemorySpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-004",
+      "name": "SriovDpdkIommuAccelerationSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-005",
+      "name": "MultusMultiNetworkCniSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-006",
+      "name": "TelcoPtpSyncEGnssTimingSpec",
+      "version": "2.0",
+      "@referredType": "PhysicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-007",
+      "name": "TelcoFecSmartNicDpuCryptoSpec",
+      "version": "2.0",
+      "@referredType": "PhysicalResourceSpecification"
+    }
+  ]
+}

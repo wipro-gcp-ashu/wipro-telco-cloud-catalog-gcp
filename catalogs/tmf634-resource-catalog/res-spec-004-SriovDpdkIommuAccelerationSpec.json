@@ -1,0 +1,138 @@
+{
+  "id": "res-spec-004",
+  "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-004",
+  "name": "SriovDpdkIommuAccelerationSpec",
+  "description": "TMF634 High-Throughput Kernel-Bypass Networking: SR-IOV Virtual Functions, DPDK Poll-Mode Drivers (PMD) & IOMMU/VT-d Isolation",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "LogicalResourceSpecification",
+  "@baseType": "ResourceSpecification",
+  "category": "TelcoPacketAcceleration",
+  "capabilityTier": "SPECIALIZED_HW_GDC_BAREMETAL",
+  "resourceSpecCharacteristic": [
+    {
+      "name": "dataplane_mode",
+      "description": "Packet acceleration mode",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "SR-IOV-DPDK"
+        },
+        {
+          "isDefault": false,
+          "value": "gVNIC-Tier1-DPDK"
+        },
+        {
+          "isDefault": false,
+          "value": "Cilium-eBPF"
+        }
+      ]
+    },
+    {
+      "name": "dpdk_enabled",
+      "description": "Enable DPDK user-space Poll Mode Driver (PMD)",
+      "valueType": "boolean",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": true
+        },
+        {
+          "isDefault": false,
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "sriov_vf_count",
+      "description": "Number of PCIe SR-IOV Virtual Functions injected per CNF pod",
+      "valueType": "integer",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": 4
+        },
+        {
+          "isDefault": false,
+          "value": 0
+        },
+        {
+          "isDefault": false,
+          "value": 2
+        },
+        {
+          "isDefault": false,
+          "value": 8
+        }
+      ]
+    },
+    {
+      "name": "iommu_vtd_enabled",
+      "description": "Require host IOMMU / Intel VT-d / AMD-Vi vfio-pci DMA protection",
+      "valueType": "boolean",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": true
+        },
+        {
+          "isDefault": false,
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "nic_pmd_driver",
+      "description": "Validated NIC PMD driver",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "net_gvnic / net_ice_vf"
+        },
+        {
+          "isDefault": false,
+          "value": "net_mlx5"
+        },
+        {
+          "isDefault": false,
+          "value": "vfio-pci"
+        }
+      ]
+    },
+    {
+      "name": "iac_binding",
+      "description": "Execution blueprint binding",
+      "valueType": "object",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": {
+            "iac_engine": "kubernetes-sriov-device-plugin",
+            "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+            "device_plugin": "intel.com/sriov_netdevice"
+          }
+        }
+      ]
+    }
+  ]
+}

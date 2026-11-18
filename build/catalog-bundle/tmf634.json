@@ -1,0 +1,1300 @@
+[
+  {
+    "id": "res-spec-001",
+    "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-001",
+    "name": "Telco3gppMultiPlaneVpcSpec",
+    "description": "TMF634 Multi-Plane Telco VPC & High-Bandwidth Interconnect Specification (OAM, Signaling N4, User-Plane N3, External Data SGi/N6, 25G-400GbE)",
+    "version": "2.0",
+    "lifecycleStatus": "Active",
+    "@type": "LogicalResourceSpecification",
+    "@baseType": "ResourceSpecification",
+    "category": "TelcoCloudNetworking",
+    "capabilityTier": "STANDARD_GCP_GKE",
+    "resourceSpecCharacteristic": [
+      {
+        "name": "region",
+        "description": "Target GCP deployment region",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "us-central1"
+          },
+          {
+            "isDefault": false,
+            "value": "us-east4"
+          },
+          {
+            "isDefault": false,
+            "value": "europe-west1"
+          },
+          {
+            "isDefault": false,
+            "value": "asia-south1"
+          }
+        ]
+      },
+      {
+        "name": "sgi_subnet_cidr",
+        "description": "3GPP SGi / N6 External Data Network Subnet CIDR",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "10.210.1.0/24"
+          }
+        ]
+      },
+      {
+        "name": "n3_subnet_cidr",
+        "description": "3GPP N3 RAN-to-UPF GTP-U User-Plane Subnet CIDR",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "10.210.2.0/24"
+          }
+        ]
+      },
+      {
+        "name": "n4_subnet_cidr",
+        "description": "3GPP N4 SMF-to-UPF PFCP Control-Plane Subnet CIDR",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "10.210.3.0/24"
+          }
+        ]
+      },
+      {
+        "name": "oam_subnet_cidr",
+        "description": "Telco OAM Management & Telemetry Plane CIDR",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "10.10.0.0/24"
+          }
+        ]
+      },
+      {
+        "name": "nic_bandwidth_gbps",
+        "description": "Interface bandwidth tier (10 / 25 / 100 / 200 / 400 GbE)",
+        "valueType": "integer",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": 100
+          },
+          {
+            "isDefault": false,
+            "value": 10
+          },
+          {
+            "isDefault": false,
+            "value": 25
+          },
+          {
+            "isDefault": false,
+            "value": 200
+          },
+          {
+            "isDefault": false,
+            "value": 400
+          }
+        ]
+      },
+      {
+        "name": "gtpu_pfcp_firewall",
+        "description": "Enable 3GPP UDP/2152 (GTP-U) & UDP/8805 (PFCP) firewall rules",
+        "valueType": "boolean",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": true
+          }
+        ]
+      },
+      {
+        "name": "iac_binding",
+        "description": "Execution blueprint binding",
+        "valueType": "object",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": {
+              "iac_engine": "terraform",
+              "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+              "provider": "hashicorp/google ~> 5.30"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "res-spec-002",
+    "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-002",
+    "name": "TelcoDeterministicComputeNumaCpuSpec",
+    "description": "TMF634 Deterministic Telco Compute Profile: Single-NUMA Alignment, Static CPU Manager Pinning, Guaranteed QoS & BIOS C-State/P-State Control",
+    "version": "2.0",
+    "lifecycleStatus": "Active",
+    "@type": "LogicalResourceSpecification",
+    "@baseType": "ResourceSpecification",
+    "category": "TelcoDeterministicCompute",
+    "capabilityTier": "TELCO_OPTIMIZED_K8S",
+    "resourceSpecCharacteristic": [
+      {
+        "name": "machine_family",
+        "description": "GCP / Edge Compute Machine Family",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "c3-standard-16"
+          },
+          {
+            "isDefault": false,
+            "value": "e2-standard-4"
+          },
+          {
+            "isDefault": false,
+            "value": "c3-standard-8"
+          },
+          {
+            "isDefault": false,
+            "value": "c3-standard-32-lssd"
+          },
+          {
+            "isDefault": false,
+            "value": "gdc-baremetal-xeon-6438n"
+          }
+        ]
+      },
+      {
+        "name": "cpu_count",
+        "description": "Dedicated whole vCPUs allocated (Guaranteed QoS)",
+        "valueType": "integer",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": 16
+          },
+          {
+            "isDefault": false,
+            "value": 4
+          },
+          {
+            "isDefault": false,
+            "value": 8
+          },
+          {
+            "isDefault": false,
+            "value": 32
+          },
+          {
+            "isDefault": false,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "name": "ram_gb",
+        "description": "Allocated memory in GiB",
+        "valueType": "integer",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": 64
+          },
+          {
+            "isDefault": false,
+            "value": 16
+          },
+          {
+            "isDefault": false,
+            "value": 32
+          },
+          {
+            "isDefault": false,
+            "value": 128
+          },
+          {
+            "isDefault": false,
+            "value": 256
+          }
+        ]
+      },
+      {
+        "name": "cpu_manager_policy",
+        "description": "Kubelet CPU Manager policy for core pinning",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "static"
+          },
+          {
+            "isDefault": false,
+            "value": "none"
+          }
+        ]
+      },
+      {
+        "name": "topology_manager_policy",
+        "description": "Kubelet Topology Manager NUMA alignment policy",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "single-numa-node"
+          },
+          {
+            "isDefault": false,
+            "value": "best-effort"
+          },
+          {
+            "isDefault": false,
+            "value": "restricted"
+          }
+        ]
+      },
+      {
+        "name": "numa_nodes",
+        "description": "Pinned NUMA socket count",
+        "valueType": "integer",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": 1
+          },
+          {
+            "isDefault": false,
+            "value": 0
+          },
+          {
+            "isDefault": false,
+            "value": 2
+          }
+        ]
+      },
+      {
+        "name": "bios_cstate_pstate_locked",
+        "description": "Disable CPU C-states & lock P-state turbo jitter (requires Bare Metal/Edge)",
+        "valueType": "boolean",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": false
+          },
+          {
+            "isDefault": false,
+            "value": true
+          }
+        ]
+      },
+      {
+        "name": "worker_instances",
+        "description": "Active/Standby or Multi-Zone worker replica count",
+        "valueType": "integer",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": 2
+          },
+          {
+            "isDefault": false,
+            "value": 1
+          },
+          {
+            "isDefault": false,
+            "value": 3
+          },
+          {
+            "isDefault": false,
+            "value": 4
+          }
+        ]
+      },
+      {
+        "name": "iac_binding",
+        "description": "Execution blueprint binding",
+        "valueType": "object",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": {
+              "iac_engine": "terraform+kubernetes",
+              "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+              "k8s_scheduler_profile": "guaranteed-static-single-numa"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "res-spec-003",
+    "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-003",
+    "name": "TelcoHugePagesMemorySpec",
+    "description": "TMF634 Boot-Reserved Linux HugePages (2Mi / 1Gi) Specification for Zero-Copy DPDK Packet Buffers",
+    "version": "2.0",
+    "lifecycleStatus": "Active",
+    "@type": "LogicalResourceSpecification",
+    "@baseType": "ResourceSpecification",
+    "category": "TelcoDeterministicMemory",
+    "capabilityTier": "TELCO_OPTIMIZED_K8S",
+    "resourceSpecCharacteristic": [
+      {
+        "name": "hugepages_enabled",
+        "description": "Enable pre-allocated Linux HugePages on dedicated GKE node pool",
+        "valueType": "boolean",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": true
+          },
+          {
+            "isDefault": false,
+            "value": false
+          }
+        ]
+      },
+      {
+        "name": "hugepage_size",
+        "description": "HugePage granularity (2Mi for general DPDK, 1Gi for ultra-low latency UPF/vRAN)",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "1Gi"
+          },
+          {
+            "isDefault": false,
+            "value": "2Mi"
+          }
+        ]
+      },
+      {
+        "name": "hugepages_total_gb",
+        "description": "Total memory reserved for HugePages per pod/node (GiB)",
+        "valueType": "integer",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": 16
+          },
+          {
+            "isDefault": false,
+            "value": 4
+          },
+          {
+            "isDefault": false,
+            "value": 8
+          },
+          {
+            "isDefault": false,
+            "value": 32
+          }
+        ]
+      },
+      {
+        "name": "iac_binding",
+        "description": "Execution blueprint binding",
+        "valueType": "object",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": {
+              "iac_engine": "kubernetes+gke-node-config",
+              "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+              "k8s_resource_key": "hugepages-1Gi"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "res-spec-004",
+    "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-004",
+    "name": "SriovDpdkIommuAccelerationSpec",
+    "description": "TMF634 High-Throughput Kernel-Bypass Networking: SR-IOV Virtual Functions, DPDK Poll-Mode Drivers (PMD) & IOMMU/VT-d Isolation",
+    "version": "2.0",
+    "lifecycleStatus": "Active",
+    "@type": "LogicalResourceSpecification",
+    "@baseType": "ResourceSpecification",
+    "category": "TelcoPacketAcceleration",
+    "capabilityTier": "SPECIALIZED_HW_GDC_BAREMETAL",
+    "resourceSpecCharacteristic": [
+      {
+        "name": "dataplane_mode",
+        "description": "Packet acceleration mode",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "SR-IOV-DPDK"
+          },
+          {
+            "isDefault": false,
+            "value": "gVNIC-Tier1-DPDK"
+          },
+          {
+            "isDefault": false,
+            "value": "Cilium-eBPF"
+          }
+        ]
+      },
+      {
+        "name": "dpdk_enabled",
+        "description": "Enable DPDK user-space Poll Mode Driver (PMD)",
+        "valueType": "boolean",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": true
+          },
+          {
+            "isDefault": false,
+            "value": false
+          }
+        ]
+      },
+      {
+        "name": "sriov_vf_count",
+        "description": "Number of PCIe SR-IOV Virtual Functions injected per CNF pod",
+        "valueType": "integer",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": 4
+          },
+          {
+            "isDefault": false,
+            "value": 0
+          },
+          {
+            "isDefault": false,
+            "value": 2
+          },
+          {
+            "isDefault": false,
+            "value": 8
+          }
+        ]
+      },
+      {
+        "name": "iommu_vtd_enabled",
+        "description": "Require host IOMMU / Intel VT-d / AMD-Vi vfio-pci DMA protection",
+        "valueType": "boolean",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": true
+          },
+          {
+            "isDefault": false,
+            "value": false
+          }
+        ]
+      },
+      {
+        "name": "nic_pmd_driver",
+        "description": "Validated NIC PMD driver",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "net_gvnic / net_ice_vf"
+          },
+          {
+            "isDefault": false,
+            "value": "net_mlx5"
+          },
+          {
+            "isDefault": false,
+            "value": "vfio-pci"
+          }
+        ]
+      },
+      {
+        "name": "iac_binding",
+        "description": "Execution blueprint binding",
+        "valueType": "object",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": {
+              "iac_engine": "kubernetes-sriov-device-plugin",
+              "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+              "device_plugin": "intel.com/sriov_netdevice"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "res-spec-005",
+    "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-005",
+    "name": "MultusMultiNetworkCniSpec",
+    "description": "TMF634 Multus CNI & GKE Multi-Networking Specification attaching Secondary Interfaces (OAM, Signaling, Sync, User-Plane N3/N6)",
+    "version": "2.0",
+    "lifecycleStatus": "Active",
+    "@type": "LogicalResourceSpecification",
+    "@baseType": "ResourceSpecification",
+    "category": "TelcoMultiNetworking",
+    "capabilityTier": "TELCO_OPTIMIZED_K8S",
+    "resourceSpecCharacteristic": [
+      {
+        "name": "multus_enabled",
+        "description": "Enable Multus meta-CNI secondary pod network attachments",
+        "valueType": "boolean",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": true
+          },
+          {
+            "isDefault": false,
+            "value": false
+          }
+        ]
+      },
+      {
+        "name": "secondary_interfaces",
+        "description": "Attached secondary interfaces inside pod",
+        "valueType": "array",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": [
+              "net1-n3-gtpu",
+              "net2-n4-pfcp",
+              "net3-n6-sgi"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "primary_cni",
+        "description": "Primary cluster CNI for eth0 OAM plane",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "GKE-Dataplane-V2-Cilium-eBPF"
+          }
+        ]
+      },
+      {
+        "name": "iac_binding",
+        "description": "Execution blueprint binding",
+        "valueType": "object",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": {
+              "iac_engine": "terraform+k8s-nad",
+              "blueprint_path": "./blueprints/02-hybrid-vnf-cnf-multus",
+              "crd_manifest": "./blueprints/02-hybrid-vnf-cnf-multus/k8s-manifests/gke-network-attachment-definition.yaml"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "res-spec-006",
+    "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-006",
+    "name": "TelcoPtpSyncEGnssTimingSpec",
+    "description": "TMF634 Carrier Timing & Synchronization Specification: IEEE 1588v2 PTP Hardware Timestamping, SyncE & GNSS/GPS Reference",
+    "version": "2.0",
+    "lifecycleStatus": "Active",
+    "@type": "PhysicalResourceSpecification",
+    "@baseType": "ResourceSpecification",
+    "category": "TelcoTimingAndSync",
+    "capabilityTier": "SPECIALIZED_HW_GDC_BAREMETAL",
+    "resourceSpecCharacteristic": [
+      {
+        "name": "ptp_profile",
+        "description": "IEEE 1588v2 Telecom PTP Profile",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "ITU-T G.8275.1 (Full Timing Support)"
+          },
+          {
+            "isDefault": false,
+            "value": "ITU-T G.8275.2"
+          },
+          {
+            "isDefault": false,
+            "value": "None"
+          }
+        ]
+      },
+      {
+        "name": "hw_timestamping",
+        "description": "Require NIC hardware timestamping (ptp4l + phc2sys)",
+        "valueType": "boolean",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": true
+          },
+          {
+            "isDefault": false,
+            "value": false
+          }
+        ]
+      },
+      {
+        "name": "synce_enabled",
+        "description": "Require Synchronous Ethernet (ITU-T G.8262) physical frequency lock",
+        "valueType": "boolean",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": true
+          },
+          {
+            "isDefault": false,
+            "value": false
+          }
+        ]
+      },
+      {
+        "name": "gnss_gps_feed",
+        "description": "Require local Stratum-1 GNSS/GPS rooftop antenna or T-GM grandmaster",
+        "valueType": "boolean",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": true
+          },
+          {
+            "isDefault": false,
+            "value": false
+          }
+        ]
+      },
+      {
+        "name": "max_phase_error_ns",
+        "description": "Maximum allowed phase accuracy drift (nanoseconds)",
+        "valueType": "integer",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": 1500
+          },
+          {
+            "isDefault": false,
+            "value": 500
+          },
+          {
+            "isDefault": false,
+            "value": 3000
+          }
+        ]
+      },
+      {
+        "name": "iac_binding",
+        "description": "Execution blueprint binding",
+        "valueType": "object",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": {
+              "iac_engine": "k8s-ptp-operator+edge-bom",
+              "blueprint_path": "./blueprints/01-oda-canvas-multitenant",
+              "operator": "ptp.openshift.io/v1-linuxptp-daemon"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "res-spec-007",
+    "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-007",
+    "name": "TelcoFecSmartNicDpuCryptoSpec",
+    "description": "TMF634 Hardware Offload Specification: 5G L1 FEC (Intel vRAN Boost/ACC100), SmartNIC/DPU (BlueField/IPU GTP-U) & IPSec/MACsec Crypto (QAT)",
+    "version": "2.0",
+    "lifecycleStatus": "Active",
+    "@type": "PhysicalResourceSpecification",
+    "@baseType": "ResourceSpecification",
+    "category": "TelcoHardwareAcceleration",
+    "capabilityTier": "SPECIALIZED_HW_GDC_BAREMETAL",
+    "resourceSpecCharacteristic": [
+      {
+        "name": "fec_accelerator",
+        "description": "5G NR Layer-1 LDPC/Turbo FEC Accelerator",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "None"
+          },
+          {
+            "isDefault": false,
+            "value": "Intel-vRAN-Boost-4thGen-Xeon"
+          },
+          {
+            "isDefault": false,
+            "value": "Intel-ACC100-PCIe"
+          },
+          {
+            "isDefault": false,
+            "value": "Qualcomm-X100"
+          }
+        ]
+      },
+      {
+        "name": "smartnic_dpu_model",
+        "description": "SmartNIC / Infrastructure Processing Unit for GTP-U & vSwitch offload",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "Google-Titanium-IPU-Native"
+          },
+          {
+            "isDefault": false,
+            "value": "NVIDIA-BlueField-3-DPU"
+          },
+          {
+            "isDefault": false,
+            "value": "Intel-IPU-E2100"
+          },
+          {
+            "isDefault": false,
+            "value": "None"
+          }
+        ]
+      },
+      {
+        "name": "gtpu_hw_offload",
+        "description": "Hardware offload 3GPP GTP-U encap/decap flows",
+        "valueType": "boolean",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": false
+          },
+          {
+            "isDefault": false,
+            "value": true
+          }
+        ]
+      },
+      {
+        "name": "crypto_offload_engine",
+        "description": "Inline IPSec / MACsec / TLS cryptographic offload engine",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "GCP-Native-AES-GCM"
+          },
+          {
+            "isDefault": false,
+            "value": "Intel-QAT-Gen4"
+          },
+          {
+            "isDefault": false,
+            "value": "DPU-Inline-IPSec-MACsec"
+          }
+        ]
+      },
+      {
+        "name": "iac_binding",
+        "description": "Execution blueprint binding",
+        "valueType": "object",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": {
+              "iac_engine": "k8s-device-plugins",
+              "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+              "device_plugin": "intel-device-plugins-for-kubernetes (qat/sriov-fec)"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "res-spec-008",
+    "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-008",
+    "name": "TelcoNebsEdgeHardwareChassisSpec",
+    "description": "TMF634 Physical Far-Edge / Central-Office OEM Server Specification: NEBS Level 3, Short-Depth Rack (300-450mm) & -48V DC Telecom Power",
+    "version": "2.0",
+    "lifecycleStatus": "Active",
+    "@type": "PhysicalResourceSpecification",
+    "@baseType": "ResourceSpecification",
+    "category": "TelcoPhysicalEdgeInfrastructure",
+    "capabilityTier": "PHYSICAL_OEM_PARTNER_EDGE",
+    "resourceSpecCharacteristic": [
+      {
+        "name": "nebs_compliance",
+        "description": "Telcordia GR-63-CORE / GR-1089-CORE compliance level",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "NEBS-Level-3-Certified"
+          },
+          {
+            "isDefault": false,
+            "value": "Standard-DataCenter-ASHRAE-A2"
+          }
+        ]
+      },
+      {
+        "name": "chassis_depth_mm",
+        "description": "Short-depth telecom cabinet server form factor (mm)",
+        "valueType": "integer",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": 430
+          },
+          {
+            "isDefault": false,
+            "value": 300
+          },
+          {
+            "isDefault": false,
+            "value": 450
+          },
+          {
+            "isDefault": false,
+            "value": 800
+          }
+        ]
+      },
+      {
+        "name": "power_supply_type",
+        "description": "Cell-site / Central Office power input",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "-48V-DC-Redundant"
+          },
+          {
+            "isDefault": false,
+            "value": "110-240V-AC-Redundant"
+          }
+        ]
+      },
+      {
+        "name": "validated_oem_bom",
+        "description": "Certified OEM Partner Edge Server Model",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "Dell-PowerEdge-XR8000 / HPE-ProLiant-DL110-Gen11"
+          },
+          {
+            "isDefault": false,
+            "value": "Nokia-AirFrame-OpenEdge"
+          },
+          {
+            "isDefault": false,
+            "value": "Supermicro-Hyper-E"
+          }
+        ]
+      },
+      {
+        "name": "gcp_management_plane",
+        "description": "Google Cloud Edge Fleet Control Plane",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "Google-Distributed-Cloud-Connected (GDC Edge)"
+          }
+        ]
+      },
+      {
+        "name": "iac_binding",
+        "description": "Execution blueprint binding",
+        "valueType": "object",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": {
+              "iac_engine": "gdc-fleet-terraform+oem-bom",
+              "blueprint_path": "./blueprints/01-oda-canvas-multitenant/terraform",
+              "fleet_registration": "gkehub.googleapis.com"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "res-spec-009",
+    "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-009",
+    "name": "HybridDualNicVnfApplianceSpec",
+    "description": "TMF634 Dual-Homed Compute Engine VNF Appliance (nic0 OAM + nic1 Data-Plane) Service-Chained with GKE CNF Pods",
+    "version": "2.0",
+    "lifecycleStatus": "Active",
+    "@type": "LogicalResourceSpecification",
+    "@baseType": "ResourceSpecification",
+    "category": "TelcoHybridVnfCompute",
+    "capabilityTier": "STANDARD_GCP_GKE",
+    "resourceSpecCharacteristic": [
+      {
+        "name": "vnf_machine_type",
+        "description": "Compute Engine machine type supporting multiple NICs",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "n2-standard-4"
+          },
+          {
+            "isDefault": false,
+            "value": "c3-standard-8"
+          },
+          {
+            "isDefault": false,
+            "value": "n2-standard-8"
+          }
+        ]
+      },
+      {
+        "name": "nic0_plane",
+        "description": "Primary NIC0 network attachment",
+        "valueType": "string",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "telco-oam-vpc (10.10.0.0/24)"
+          }
+        ]
+      },
+      {
+        "name": "nic1_plane",
+        "description": "Secondary NIC1 user-plane network attachment",
+        "valueType": "string",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "telco-dataplane-vpc (10.20.0.0/24)"
+          }
+        ]
+      },
+      {
+        "name": "ip_forwarding_enabled",
+        "description": "Enable Linux kernel L3 packet forwarding & routing",
+        "valueType": "boolean",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": true
+          }
+        ]
+      },
+      {
+        "name": "iac_binding",
+        "description": "Execution blueprint binding",
+        "valueType": "object",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": {
+              "iac_engine": "terraform",
+              "blueprint_path": "./blueprints/02-hybrid-vnf-cnf-multus/terraform/environments/demo",
+              "module": "modules/vnf_workload"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "res-spec-010",
+    "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-010",
+    "name": "OdaCanvasMultiTenantSliceSpec",
+    "description": "TMF634 Isolated TM Forum ODA Canvas Tenant Slice: Namespace, ResourceQuota, Cilium eBPF Zero-Trust Policy, Workload Identity & Secret Manager",
+    "version": "2.0",
+    "lifecycleStatus": "Active",
+    "@type": "LogicalResourceSpecification",
+    "@baseType": "ResourceSpecification",
+    "category": "TelcoOdaPlatformSlice",
+    "capabilityTier": "STANDARD_GCP_GKE",
+    "resourceSpecCharacteristic": [
+      {
+        "name": "gke_cluster_name",
+        "description": "Host Multi-Tenant ODA Canvas Private GKE Cluster",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "oda-canvas-mt-gke"
+          }
+        ]
+      },
+      {
+        "name": "ebpf_isolation_policy",
+        "description": "Enforce Dataplane V2 Cilium eBPF cross-tenant deny policy",
+        "valueType": "boolean",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": true
+          }
+        ]
+      },
+      {
+        "name": "oda_components",
+        "description": "Pre-installed TM Forum ODA Components in tenant slice",
+        "valueType": "array",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": [
+              "TMFC001-ProductCatalog",
+              "TMFC006-ServiceCatalog",
+              "TMFC007-ResourceCatalog"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "storage_class",
+        "description": "Persistent volume storage tier",
+        "valueType": "string",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": "premium-rwo"
+          },
+          {
+            "isDefault": false,
+            "value": "standard-rwo"
+          }
+        ]
+      },
+      {
+        "name": "disk_size_gb",
+        "description": "Persistent volume size (GiB)",
+        "valueType": "integer",
+        "configurable": true,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": 50
+          },
+          {
+            "isDefault": false,
+            "value": 20
+          },
+          {
+            "isDefault": false,
+            "value": 100
+          }
+        ]
+      },
+      {
+        "name": "iac_binding",
+        "description": "Execution blueprint binding",
+        "valueType": "object",
+        "configurable": false,
+        "minCardinality": 1,
+        "maxCardinality": 1,
+        "resourceSpecCharacteristicValue": [
+          {
+            "isDefault": true,
+            "value": {
+              "iac_engine": "terraform+kustomize+helm",
+              "blueprint_path": "./blueprints/01-oda-canvas-multitenant",
+              "tenant_template": "./blueprints/01-oda-canvas-multitenant/tenants/tenant-template"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

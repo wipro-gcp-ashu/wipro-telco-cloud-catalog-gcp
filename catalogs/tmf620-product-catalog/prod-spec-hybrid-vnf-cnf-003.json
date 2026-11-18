@@ -1,0 +1,18 @@
+{
+  "id": "prod-spec-hybrid-vnf-cnf-003",
+  "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-hybrid-vnf-cnf-003",
+  "name": "Hybrid VNF + CNF Multi-Network Service Chain Specification",
+  "description": "Unified Brownfield-to-Cloud-Native Orchestration chaining Dual-NIC Compute Engine VNFs with Multus Multi-Interface GKE CNFs",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "ProductSpecification",
+  "serviceSpecification": [
+    {
+      "id": "cfs-003-hybrid-vnf-cnf-chain",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-003-hybrid-vnf-cnf-chain",
+      "name": "Hybrid_VNF_CNF_ServiceChain_CFS",
+      "version": "2.0",
+      "@referredType": "CustomerFacingServiceSpecification"
+    }
+  ]
+}

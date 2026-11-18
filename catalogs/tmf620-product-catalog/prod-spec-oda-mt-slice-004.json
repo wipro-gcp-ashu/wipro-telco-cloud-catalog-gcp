@@ -1,0 +1,18 @@
+{
+  "id": "prod-spec-oda-mt-slice-004",
+  "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-oda-mt-slice-004",
+  "name": "Multi-Tenant TM Forum ODA Canvas Partner Slice Specification",
+  "description": "Zero-Touch Isolated MVNO / Enterprise B2B Tenant Slice on Shared Private GKE ODA Canvas with Cilium eBPF, Cloud Armor WAF & Workload Identity",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "ProductSpecification",
+  "serviceSpecification": [
+    {
+      "id": "cfs-004-oda-multitenant-slice",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-004-oda-multitenant-slice",
+      "name": "ODA_Canvas_MultiTenant_Partner_CFS",
+      "version": "2.0",
+      "@referredType": "CustomerFacingServiceSpecification"
+    }
+  ]
+}

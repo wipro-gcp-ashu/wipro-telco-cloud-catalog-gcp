@@ -1,0 +1,18 @@
+{
+  "id": "prod-spec-telco-far-edge-006",
+  "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-telco-far-edge-006",
+  "name": "Telco Far-Edge & NEBS Level 3 MEC Platform Specification",
+  "description": "Central-Office & Cell-Site Edge Infrastructure Blueprint on NEBS Level 3 Short-Depth -48V DC OEM Servers managed via Google Distributed Cloud",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "ProductSpecification",
+  "serviceSpecification": [
+    {
+      "id": "cfs-006-telco-mec-far-edge",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-006-telco-mec-far-edge",
+      "name": "Telco_FarEdge_MEC_Platform_CFS",
+      "version": "2.0",
+      "@referredType": "CustomerFacingServiceSpecification"
+    }
+  ]
+}

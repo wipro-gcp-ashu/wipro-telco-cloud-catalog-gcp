@@ -1,0 +1,94 @@
+{
+  "id": "res-spec-003",
+  "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-003",
+  "name": "TelcoHugePagesMemorySpec",
+  "description": "TMF634 Boot-Reserved Linux HugePages (2Mi / 1Gi) Specification for Zero-Copy DPDK Packet Buffers",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "LogicalResourceSpecification",
+  "@baseType": "ResourceSpecification",
+  "category": "TelcoDeterministicMemory",
+  "capabilityTier": "TELCO_OPTIMIZED_K8S",
+  "resourceSpecCharacteristic": [
+    {
+      "name": "hugepages_enabled",
+      "description": "Enable pre-allocated Linux HugePages on dedicated GKE node pool",
+      "valueType": "boolean",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": true
+        },
+        {
+          "isDefault": false,
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "hugepage_size",
+      "description": "HugePage granularity (2Mi for general DPDK, 1Gi for ultra-low latency UPF/vRAN)",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "1Gi"
+        },
+        {
+          "isDefault": false,
+          "value": "2Mi"
+        }
+      ]
+    },
+    {
+      "name": "hugepages_total_gb",
+      "description": "Total memory reserved for HugePages per pod/node (GiB)",
+      "valueType": "integer",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": 16
+        },
+        {
+          "isDefault": false,
+          "value": 4
+        },
+        {
+          "isDefault": false,
+          "value": 8
+        },
+        {
+          "isDefault": false,
+          "value": 32
+        }
+      ]
+    },
+    {
+      "name": "iac_binding",
+      "description": "Execution blueprint binding",
+      "valueType": "object",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": {
+            "iac_engine": "kubernetes+gke-node-config",
+            "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+            "k8s_resource_key": "hugepages-1Gi"
+          }
+        }
+      ]
+    }
+  ]
+}

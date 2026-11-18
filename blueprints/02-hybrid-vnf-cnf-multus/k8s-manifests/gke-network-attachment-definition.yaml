@@ -1,0 +1,9 @@
+apiVersion: networking.gke.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: dataplane-net-attach
+  namespace: default
+spec:
+  network: telco-dataplane-vpc
+  subnetwork: telco-dataplane-subnet
+  type: Device

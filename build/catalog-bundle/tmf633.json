@@ -1,0 +1,997 @@
+{
+  "customerFacingServices": [
+    {
+      "id": "cfs-001-5g-upf-connectivity",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-001-5g-upf-connectivity",
+      "name": "5G_UPF_HighPerformance_Connectivity_CFS",
+      "description": "Flagship Worked Example: Customer-Facing 5G User Plane Function (UPF) Service translating SLA tiers (Throughput, Latency, HA, Placement) into the TELCO-UPF RFS Hardware & Network Recipe",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "isBundle": false,
+      "@type": "CustomerFacingServiceSpecification",
+      "@baseType": "ServiceSpecification",
+      "serviceSpecCharacteristic": [
+        {
+          "name": "throughput_tier",
+          "description": "Guaranteed aggregate 5G user-plane throughput",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "10Gbps"
+            },
+            {
+              "isDefault": false,
+              "value": "1Gbps"
+            },
+            {
+              "isDefault": false,
+              "value": "40Gbps"
+            },
+            {
+              "isDefault": false,
+              "value": "100Gbps"
+            }
+          ]
+        },
+        {
+          "name": "latency_tier",
+          "description": "Packet processing latency SLA",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "Ultra-Low"
+            },
+            {
+              "isDefault": false,
+              "value": "Standard"
+            }
+          ]
+        },
+        {
+          "name": "redundancy",
+          "description": "High availability topology",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "active-standby"
+            },
+            {
+              "isDefault": false,
+              "value": "single-node"
+            },
+            {
+              "isDefault": false,
+              "value": "active-active-multizone"
+            }
+          ]
+        },
+        {
+          "name": "deployment_placement",
+          "description": "Cloud region vs. Edge placement",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "GCP-Regional-Cloud"
+            },
+            {
+              "isDefault": false,
+              "value": "GDC-Edge-BareMetal"
+            }
+          ]
+        },
+        {
+          "name": "decomposition_policy_rules",
+          "description": "TMFC003 Declarative CFS-to-RFS Hardware Recipe Rules",
+          "valueType": "array",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": [
+                {
+                  "ruleId": "RULE-UPF-LATENCY-01",
+                  "condition": "cfs.latency_tier == 'Ultra-Low'",
+                  "actions": [
+                    "rfs('rfs-profile-telco-upf').compute_acceleration_profile = 'ULTRA_LOW_LATENCY_NUMA_DPDK_SRIOV'",
+                    "resource('res-spec-002').numa_nodes = 2",
+                    "resource('res-spec-002').cpu_manager_policy = 'static'",
+                    "resource('res-spec-003').hugepages_enabled = true",
+                    "resource('res-spec-004').dpdk_enabled = true",
+                    "resource('res-spec-004').dataplane_mode = 'SR-IOV-DPDK'",
+                    "resource('res-spec-005').multus_enabled = true"
+                  ]
+                },
+                {
+                  "ruleId": "RULE-UPF-THRU-02",
+                  "condition": "cfs.throughput_tier in ['10Gbps', '40Gbps', '100Gbps']",
+                  "actions": [
+                    "resource('res-spec-002').cpu_count = 16",
+                    "resource('res-spec-002').ram_gb = 64",
+                    "resource('res-spec-007').smartnic_dpu_model = 'Google-Titanium-IPU-Native'"
+                  ]
+                },
+                {
+                  "ruleId": "RULE-UPF-HA-03",
+                  "condition": "cfs.redundancy == 'active-standby'",
+                  "actions": [
+                    "resource('res-spec-002').worker_instances = 2"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "serviceSpecRelationship": [
+        {
+          "id": "rfs-profile-telco-upf",
+          "name": "TELCO_5G_UPF_HighPerf_Infra_Profile_RFS",
+          "relationshipType": "decomposesInto",
+          "role": "primaryResourceFacingProfile",
+          "@referredType": "ResourceFacingServiceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "cfs-002-5g-core-control-plane",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-002-5g-core-control-plane",
+      "name": "5G_Core_ControlPlane_Cloud_CFS",
+      "description": "Customer-Facing 5G Standalone (SA) Control-Plane Hosting Service (AMF, SMF, NRF, UDM, AUSF, PCF, NSSF) backed by TELCO-GENERAL-CNF",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "isBundle": false,
+      "@type": "CustomerFacingServiceSpecification",
+      "@baseType": "ServiceSpecification",
+      "serviceSpecCharacteristic": [
+        {
+          "name": "subscriber_capacity_tier",
+          "description": "Target 5G SA subscriber scale",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "1M-Subscribers"
+            },
+            {
+              "isDefault": false,
+              "value": "100K-Subscribers"
+            },
+            {
+              "isDefault": false,
+              "value": "10M-Subscribers"
+            }
+          ]
+        },
+        {
+          "name": "hosted_network_functions",
+          "description": "Selected 3GPP 5G SBA Control-Plane CNFs",
+          "valueType": "array",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": [
+                "AMF",
+                "SMF",
+                "NRF",
+                "UDM",
+                "AUSF",
+                "PCF",
+                "NSSF"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "redundancy",
+          "description": "Control-plane availability SLA",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "active-active-multizone"
+            },
+            {
+              "isDefault": false,
+              "value": "active-standby"
+            }
+          ]
+        }
+      ],
+      "serviceSpecRelationship": [
+        {
+          "id": "rfs-profile-telco-general-cnf",
+          "name": "TELCO_GENERAL_CNF_Infra_Profile_RFS",
+          "relationshipType": "decomposesInto",
+          "role": "primaryResourceFacingProfile",
+          "@referredType": "ResourceFacingServiceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "cfs-003-hybrid-vnf-cnf-chain",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-003-hybrid-vnf-cnf-chain",
+      "name": "Hybrid_VNF_CNF_ServiceChain_CFS",
+      "description": "Customer-Facing Hybrid Telecom Service Chain bridging Legacy Dual-NIC GCE VNFs with Cloud-Native Multus GKE CNFs across OAM & Data-Plane VPCs",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "isBundle": false,
+      "@type": "CustomerFacingServiceSpecification",
+      "@baseType": "ServiceSpecification",
+      "serviceSpecCharacteristic": [
+        {
+          "name": "throughput_tier",
+          "description": "East-West VNF-to-CNF user-plane bandwidth",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "10Gbps"
+            },
+            {
+              "isDefault": false,
+              "value": "1Gbps"
+            },
+            {
+              "isDefault": false,
+              "value": "40Gbps"
+            }
+          ]
+        },
+        {
+          "name": "latency_tier",
+          "description": "L3 wire-traversal latency tier",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "Ultra-Low"
+            },
+            {
+              "isDefault": false,
+              "value": "Standard"
+            }
+          ]
+        },
+        {
+          "name": "redundancy",
+          "description": "VNF/CNF HA mode",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "active-standby"
+            },
+            {
+              "isDefault": false,
+              "value": "single-node"
+            }
+          ]
+        }
+      ],
+      "serviceSpecRelationship": [
+        {
+          "id": "rfs-profile-telco-hp-cnf",
+          "name": "TELCO_HP_CNF_Infra_Profile_RFS",
+          "relationshipType": "decomposesInto",
+          "role": "primaryResourceFacingProfile",
+          "@referredType": "ResourceFacingServiceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "cfs-004-oda-multitenant-slice",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-004-oda-multitenant-slice",
+      "name": "ODA_Canvas_MultiTenant_Partner_CFS",
+      "description": "Customer-Facing Multi-Tenant TM Forum ODA Canvas Slice for MVNOs, OpCos & Enterprise B2B Partners with Zero-Trust Cilium eBPF Isolation",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "isBundle": false,
+      "@type": "CustomerFacingServiceSpecification",
+      "@baseType": "ServiceSpecification",
+      "serviceSpecCharacteristic": [
+        {
+          "name": "partner_tier",
+          "description": "MVNO / B2B Tenant Sizing Tier",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "Enterprise-MVNO-Gold"
+            },
+            {
+              "isDefault": false,
+              "value": "B2B-Partner-Standard"
+            },
+            {
+              "isDefault": false,
+              "value": "OpCo-Platinum"
+            }
+          ]
+        },
+        {
+          "name": "oda_components_bundle",
+          "description": "Subscribed ODA Components",
+          "valueType": "array",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": [
+                "TMFC001",
+                "TMFC006",
+                "TMFC007"
+              ]
+            }
+          ]
+        }
+      ],
+      "serviceSpecRelationship": [
+        {
+          "id": "rfs-profile-telco-general-cnf",
+          "name": "TELCO_GENERAL_CNF_Infra_Profile_RFS",
+          "relationshipType": "decomposesInto",
+          "role": "primaryResourceFacingProfile",
+          "@referredType": "ResourceFacingServiceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "cfs-005-vran-oran-radio",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-005-vran-oran-radio",
+      "name": "vRAN_ORAN_DistributedUnit_CFS",
+      "description": "Customer-Facing O-RAN / vRAN Distributed & Central Unit (O-DU / O-CU) Cell-Site Infrastructure with PTP/SyncE Timing & FEC Layer-1 Acceleration",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "isBundle": false,
+      "@type": "CustomerFacingServiceSpecification",
+      "@baseType": "ServiceSpecification",
+      "serviceSpecCharacteristic": [
+        {
+          "name": "oran_split_option",
+          "description": "3GPP / O-RAN Functional Split",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "O-RAN-Split-7.2x"
+            },
+            {
+              "isDefault": false,
+              "value": "3GPP-Split-2-CU"
+            }
+          ]
+        },
+        {
+          "name": "sector_carrier_capacity",
+          "description": "Radio sectors & MIMO configuration",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "3-Sector-64T64R-100MHz"
+            },
+            {
+              "isDefault": false,
+              "value": "3-Sector-4T4R-20MHz"
+            }
+          ]
+        },
+        {
+          "name": "latency_tier",
+          "description": "Fronthaul latency budget (<100 µs one-way)",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "Ultra-Low"
+            }
+          ]
+        }
+      ],
+      "serviceSpecRelationship": [
+        {
+          "id": "rfs-profile-telco-vran",
+          "name": "TELCO_vRAN_ORAN_RealTime_Infra_Profile_RFS",
+          "relationshipType": "decomposesInto",
+          "role": "primaryResourceFacingProfile",
+          "@referredType": "ResourceFacingServiceSpecification"
+        },
+        {
+          "id": "rfs-profile-telco-edge",
+          "name": "TELCO_FarEdge_NEBS_Hardware_Profile_RFS",
+          "relationshipType": "decomposesInto",
+          "role": "physicalSiteProfile",
+          "@referredType": "ResourceFacingServiceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "cfs-006-telco-mec-far-edge",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-006-telco-mec-far-edge",
+      "name": "Telco_FarEdge_MEC_Platform_CFS",
+      "description": "Customer-Facing NEBS Level 3 Telecom Central-Office / Cell-Site Far-Edge Compute Platform (-48V DC, Short-Depth Chassis, 100GbE Breakout)",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "isBundle": false,
+      "@type": "CustomerFacingServiceSpecification",
+      "@baseType": "ServiceSpecification",
+      "serviceSpecCharacteristic": [
+        {
+          "name": "site_type",
+          "description": "Customer / Operator Edge Facility Type",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "Telco-Central-Office-NEBS3"
+            },
+            {
+              "isDefault": false,
+              "value": "Cell-Site-Outdoor-Cabinet"
+            },
+            {
+              "isDefault": false,
+              "value": "Enterprise-Factory-Premises"
+            }
+          ]
+        },
+        {
+          "name": "throughput_tier",
+          "description": "Local breakout bandwidth",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "100Gbps"
+            },
+            {
+              "isDefault": false,
+              "value": "25Gbps"
+            },
+            {
+              "isDefault": false,
+              "value": "400Gbps"
+            }
+          ]
+        }
+      ],
+      "serviceSpecRelationship": [
+        {
+          "id": "rfs-profile-telco-edge",
+          "name": "TELCO_FarEdge_NEBS_Hardware_Profile_RFS",
+          "relationshipType": "decomposesInto",
+          "role": "primaryResourceFacingProfile",
+          "@referredType": "ResourceFacingServiceSpecification"
+        },
+        {
+          "id": "rfs-profile-telco-hp-cnf",
+          "name": "TELCO_HP_CNF_Infra_Profile_RFS",
+          "relationshipType": "decomposesInto",
+          "role": "packetAccelerationProfile",
+          "@referredType": "ResourceFacingServiceSpecification"
+        }
+      ]
+    }
+  ],
+  "resourceFacingProfiles": [
+    {
+      "id": "rfs-profile-telco-edge",
+      "profileCode": "TELCO-EDGE",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/rfs-profile-telco-edge",
+      "name": "TELCO_FarEdge_NEBS_Hardware_Profile_RFS",
+      "description": "Standardized RFS Recipe for Far-Edge Cell-Site & Central-Office Deployments: NEBS Level 3 Enclosure, Short-Depth Server (300-450mm), -48V DC Power & 25/100/200/400 GbE Optical Uplinks",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "isBundle": false,
+      "@type": "ResourceFacingServiceSpecification",
+      "@baseType": "ServiceSpecification",
+      "deploymentTarget": "Operator Cell-Site / Central Office (OEM NEBS Server + GDC Connected)",
+      "serviceSpecCharacteristic": [
+        {
+          "name": "profile_code",
+          "description": "Standardized Wipro Telco Infrastructure Profile Code",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "TELCO-EDGE"
+            }
+          ]
+        },
+        {
+          "name": "orchestration_blueprint",
+          "description": "Target Fleet Registration & Edge Blueprint",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "./blueprints/01-oda-canvas-multitenant"
+            }
+          ]
+        },
+        {
+          "name": "site_environment_tier",
+          "description": "Physical Telco Site Tier",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "NEBS-Level-3-Central-Office"
+            },
+            {
+              "isDefault": false,
+              "value": "Far-Edge-Cell-Site-Cabinet"
+            }
+          ]
+        }
+      ],
+      "resourceSpecification": [
+        {
+          "id": "res-spec-001",
+          "name": "Telco3gppMultiPlaneVpcSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-008",
+          "name": "TelcoNebsEdgeHardwareChassisSpec",
+          "version": "2.0",
+          "@referredType": "PhysicalResourceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "rfs-profile-telco-general-cnf",
+      "profileCode": "TELCO-GENERAL-CNF",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/rfs-profile-telco-general-cnf",
+      "name": "TELCO_GENERAL_CNF_Infra_Profile_RFS",
+      "description": "Standardized RFS Recipe for 5G Core Control-Plane CNFs (AMF, SMF, NRF, UDM, AUSF, PCF, NSSF) & Multi-Tenant ODA Components on Managed Private GKE",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "isBundle": false,
+      "@type": "ResourceFacingServiceSpecification",
+      "@baseType": "ServiceSpecification",
+      "deploymentTarget": "Native GCP Region (Private GKE Standard + Dataplane V2)",
+      "serviceSpecCharacteristic": [
+        {
+          "name": "profile_code",
+          "description": "Standardized Wipro Telco Infrastructure Profile Code",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "TELCO-GENERAL-CNF"
+            }
+          ]
+        },
+        {
+          "name": "orchestration_blueprint",
+          "description": "Target Terraform/Helm blueprint path",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "./blueprints/01-oda-canvas-multitenant"
+            }
+          ]
+        },
+        {
+          "name": "compute_acceleration_profile",
+          "description": "Compute profile mode",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "STANDARD_CLOUD_NATIVE_EBPF"
+            }
+          ]
+        }
+      ],
+      "resourceSpecification": [
+        {
+          "id": "res-spec-001",
+          "name": "Telco3gppMultiPlaneVpcSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-010",
+          "name": "OdaCanvasMultiTenantSliceSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "rfs-profile-telco-hp-cnf",
+      "profileCode": "TELCO-HP-CNF",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/rfs-profile-telco-hp-cnf",
+      "name": "TELCO_HP_CNF_Infra_Profile_RFS",
+      "description": "Standardized RFS Recipe for Packet-Processing CNFs & Hybrid VNF/CNF Chains: Multus CNI, HugePages (2Mi/1Gi), Static CPU Pinning, Single-NUMA, SR-IOV & DPDK",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "isBundle": false,
+      "@type": "ResourceFacingServiceSpecification",
+      "@baseType": "ServiceSpecification",
+      "deploymentTarget": "Telco-Optimized GKE Node Pool (C3/C4 Tier-1) or GDC Bare Metal",
+      "serviceSpecCharacteristic": [
+        {
+          "name": "profile_code",
+          "description": "Standardized Wipro Telco Infrastructure Profile Code",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "TELCO-HP-CNF"
+            }
+          ]
+        },
+        {
+          "name": "orchestration_blueprint",
+          "description": "Target Terraform/K8s blueprint path",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "./blueprints/02-hybrid-vnf-cnf-multus"
+            }
+          ]
+        },
+        {
+          "name": "compute_acceleration_profile",
+          "description": "Compute profile mode",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "HIGH_PERF_MULTUS_HUGEPAGES_DPDK"
+            }
+          ]
+        }
+      ],
+      "resourceSpecification": [
+        {
+          "id": "res-spec-001",
+          "name": "Telco3gppMultiPlaneVpcSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-002",
+          "name": "TelcoDeterministicComputeNumaCpuSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-003",
+          "name": "TelcoHugePagesMemorySpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-004",
+          "name": "SriovDpdkIommuAccelerationSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-005",
+          "name": "MultusMultiNetworkCniSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-009",
+          "name": "HybridDualNicVnfApplianceSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "rfs-profile-telco-upf",
+      "profileCode": "TELCO-UPF",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/rfs-profile-telco-upf",
+      "name": "TELCO_5G_UPF_HighPerf_Infra_Profile_RFS",
+      "description": "Flagship RFS Recipe for Carrier-Grade 5G User Plane Function (UPF): N3/N4/N6(SGi) Multi-Network, SR-IOV, DPDK, HugePages, Static CPU/NUMA, 100GbE Tier-1 NIC & Optional SmartNIC/DPU Offload",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "isBundle": false,
+      "@type": "ResourceFacingServiceSpecification",
+      "@baseType": "ServiceSpecification",
+      "deploymentTarget": "GCP Regional C3 Tier-1 GKE Pool or GDC Edge Bare Metal",
+      "serviceSpecCharacteristic": [
+        {
+          "name": "profile_code",
+          "description": "Standardized Wipro Telco Infrastructure Profile Code",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "TELCO-UPF"
+            }
+          ]
+        },
+        {
+          "name": "orchestration_blueprint",
+          "description": "Target Terraform/GKE blueprint path",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "./blueprints/03-5g-upf-network-slice/terraform"
+            }
+          ]
+        },
+        {
+          "name": "compute_acceleration_profile",
+          "description": "Packet acceleration profile",
+          "valueType": "string",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "ULTRA_LOW_LATENCY_NUMA_DPDK_SRIOV"
+            },
+            {
+              "isDefault": false,
+              "value": "STANDARD_EBPF"
+            }
+          ]
+        },
+        {
+          "name": "subnet_topology",
+          "description": "3GPP 5G UPF Interface Planes",
+          "valueType": "object",
+          "configurable": true,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": {
+                "vpc_count": 1,
+                "subnets": [
+                  "SGi/N6-External-Data",
+                  "N3-RAN-GTP-U",
+                  "N4-SMF-PFCP"
+                ],
+                "worker_instances": 2
+              }
+            }
+          ]
+        }
+      ],
+      "resourceSpecification": [
+        {
+          "id": "res-spec-001",
+          "name": "Telco3gppMultiPlaneVpcSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-002",
+          "name": "TelcoDeterministicComputeNumaCpuSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-003",
+          "name": "TelcoHugePagesMemorySpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-004",
+          "name": "SriovDpdkIommuAccelerationSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-005",
+          "name": "MultusMultiNetworkCniSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-007",
+          "name": "TelcoFecSmartNicDpuCryptoSpec",
+          "version": "2.0",
+          "@referredType": "PhysicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-010",
+          "name": "OdaCanvasMultiTenantSliceSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        }
+      ]
+    },
+    {
+      "id": "rfs-profile-telco-vran",
+      "profileCode": "TELCO-vRAN",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/rfs-profile-telco-vran",
+      "name": "TELCO_vRAN_ORAN_RealTime_Infra_Profile_RFS",
+      "description": "Standardized RFS Recipe for 5G vRAN / O-RAN Distributed Unit (O-DU): IEEE 1588v2 PTP Hardware Timestamping, SyncE, GNSS, Intel vRAN Boost / ACC100 FEC, Locked BIOS C-State & Real-Time CPU Pinning",
+      "version": "2.0",
+      "lifecycleStatus": "Active",
+      "isBundle": false,
+      "@type": "ResourceFacingServiceSpecification",
+      "@baseType": "ServiceSpecification",
+      "deploymentTarget": "Google Distributed Cloud (GDC) Bare Metal / Certified OEM vRAN Server",
+      "serviceSpecCharacteristic": [
+        {
+          "name": "profile_code",
+          "description": "Standardized Wipro Telco Infrastructure Profile Code",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "TELCO-vRAN"
+            }
+          ]
+        },
+        {
+          "name": "orchestration_blueprint",
+          "description": "Target Edge Fleet / Terraform blueprint path",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "./blueprints/01-oda-canvas-multitenant"
+            }
+          ]
+        },
+        {
+          "name": "compute_acceleration_profile",
+          "description": "Real-Time L1 PHY Acceleration Profile",
+          "valueType": "string",
+          "configurable": false,
+          "minCardinality": 1,
+          "maxCardinality": 1,
+          "serviceSpecCharacteristicValue": [
+            {
+              "isDefault": true,
+              "value": "REALTIME_PTP_SYNCE_FEC_ACC100"
+            }
+          ]
+        }
+      ],
+      "resourceSpecification": [
+        {
+          "id": "res-spec-002",
+          "name": "TelcoDeterministicComputeNumaCpuSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-003",
+          "name": "TelcoHugePagesMemorySpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-004",
+          "name": "SriovDpdkIommuAccelerationSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-005",
+          "name": "MultusMultiNetworkCniSpec",
+          "version": "2.0",
+          "@referredType": "LogicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-006",
+          "name": "TelcoPtpSyncEGnssTimingSpec",
+          "version": "2.0",
+          "@referredType": "PhysicalResourceSpecification"
+        },
+        {
+          "id": "res-spec-007",
+          "name": "TelcoFecSmartNicDpuCryptoSpec",
+          "version": "2.0",
+          "@referredType": "PhysicalResourceSpecification"
+        }
+      ]
+    }
+  ]
+}

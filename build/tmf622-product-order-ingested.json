@@ -1,0 +1,53 @@
+{
+  "externalId": "ORD-2026-TENANT-DELTA",
+  "priority": "1",
+  "description": "Flagship Worked Example: High-Performance 10Gbps Ultra-Low Latency 5G UPF Slice for Delta Manufacturing Corp",
+  "@type": "ProductOrder",
+  "relatedParty": [
+    {
+      "id": "ORG-DELTA",
+      "name": "Delta Manufacturing Corp",
+      "role": "Customer",
+      "@referredType": "Organization"
+    }
+  ],
+  "productOrderItem": [
+    {
+      "id": "100",
+      "action": "add",
+      "quantity": 1,
+      "productOffering": {
+        "id": "prod-offer-5g-upf-hp-001",
+        "name": "High-Performance 5G UPF Cloud Infrastructure Slice"
+      },
+      "product": {
+        "productCharacteristic": [
+          {
+            "name": "tenant_id",
+            "value": "tenant-delta"
+          },
+          {
+            "name": "region",
+            "value": "us-central1"
+          },
+          {
+            "name": "throughput_tier",
+            "value": "10Gbps"
+          },
+          {
+            "name": "latency_tier",
+            "value": "Ultra-Low"
+          },
+          {
+            "name": "redundancy",
+            "value": "active-standby"
+          },
+          {
+            "name": "deployment_placement",
+            "value": "GCP-Regional-Cloud"
+          }
+        ]
+      }
+    }
+  ]
+}

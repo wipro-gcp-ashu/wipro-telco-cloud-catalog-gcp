@@ -1,0 +1,75 @@
+{
+  "id": "rfs-profile-telco-edge",
+  "profileCode": "TELCO-EDGE",
+  "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/rfs-profile-telco-edge",
+  "name": "TELCO_FarEdge_NEBS_Hardware_Profile_RFS",
+  "description": "Standardized RFS Recipe for Far-Edge Cell-Site & Central-Office Deployments: NEBS Level 3 Enclosure, Short-Depth Server (300-450mm), -48V DC Power & 25/100/200/400 GbE Optical Uplinks",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "isBundle": false,
+  "@type": "ResourceFacingServiceSpecification",
+  "@baseType": "ServiceSpecification",
+  "deploymentTarget": "Operator Cell-Site / Central Office (OEM NEBS Server + GDC Connected)",
+  "serviceSpecCharacteristic": [
+    {
+      "name": "profile_code",
+      "description": "Standardized Wipro Telco Infrastructure Profile Code",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "TELCO-EDGE"
+        }
+      ]
+    },
+    {
+      "name": "orchestration_blueprint",
+      "description": "Target Fleet Registration & Edge Blueprint",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "./blueprints/01-oda-canvas-multitenant"
+        }
+      ]
+    },
+    {
+      "name": "site_environment_tier",
+      "description": "Physical Telco Site Tier",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "NEBS-Level-3-Central-Office"
+        },
+        {
+          "isDefault": false,
+          "value": "Far-Edge-Cell-Site-Cabinet"
+        }
+      ]
+    }
+  ],
+  "resourceSpecification": [
+    {
+      "id": "res-spec-001",
+      "name": "Telco3gppMultiPlaneVpcSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-008",
+      "name": "TelcoNebsEdgeHardwareChassisSpec",
+      "version": "2.0",
+      "@referredType": "PhysicalResourceSpecification"
+    }
+  ]
+}

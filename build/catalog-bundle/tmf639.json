@@ -1,0 +1,84 @@
+{
+  "synchronizedAt": "2026-11-17T13:30:45.473Z",
+  "healthCheckStatus": "PASS",
+  "resources": [
+    {
+      "id": "res-inv-vpc-tenant-delta",
+      "href": "/tmf-api/resourceInventoryManagement/v4/resource/res-inv-vpc-tenant-delta",
+      "name": "vpc-upf-tenant-delta",
+      "resourceStatus": "available",
+      "operationalState": "enable",
+      "usageState": "active",
+      "@type": "LogicalResource",
+      "resourceSpecification": {
+        "id": "res-spec-001",
+        "name": "Telco3gppMultiPlaneVpcSpec"
+      },
+      "resourceCharacteristic": [
+        {
+          "name": "gcp_project_id",
+          "value": "gcp-oda-canvas-poc"
+        },
+        {
+          "name": "vpc_self_link",
+          "value": "projects/gcp-oda-canvas-poc/global/networks/vpc-upf-tenant-delta"
+        },
+        {
+          "name": "sgi_subnet_cidr",
+          "value": "10.90.1.0/24"
+        },
+        {
+          "name": "n3_subnet_cidr",
+          "value": "10.90.2.0/24"
+        },
+        {
+          "name": "n4_subnet_cidr",
+          "value": "10.90.3.0/24"
+        }
+      ]
+    },
+    {
+      "id": "res-inv-compute-tenant-delta",
+      "href": "/tmf-api/resourceInventoryManagement/v4/resource/res-inv-compute-tenant-delta",
+      "name": "worker-pool-upf-tenant-delta",
+      "resourceStatus": "available",
+      "operationalState": "enable",
+      "usageState": "active",
+      "@type": "LogicalResource",
+      "resourceSpecification": {
+        "id": "res-spec-002",
+        "name": "TelcoDeterministicComputeNumaCpuSpec"
+      },
+      "resourceCharacteristic": [
+        {
+          "name": "gke_cluster_uri",
+          "value": "projects/gcp-oda-canvas-poc/locations/us-central1/clusters/oda-canvas-mt-gke"
+        },
+        {
+          "name": "k8s_namespace",
+          "value": "upf-tenant-delta"
+        },
+        {
+          "name": "cpu_count",
+          "value": 16
+        },
+        {
+          "name": "ram_gb",
+          "value": 64
+        },
+        {
+          "name": "numa_nodes",
+          "value": 2
+        },
+        {
+          "name": "dpdk_enabled",
+          "value": true
+        },
+        {
+          "name": "dataplane_mode",
+          "value": "SR-IOV"
+        }
+      ]
+    }
+  ]
+}

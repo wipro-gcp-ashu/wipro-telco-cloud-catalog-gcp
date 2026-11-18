@@ -1,0 +1,73 @@
+{
+  "id": "cfs-006-telco-mec-far-edge",
+  "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-006-telco-mec-far-edge",
+  "name": "Telco_FarEdge_MEC_Platform_CFS",
+  "description": "Customer-Facing NEBS Level 3 Telecom Central-Office / Cell-Site Far-Edge Compute Platform (-48V DC, Short-Depth Chassis, 100GbE Breakout)",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "isBundle": false,
+  "@type": "CustomerFacingServiceSpecification",
+  "@baseType": "ServiceSpecification",
+  "serviceSpecCharacteristic": [
+    {
+      "name": "site_type",
+      "description": "Customer / Operator Edge Facility Type",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "Telco-Central-Office-NEBS3"
+        },
+        {
+          "isDefault": false,
+          "value": "Cell-Site-Outdoor-Cabinet"
+        },
+        {
+          "isDefault": false,
+          "value": "Enterprise-Factory-Premises"
+        }
+      ]
+    },
+    {
+      "name": "throughput_tier",
+      "description": "Local breakout bandwidth",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "100Gbps"
+        },
+        {
+          "isDefault": false,
+          "value": "25Gbps"
+        },
+        {
+          "isDefault": false,
+          "value": "400Gbps"
+        }
+      ]
+    }
+  ],
+  "serviceSpecRelationship": [
+    {
+      "id": "rfs-profile-telco-edge",
+      "name": "TELCO_FarEdge_NEBS_Hardware_Profile_RFS",
+      "relationshipType": "decomposesInto",
+      "role": "primaryResourceFacingProfile",
+      "@referredType": "ResourceFacingServiceSpecification"
+    },
+    {
+      "id": "rfs-profile-telco-hp-cnf",
+      "name": "TELCO_HP_CNF_Infra_Profile_RFS",
+      "relationshipType": "decomposesInto",
+      "role": "packetAccelerationProfile",
+      "@referredType": "ResourceFacingServiceSpecification"
+    }
+  ]
+}

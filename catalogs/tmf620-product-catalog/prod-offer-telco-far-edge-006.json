@@ -1,0 +1,40 @@
+{
+  "id": "prod-offer-telco-far-edge-006",
+  "href": "/tmf-api/productCatalogManagement/v4/productOffering/prod-offer-telco-far-edge-006",
+  "name": "Telco Far-Edge & NEBS Level 3 MEC Platform",
+  "description": "Central-Office & Cell-Site Edge Infrastructure Blueprint on NEBS Level 3 Short-Depth -48V DC OEM Servers managed via Google Distributed Cloud",
+  "lifecycleStatus": "Active",
+  "version": "2.0",
+  "isBundle": false,
+  "isSellable": true,
+  "@type": "ProductOffering",
+  "productSpecification": {
+    "id": "prod-spec-telco-far-edge-006",
+    "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-telco-far-edge-006",
+    "name": "Telco Far-Edge & NEBS Level 3 MEC Platform Specification",
+    "@referredType": "ProductSpecification"
+  },
+  "productOfferingTerm": [
+    {
+      "name": "12-Month Carrier SLA (99.999% Availability)",
+      "description": "Zero-touch TM Forum TMF622 -> TMF641 -> TMF652 automated GCP/GKE provisioning",
+      "duration": {
+        "amount": 12,
+        "units": "Month"
+      }
+    }
+  ],
+  "productOfferingPrice": [
+    {
+      "id": "pop-prod-offer-telco-far-edge-006",
+      "name": "Monthly Platform Subscription",
+      "priceType": "recurring",
+      "recurringChargePeriodType": "monthly",
+      "recurringChargePeriodLength": 1,
+      "price": {
+        "unit": "USD",
+        "value": 3100
+      }
+    }
+  ]
+}

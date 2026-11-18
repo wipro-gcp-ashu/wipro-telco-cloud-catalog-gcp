@@ -1,0 +1,118 @@
+{
+  "id": "res-spec-010",
+  "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-010",
+  "name": "OdaCanvasMultiTenantSliceSpec",
+  "description": "TMF634 Isolated TM Forum ODA Canvas Tenant Slice: Namespace, ResourceQuota, Cilium eBPF Zero-Trust Policy, Workload Identity & Secret Manager",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "LogicalResourceSpecification",
+  "@baseType": "ResourceSpecification",
+  "category": "TelcoOdaPlatformSlice",
+  "capabilityTier": "STANDARD_GCP_GKE",
+  "resourceSpecCharacteristic": [
+    {
+      "name": "gke_cluster_name",
+      "description": "Host Multi-Tenant ODA Canvas Private GKE Cluster",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "oda-canvas-mt-gke"
+        }
+      ]
+    },
+    {
+      "name": "ebpf_isolation_policy",
+      "description": "Enforce Dataplane V2 Cilium eBPF cross-tenant deny policy",
+      "valueType": "boolean",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "oda_components",
+      "description": "Pre-installed TM Forum ODA Components in tenant slice",
+      "valueType": "array",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": [
+            "TMFC001-ProductCatalog",
+            "TMFC006-ServiceCatalog",
+            "TMFC007-ResourceCatalog"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "storage_class",
+      "description": "Persistent volume storage tier",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "premium-rwo"
+        },
+        {
+          "isDefault": false,
+          "value": "standard-rwo"
+        }
+      ]
+    },
+    {
+      "name": "disk_size_gb",
+      "description": "Persistent volume size (GiB)",
+      "valueType": "integer",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": 50
+        },
+        {
+          "isDefault": false,
+          "value": 20
+        },
+        {
+          "isDefault": false,
+          "value": 100
+        }
+      ]
+    },
+    {
+      "name": "iac_binding",
+      "description": "Execution blueprint binding",
+      "valueType": "object",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": {
+            "iac_engine": "terraform+kustomize+helm",
+            "blueprint_path": "./blueprints/01-oda-canvas-multitenant",
+            "tenant_template": "./blueprints/01-oda-canvas-multitenant/tenants/tenant-template"
+          }
+        }
+      ]
+    }
+  ]
+}

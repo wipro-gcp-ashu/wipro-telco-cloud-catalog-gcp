@@ -1,0 +1,71 @@
+{
+  "id": "rfs-profile-telco-general-cnf",
+  "profileCode": "TELCO-GENERAL-CNF",
+  "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/rfs-profile-telco-general-cnf",
+  "name": "TELCO_GENERAL_CNF_Infra_Profile_RFS",
+  "description": "Standardized RFS Recipe for 5G Core Control-Plane CNFs (AMF, SMF, NRF, UDM, AUSF, PCF, NSSF) & Multi-Tenant ODA Components on Managed Private GKE",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "isBundle": false,
+  "@type": "ResourceFacingServiceSpecification",
+  "@baseType": "ServiceSpecification",
+  "deploymentTarget": "Native GCP Region (Private GKE Standard + Dataplane V2)",
+  "serviceSpecCharacteristic": [
+    {
+      "name": "profile_code",
+      "description": "Standardized Wipro Telco Infrastructure Profile Code",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "TELCO-GENERAL-CNF"
+        }
+      ]
+    },
+    {
+      "name": "orchestration_blueprint",
+      "description": "Target Terraform/Helm blueprint path",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "./blueprints/01-oda-canvas-multitenant"
+        }
+      ]
+    },
+    {
+      "name": "compute_acceleration_profile",
+      "description": "Compute profile mode",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "STANDARD_CLOUD_NATIVE_EBPF"
+        }
+      ]
+    }
+  ],
+  "resourceSpecification": [
+    {
+      "id": "res-spec-001",
+      "name": "Telco3gppMultiPlaneVpcSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-010",
+      "name": "OdaCanvasMultiTenantSliceSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    }
+  ]
+}

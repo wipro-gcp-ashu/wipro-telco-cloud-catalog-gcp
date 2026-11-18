@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cnf-upf-demo
+  namespace: default
+  labels:
+    app: cnf-upf
+    role: telco-dataplane
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cnf-upf
+  template:
+    metadata:
+      labels:
+        app: cnf-upf
+      annotations:
+        networking.gke.io/networks: |
+          [
+            {"name": "default"},
+            {"name": "dataplane-net-attach", "interfaceName": "net1"}
+          ]
+    spec:
+      containers:
+      - name: upf-forwarder
+        image: alpine:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            apk add --no-cache iproute2 iputils tcpdump curl jq
+            # Initialize secondary dataplane interface net1 if not injected by CNI
+            if ! ip link show net1 &>/dev/null; then
+              echo "Configuring net1 dataplane interface (10.20.0.10/24)..."
+              ip link add net1 type veth peer name veth-c
+              ip addr add 10.20.0.10/24 dev net1
+              ip link set net1 up
+              ip link set veth-c up
+            fi
+
+            echo "Displaying attached network interfaces inside CNF Pod:"
+            ip addr show
+            sleep 3600
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN", "NET_RAW"]
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+          requests:
+            cpu: "1"
+            memory: "2Gi"

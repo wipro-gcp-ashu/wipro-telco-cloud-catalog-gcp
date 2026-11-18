@@ -1,0 +1,40 @@
+{
+  "id": "prod-offer-hybrid-vnf-cnf-003",
+  "href": "/tmf-api/productCatalogManagement/v4/productOffering/prod-offer-hybrid-vnf-cnf-003",
+  "name": "Hybrid VNF + CNF Multi-Network Service Chain",
+  "description": "Unified Brownfield-to-Cloud-Native Orchestration chaining Dual-NIC Compute Engine VNFs with Multus Multi-Interface GKE CNFs",
+  "lifecycleStatus": "Active",
+  "version": "2.0",
+  "isBundle": false,
+  "isSellable": true,
+  "@type": "ProductOffering",
+  "productSpecification": {
+    "id": "prod-spec-hybrid-vnf-cnf-003",
+    "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-hybrid-vnf-cnf-003",
+    "name": "Hybrid VNF + CNF Multi-Network Service Chain Specification",
+    "@referredType": "ProductSpecification"
+  },
+  "productOfferingTerm": [
+    {
+      "name": "12-Month Carrier SLA (99.999% Availability)",
+      "description": "Zero-touch TM Forum TMF622 -> TMF641 -> TMF652 automated GCP/GKE provisioning",
+      "duration": {
+        "amount": 12,
+        "units": "Month"
+      }
+    }
+  ],
+  "productOfferingPrice": [
+    {
+      "id": "pop-prod-offer-hybrid-vnf-cnf-003",
+      "name": "Monthly Platform Subscription",
+      "priceType": "recurring",
+      "recurringChargePeriodType": "monthly",
+      "recurringChargePeriodLength": 1,
+      "price": {
+        "unit": "USD",
+        "value": 1950
+      }
+    }
+  ]
+}

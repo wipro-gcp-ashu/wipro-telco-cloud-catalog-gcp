@@ -1,0 +1,82 @@
+{
+  "id": "res-spec-005",
+  "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-005",
+  "name": "MultusMultiNetworkCniSpec",
+  "description": "TMF634 Multus CNI & GKE Multi-Networking Specification attaching Secondary Interfaces (OAM, Signaling, Sync, User-Plane N3/N6)",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "LogicalResourceSpecification",
+  "@baseType": "ResourceSpecification",
+  "category": "TelcoMultiNetworking",
+  "capabilityTier": "TELCO_OPTIMIZED_K8S",
+  "resourceSpecCharacteristic": [
+    {
+      "name": "multus_enabled",
+      "description": "Enable Multus meta-CNI secondary pod network attachments",
+      "valueType": "boolean",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": true
+        },
+        {
+          "isDefault": false,
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "secondary_interfaces",
+      "description": "Attached secondary interfaces inside pod",
+      "valueType": "array",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": [
+            "net1-n3-gtpu",
+            "net2-n4-pfcp",
+            "net3-n6-sgi"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "primary_cni",
+      "description": "Primary cluster CNI for eth0 OAM plane",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "GKE-Dataplane-V2-Cilium-eBPF"
+        }
+      ]
+    },
+    {
+      "name": "iac_binding",
+      "description": "Execution blueprint binding",
+      "valueType": "object",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": {
+            "iac_engine": "terraform+k8s-nad",
+            "blueprint_path": "./blueprints/02-hybrid-vnf-cnf-multus",
+            "crd_manifest": "./blueprints/02-hybrid-vnf-cnf-multus/k8s-manifests/gke-network-attachment-definition.yaml"
+          }
+        }
+      ]
+    }
+  ]
+}

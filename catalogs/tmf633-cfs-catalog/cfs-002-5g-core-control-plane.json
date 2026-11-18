@@ -1,0 +1,84 @@
+{
+  "id": "cfs-002-5g-core-control-plane",
+  "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-002-5g-core-control-plane",
+  "name": "5G_Core_ControlPlane_Cloud_CFS",
+  "description": "Customer-Facing 5G Standalone (SA) Control-Plane Hosting Service (AMF, SMF, NRF, UDM, AUSF, PCF, NSSF) backed by TELCO-GENERAL-CNF",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "isBundle": false,
+  "@type": "CustomerFacingServiceSpecification",
+  "@baseType": "ServiceSpecification",
+  "serviceSpecCharacteristic": [
+    {
+      "name": "subscriber_capacity_tier",
+      "description": "Target 5G SA subscriber scale",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "1M-Subscribers"
+        },
+        {
+          "isDefault": false,
+          "value": "100K-Subscribers"
+        },
+        {
+          "isDefault": false,
+          "value": "10M-Subscribers"
+        }
+      ]
+    },
+    {
+      "name": "hosted_network_functions",
+      "description": "Selected 3GPP 5G SBA Control-Plane CNFs",
+      "valueType": "array",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": [
+            "AMF",
+            "SMF",
+            "NRF",
+            "UDM",
+            "AUSF",
+            "PCF",
+            "NSSF"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "redundancy",
+      "description": "Control-plane availability SLA",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "active-active-multizone"
+        },
+        {
+          "isDefault": false,
+          "value": "active-standby"
+        }
+      ]
+    }
+  ],
+  "serviceSpecRelationship": [
+    {
+      "id": "rfs-profile-telco-general-cnf",
+      "name": "TELCO_GENERAL_CNF_Infra_Profile_RFS",
+      "relationshipType": "decomposesInto",
+      "role": "primaryResourceFacingProfile",
+      "@referredType": "ResourceFacingServiceSpecification"
+    }
+  ]
+}

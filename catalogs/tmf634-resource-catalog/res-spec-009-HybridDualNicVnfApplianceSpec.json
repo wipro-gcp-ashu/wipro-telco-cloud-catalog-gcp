@@ -1,0 +1,96 @@
+{
+  "id": "res-spec-009",
+  "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-009",
+  "name": "HybridDualNicVnfApplianceSpec",
+  "description": "TMF634 Dual-Homed Compute Engine VNF Appliance (nic0 OAM + nic1 Data-Plane) Service-Chained with GKE CNF Pods",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "LogicalResourceSpecification",
+  "@baseType": "ResourceSpecification",
+  "category": "TelcoHybridVnfCompute",
+  "capabilityTier": "STANDARD_GCP_GKE",
+  "resourceSpecCharacteristic": [
+    {
+      "name": "vnf_machine_type",
+      "description": "Compute Engine machine type supporting multiple NICs",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "n2-standard-4"
+        },
+        {
+          "isDefault": false,
+          "value": "c3-standard-8"
+        },
+        {
+          "isDefault": false,
+          "value": "n2-standard-8"
+        }
+      ]
+    },
+    {
+      "name": "nic0_plane",
+      "description": "Primary NIC0 network attachment",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "telco-oam-vpc (10.10.0.0/24)"
+        }
+      ]
+    },
+    {
+      "name": "nic1_plane",
+      "description": "Secondary NIC1 user-plane network attachment",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "telco-dataplane-vpc (10.20.0.0/24)"
+        }
+      ]
+    },
+    {
+      "name": "ip_forwarding_enabled",
+      "description": "Enable Linux kernel L3 packet forwarding & routing",
+      "valueType": "boolean",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "iac_binding",
+      "description": "Execution blueprint binding",
+      "valueType": "object",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": {
+            "iac_engine": "terraform",
+            "blueprint_path": "./blueprints/02-hybrid-vnf-cnf-multus/terraform/environments/demo",
+            "module": "modules/vnf_workload"
+          }
+        }
+      ]
+    }
+  ]
+}

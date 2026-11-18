@@ -1,0 +1,49 @@
+{
+  "externalId": "ORD-2026-TENANT-OMEGA",
+  "priority": "1",
+  "description": "Hybrid VNF + Multus CNF Service Chain Order invoking Blueprint 02",
+  "@type": "ProductOrder",
+  "relatedParty": [
+    {
+      "id": "ORG-OMEGA",
+      "name": "Omega Telecom Transit Ltd",
+      "role": "Customer",
+      "@referredType": "Organization"
+    }
+  ],
+  "productOrderItem": [
+    {
+      "id": "100",
+      "action": "add",
+      "quantity": 1,
+      "productOffering": {
+        "id": "prod-offer-hybrid-vnf-cnf-003",
+        "name": "Hybrid VNF + CNF Multi-Network Service Chain"
+      },
+      "product": {
+        "productCharacteristic": [
+          {
+            "name": "tenant_id",
+            "value": "tenant-omega"
+          },
+          {
+            "name": "region",
+            "value": "us-central1"
+          },
+          {
+            "name": "throughput_tier",
+            "value": "10Gbps"
+          },
+          {
+            "name": "latency_tier",
+            "value": "Ultra-Low"
+          },
+          {
+            "name": "redundancy",
+            "value": "active-standby"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "externalId": "ORD-2026-VRAN-SITE01",
+  "priority": "1",
+  "description": "5G O-RAN Split 7.2x Distributed Unit Order decomposing into TELCO-vRAN (PTP/SyncE/FEC ACC100) + TELCO-EDGE (NEBS3/-48VDC)",
+  "@type": "ProductOrder",
+  "relatedParty": [
+    {
+      "id": "ORG-METRO-RAN",
+      "name": "Metro 5G OpenRAN Operator",
+      "role": "Customer",
+      "@referredType": "Organization"
+    }
+  ],
+  "productOrderItem": [
+    {
+      "id": "100",
+      "action": "add",
+      "quantity": 1,
+      "productOffering": {
+        "id": "prod-offer-vran-oran-du-005",
+        "name": "5G vRAN / O-RAN Distributed Unit (O-DU) Edge Platform"
+      },
+      "product": {
+        "productCharacteristic": [
+          {
+            "name": "tenant_id",
+            "value": "vran-site01"
+          },
+          {
+            "name": "region",
+            "value": "us-central1"
+          },
+          {
+            "name": "oran_split_option",
+            "value": "O-RAN-Split-7.2x"
+          },
+          {
+            "name": "sector_carrier_capacity",
+            "value": "3-Sector-64T64R-100MHz"
+          },
+          {
+            "name": "latency_tier",
+            "value": "Ultra-Low"
+          }
+        ]
+      }
+    }
+  ]
+}

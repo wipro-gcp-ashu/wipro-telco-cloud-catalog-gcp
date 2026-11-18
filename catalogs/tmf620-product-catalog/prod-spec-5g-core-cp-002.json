@@ -1,0 +1,18 @@
+{
+  "id": "prod-spec-5g-core-cp-002",
+  "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-5g-core-cp-002",
+  "name": "5G Core Control Plane Cloud Platform (3GPP SBA) Specification",
+  "description": "Cloud-Native GKE Hosting Platform for 5G SA Control Plane Functions (AMF, SMF, NRF, UDM, AUSF, PCF, NSSF) with Multi-Zone HA & Managed Prometheus",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "ProductSpecification",
+  "serviceSpecification": [
+    {
+      "id": "cfs-002-5g-core-control-plane",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-002-5g-core-control-plane",
+      "name": "5G_Core_ControlPlane_Cloud_CFS",
+      "version": "2.0",
+      "@referredType": "CustomerFacingServiceSpecification"
+    }
+  ]
+}

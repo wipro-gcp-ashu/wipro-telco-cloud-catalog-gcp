@@ -1,0 +1,228 @@
+{
+  "id": "res-spec-002",
+  "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-002",
+  "name": "TelcoDeterministicComputeNumaCpuSpec",
+  "description": "TMF634 Deterministic Telco Compute Profile: Single-NUMA Alignment, Static CPU Manager Pinning, Guaranteed QoS & BIOS C-State/P-State Control",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "LogicalResourceSpecification",
+  "@baseType": "ResourceSpecification",
+  "category": "TelcoDeterministicCompute",
+  "capabilityTier": "TELCO_OPTIMIZED_K8S",
+  "resourceSpecCharacteristic": [
+    {
+      "name": "machine_family",
+      "description": "GCP / Edge Compute Machine Family",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "c3-standard-16"
+        },
+        {
+          "isDefault": false,
+          "value": "e2-standard-4"
+        },
+        {
+          "isDefault": false,
+          "value": "c3-standard-8"
+        },
+        {
+          "isDefault": false,
+          "value": "c3-standard-32-lssd"
+        },
+        {
+          "isDefault": false,
+          "value": "gdc-baremetal-xeon-6438n"
+        }
+      ]
+    },
+    {
+      "name": "cpu_count",
+      "description": "Dedicated whole vCPUs allocated (Guaranteed QoS)",
+      "valueType": "integer",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": 16
+        },
+        {
+          "isDefault": false,
+          "value": 4
+        },
+        {
+          "isDefault": false,
+          "value": 8
+        },
+        {
+          "isDefault": false,
+          "value": 32
+        },
+        {
+          "isDefault": false,
+          "value": 64
+        }
+      ]
+    },
+    {
+      "name": "ram_gb",
+      "description": "Allocated memory in GiB",
+      "valueType": "integer",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": 64
+        },
+        {
+          "isDefault": false,
+          "value": 16
+        },
+        {
+          "isDefault": false,
+          "value": 32
+        },
+        {
+          "isDefault": false,
+          "value": 128
+        },
+        {
+          "isDefault": false,
+          "value": 256
+        }
+      ]
+    },
+    {
+      "name": "cpu_manager_policy",
+      "description": "Kubelet CPU Manager policy for core pinning",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "static"
+        },
+        {
+          "isDefault": false,
+          "value": "none"
+        }
+      ]
+    },
+    {
+      "name": "topology_manager_policy",
+      "description": "Kubelet Topology Manager NUMA alignment policy",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "single-numa-node"
+        },
+        {
+          "isDefault": false,
+          "value": "best-effort"
+        },
+        {
+          "isDefault": false,
+          "value": "restricted"
+        }
+      ]
+    },
+    {
+      "name": "numa_nodes",
+      "description": "Pinned NUMA socket count",
+      "valueType": "integer",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": 1
+        },
+        {
+          "isDefault": false,
+          "value": 0
+        },
+        {
+          "isDefault": false,
+          "value": 2
+        }
+      ]
+    },
+    {
+      "name": "bios_cstate_pstate_locked",
+      "description": "Disable CPU C-states & lock P-state turbo jitter (requires Bare Metal/Edge)",
+      "valueType": "boolean",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": false
+        },
+        {
+          "isDefault": false,
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "worker_instances",
+      "description": "Active/Standby or Multi-Zone worker replica count",
+      "valueType": "integer",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": 2
+        },
+        {
+          "isDefault": false,
+          "value": 1
+        },
+        {
+          "isDefault": false,
+          "value": 3
+        },
+        {
+          "isDefault": false,
+          "value": 4
+        }
+      ]
+    },
+    {
+      "name": "iac_binding",
+      "description": "Execution blueprint binding",
+      "valueType": "object",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": {
+            "iac_engine": "terraform+kubernetes",
+            "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+            "k8s_scheduler_profile": "guaranteed-static-single-numa"
+          }
+        }
+      ]
+    }
+  ]
+}

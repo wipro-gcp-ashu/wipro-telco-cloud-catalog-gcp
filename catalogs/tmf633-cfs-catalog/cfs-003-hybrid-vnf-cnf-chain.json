@@ -1,0 +1,80 @@
+{
+  "id": "cfs-003-hybrid-vnf-cnf-chain",
+  "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-003-hybrid-vnf-cnf-chain",
+  "name": "Hybrid_VNF_CNF_ServiceChain_CFS",
+  "description": "Customer-Facing Hybrid Telecom Service Chain bridging Legacy Dual-NIC GCE VNFs with Cloud-Native Multus GKE CNFs across OAM & Data-Plane VPCs",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "isBundle": false,
+  "@type": "CustomerFacingServiceSpecification",
+  "@baseType": "ServiceSpecification",
+  "serviceSpecCharacteristic": [
+    {
+      "name": "throughput_tier",
+      "description": "East-West VNF-to-CNF user-plane bandwidth",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "10Gbps"
+        },
+        {
+          "isDefault": false,
+          "value": "1Gbps"
+        },
+        {
+          "isDefault": false,
+          "value": "40Gbps"
+        }
+      ]
+    },
+    {
+      "name": "latency_tier",
+      "description": "L3 wire-traversal latency tier",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "Ultra-Low"
+        },
+        {
+          "isDefault": false,
+          "value": "Standard"
+        }
+      ]
+    },
+    {
+      "name": "redundancy",
+      "description": "VNF/CNF HA mode",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "active-standby"
+        },
+        {
+          "isDefault": false,
+          "value": "single-node"
+        }
+      ]
+    }
+  ],
+  "serviceSpecRelationship": [
+    {
+      "id": "rfs-profile-telco-hp-cnf",
+      "name": "TELCO_HP_CNF_Infra_Profile_RFS",
+      "relationshipType": "decomposesInto",
+      "role": "primaryResourceFacingProfile",
+      "@referredType": "ResourceFacingServiceSpecification"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "prod-offer-vran-oran-du-005",
+  "href": "/tmf-api/productCatalogManagement/v4/productOffering/prod-offer-vran-oran-du-005",
+  "name": "5G vRAN / O-RAN Distributed Unit (O-DU) Edge Platform",
+  "description": "Real-Time O-RAN 7.2x Infrastructure Blueprint with IEEE 1588v2 PTP, SyncE, GNSS Timing, Intel vRAN Boost / ACC100 FEC & Locked BIOS C-States",
+  "lifecycleStatus": "Active",
+  "version": "2.0",
+  "isBundle": false,
+  "isSellable": true,
+  "@type": "ProductOffering",
+  "productSpecification": {
+    "id": "prod-spec-vran-oran-du-005",
+    "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-vran-oran-du-005",
+    "name": "5G vRAN / O-RAN Distributed Unit (O-DU) Edge Platform Specification",
+    "@referredType": "ProductSpecification"
+  },
+  "productOfferingTerm": [
+    {
+      "name": "12-Month Carrier SLA (99.999% Availability)",
+      "description": "Zero-touch TM Forum TMF622 -> TMF641 -> TMF652 automated GCP/GKE provisioning",
+      "duration": {
+        "amount": 12,
+        "units": "Month"
+      }
+    }
+  ],
+  "productOfferingPrice": [
+    {
+      "id": "pop-prod-offer-vran-oran-du-005",
+      "name": "Monthly Platform Subscription",
+      "priceType": "recurring",
+      "recurringChargePeriodType": "monthly",
+      "recurringChargePeriodLength": 1,
+      "price": {
+        "unit": "USD",
+        "value": 4200
+      }
+    }
+  ]
+}

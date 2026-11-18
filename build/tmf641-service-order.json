@@ -1,0 +1,106 @@
+{
+  "id": "SVC-ORD-TENANT-DELTA",
+  "externalId": "ORD-2026-TENANT-DELTA",
+  "href": "/tmf-api/serviceOrdering/v4/serviceOrder/SVC-ORD-TENANT-DELTA",
+  "state": "completed",
+  "description": "Decomposed CFS & Reusable Telco RFS Profile order for tenant-delta (High-Performance 5G UPF Cloud Infrastructure Slice)",
+  "@type": "ServiceOrder",
+  "triggeredPolicyRules": [
+    {
+      "ruleId": "RULE-TELCO-LATENCY-01",
+      "condition": "cfs.latency_tier == 'Ultra-Low'",
+      "derived_overrides": {
+        "res-spec-002.numa_nodes": 2,
+        "res-spec-002.cpu_manager_policy": "static",
+        "res-spec-003.hugepages_enabled": true,
+        "res-spec-004.dpdk_enabled": true,
+        "res-spec-004.dataplane_mode": "SR-IOV"
+      }
+    },
+    {
+      "ruleId": "RULE-TELCO-THRU-10G",
+      "condition": "cfs.throughput_tier == '10Gbps'"
+    },
+    {
+      "ruleId": "RULE-TELCO-HA-03",
+      "condition": "cfs.redundancy == 'active-standby'"
+    }
+  ],
+  "serviceOrderItem": [
+    {
+      "id": "1",
+      "action": "add",
+      "service": {
+        "name": "5G_UPF_HighPerformance_Connectivity_CFS_tenant-delta",
+        "serviceType": "CFS",
+        "state": "reserved",
+        "serviceSpecification": {
+          "id": "cfs-001-5g-upf-connectivity",
+          "name": "5G_UPF_HighPerformance_Connectivity_CFS",
+          "@referredType": "CustomerFacingServiceSpecification"
+        },
+        "serviceCharacteristic": [
+          {
+            "name": "tenant_id",
+            "value": "tenant-delta"
+          },
+          {
+            "name": "region",
+            "value": "us-central1"
+          },
+          {
+            "name": "throughput_tier",
+            "value": "10Gbps"
+          },
+          {
+            "name": "latency_tier",
+            "value": "Ultra-Low"
+          },
+          {
+            "name": "redundancy",
+            "value": "active-standby"
+          },
+          {
+            "name": "deployment_placement",
+            "value": "GCP-Regional-Cloud"
+          }
+        ],
+        "supportingService": [
+          {
+            "id": "2",
+            "name": "TELCO_5G_UPF_HighPerf_Infra_Profile_RFS_tenant-delta"
+          }
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "action": "add",
+      "service": {
+        "name": "TELCO_5G_UPF_HighPerf_Infra_Profile_RFS_tenant-delta",
+        "serviceType": "RFS",
+        "state": "reserved",
+        "serviceSpecification": {
+          "id": "rfs-profile-telco-upf",
+          "name": "TELCO_5G_UPF_HighPerf_Infra_Profile_RFS",
+          "profileCode": "TELCO-UPF",
+          "@referredType": "ResourceFacingServiceSpecification"
+        },
+        "serviceCharacteristic": [
+          {
+            "name": "profile_code",
+            "value": "TELCO-UPF"
+          },
+          {
+            "name": "deployment_target",
+            "value": "GCP Regional C3 Tier-1 GKE Pool or GDC Edge Bare Metal"
+          },
+          {
+            "name": "orchestration_blueprint",
+            "value": "./blueprints/03-5g-upf-network-slice/terraform"
+          }
+        ]
+      }
+    }
+  ]
+}

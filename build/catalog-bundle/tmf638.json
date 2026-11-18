@@ -1,0 +1,30 @@
+{
+  "synchronizedAt": "2026-11-17T13:30:45.473Z",
+  "services": [
+    {
+      "id": "svc-inv-cfs-tenant-delta",
+      "href": "/tmf-api/serviceInventory/v4/service/svc-inv-cfs-tenant-delta",
+      "name": "5G_UPF_HighPerformance_Connectivity_CFS_tenant-delta",
+      "state": "active",
+      "serviceType": "CFS",
+      "@type": "CustomerFacingService",
+      "serviceSpecification": {
+        "id": "cfs-001-5g-upf-connectivity",
+        "name": "5G_UPF_HighPerformance_Connectivity_CFS"
+      }
+    },
+    {
+      "id": "svc-inv-rfs-telco-upf-tenant-delta",
+      "href": "/tmf-api/serviceInventory/v4/service/svc-inv-rfs-telco-upf-tenant-delta",
+      "name": "TELCO_5G_UPF_HighPerf_Infra_Profile_RFS_tenant-delta",
+      "state": "active",
+      "serviceType": "RFS",
+      "@type": "ResourceFacingService",
+      "serviceSpecification": {
+        "id": "rfs-profile-telco-upf",
+        "name": "TELCO_5G_UPF_HighPerf_Infra_Profile_RFS",
+        "profileCode": "TELCO-UPF"
+      }
+    }
+  ]
+}

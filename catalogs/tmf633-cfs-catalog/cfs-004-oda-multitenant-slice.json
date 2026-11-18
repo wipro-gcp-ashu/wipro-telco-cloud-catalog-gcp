@@ -1,0 +1,62 @@
+{
+  "id": "cfs-004-oda-multitenant-slice",
+  "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-004-oda-multitenant-slice",
+  "name": "ODA_Canvas_MultiTenant_Partner_CFS",
+  "description": "Customer-Facing Multi-Tenant TM Forum ODA Canvas Slice for MVNOs, OpCos & Enterprise B2B Partners with Zero-Trust Cilium eBPF Isolation",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "isBundle": false,
+  "@type": "CustomerFacingServiceSpecification",
+  "@baseType": "ServiceSpecification",
+  "serviceSpecCharacteristic": [
+    {
+      "name": "partner_tier",
+      "description": "MVNO / B2B Tenant Sizing Tier",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "Enterprise-MVNO-Gold"
+        },
+        {
+          "isDefault": false,
+          "value": "B2B-Partner-Standard"
+        },
+        {
+          "isDefault": false,
+          "value": "OpCo-Platinum"
+        }
+      ]
+    },
+    {
+      "name": "oda_components_bundle",
+      "description": "Subscribed ODA Components",
+      "valueType": "array",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": [
+            "TMFC001",
+            "TMFC006",
+            "TMFC007"
+          ]
+        }
+      ]
+    }
+  ],
+  "serviceSpecRelationship": [
+    {
+      "id": "rfs-profile-telco-general-cnf",
+      "name": "TELCO_GENERAL_CNF_Infra_Profile_RFS",
+      "relationshipType": "decomposesInto",
+      "role": "primaryResourceFacingProfile",
+      "@referredType": "ResourceFacingServiceSpecification"
+    }
+  ]
+}

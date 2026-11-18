@@ -1,0 +1,40 @@
+{
+  "id": "prod-offer-5g-upf-hp-001",
+  "href": "/tmf-api/productCatalogManagement/v4/productOffering/prod-offer-5g-upf-hp-001",
+  "name": "High-Performance 5G UPF Cloud Infrastructure Slice",
+  "description": "Flagship Self-Provisioned 5G User Plane Function (UPF) Infrastructure on GCP/GDC with N3/N4/N6 Subnets, SR-IOV, DPDK, HugePages & Single-NUMA Pinning",
+  "lifecycleStatus": "Active",
+  "version": "2.0",
+  "isBundle": false,
+  "isSellable": true,
+  "@type": "ProductOffering",
+  "productSpecification": {
+    "id": "prod-spec-5g-upf-hp-001",
+    "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-5g-upf-hp-001",
+    "name": "High-Performance 5G UPF Cloud Infrastructure Slice Specification",
+    "@referredType": "ProductSpecification"
+  },
+  "productOfferingTerm": [
+    {
+      "name": "12-Month Carrier SLA (99.999% Availability)",
+      "description": "Zero-touch TM Forum TMF622 -> TMF641 -> TMF652 automated GCP/GKE provisioning",
+      "duration": {
+        "amount": 12,
+        "units": "Month"
+      }
+    }
+  ],
+  "productOfferingPrice": [
+    {
+      "id": "pop-prod-offer-5g-upf-hp-001",
+      "name": "Monthly Platform Subscription",
+      "priceType": "recurring",
+      "recurringChargePeriodType": "monthly",
+      "recurringChargePeriodLength": 1,
+      "price": {
+        "unit": "USD",
+        "value": 2450
+      }
+    }
+  ]
+}

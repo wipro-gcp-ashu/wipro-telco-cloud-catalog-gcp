@@ -1,0 +1,124 @@
+{
+  "id": "res-spec-007",
+  "href": "/tmf-api/resourceCatalog/v4/resourceSpecification/res-spec-007",
+  "name": "TelcoFecSmartNicDpuCryptoSpec",
+  "description": "TMF634 Hardware Offload Specification: 5G L1 FEC (Intel vRAN Boost/ACC100), SmartNIC/DPU (BlueField/IPU GTP-U) & IPSec/MACsec Crypto (QAT)",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "PhysicalResourceSpecification",
+  "@baseType": "ResourceSpecification",
+  "category": "TelcoHardwareAcceleration",
+  "capabilityTier": "SPECIALIZED_HW_GDC_BAREMETAL",
+  "resourceSpecCharacteristic": [
+    {
+      "name": "fec_accelerator",
+      "description": "5G NR Layer-1 LDPC/Turbo FEC Accelerator",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "None"
+        },
+        {
+          "isDefault": false,
+          "value": "Intel-vRAN-Boost-4thGen-Xeon"
+        },
+        {
+          "isDefault": false,
+          "value": "Intel-ACC100-PCIe"
+        },
+        {
+          "isDefault": false,
+          "value": "Qualcomm-X100"
+        }
+      ]
+    },
+    {
+      "name": "smartnic_dpu_model",
+      "description": "SmartNIC / Infrastructure Processing Unit for GTP-U & vSwitch offload",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "Google-Titanium-IPU-Native"
+        },
+        {
+          "isDefault": false,
+          "value": "NVIDIA-BlueField-3-DPU"
+        },
+        {
+          "isDefault": false,
+          "value": "Intel-IPU-E2100"
+        },
+        {
+          "isDefault": false,
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "name": "gtpu_hw_offload",
+      "description": "Hardware offload 3GPP GTP-U encap/decap flows",
+      "valueType": "boolean",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": false
+        },
+        {
+          "isDefault": false,
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "crypto_offload_engine",
+      "description": "Inline IPSec / MACsec / TLS cryptographic offload engine",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "GCP-Native-AES-GCM"
+        },
+        {
+          "isDefault": false,
+          "value": "Intel-QAT-Gen4"
+        },
+        {
+          "isDefault": false,
+          "value": "DPU-Inline-IPSec-MACsec"
+        }
+      ]
+    },
+    {
+      "name": "iac_binding",
+      "description": "Execution blueprint binding",
+      "valueType": "object",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "resourceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": {
+            "iac_engine": "k8s-device-plugins",
+            "blueprint_path": "./blueprints/03-5g-upf-network-slice/terraform",
+            "device_plugin": "intel-device-plugins-for-kubernetes (qat/sriov-fec)"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+# Official Helm values for TM Forum ODA Canvas (chart: oda-canvas/canvas-oda)
+# Aligned with https://github.com/tmforum-oda/oda-canvas/blob/main/charts/canvas-oda/values.yaml
+
+preqrequisitechecks:
+  istio: true
+
+istioCert:
+  namespace: "istio-ingress"
+
+oda-crds:
+  enabled: true
+
+canvas-namespaces:
+  enabled: true
+  certManagerNamespace: cert-manager
+  componentNamespace: components
+
+cert-manager-init:
+  leaseWaitTimeonStartup: 90
+  cert-manager:
+    enabled: true
+    installCRDs: true
+    namespace: cert-manager
+
+# Configure the TM Forum ODA Component Operator to watch all Tenant Namespaces
+component-operator:
+  deployment:
+    istioGateway: true
+    monitoredNamespaces: "components,tenant-alpha,tenant-beta,tenant-*"
+    httpsRedirect: false
+
+# Identity Config Operator (SECOOP) & Keycloak for Multi-Tenant OIDC/IAM
+keycloak:
+  enabled: true
+  postgresql:
+    enabled: true

@@ -1,0 +1,33 @@
+{
+  "order_id": "ORD-2026-TENANT-DELTA",
+  "tenant_id": "tenant-delta",
+  "offering_id": "prod-offer-5g-upf-hp-001",
+  "offering_name": "High-Performance 5G UPF Cloud Infrastructure Slice",
+  "cfs_id": "cfs-001-5g-upf-connectivity",
+  "cfs_name": "5G_UPF_HighPerformance_Connectivity_CFS",
+  "rfs_profiles": [
+    {
+      "id": "rfs-profile-telco-upf",
+      "profileCode": "TELCO-UPF",
+      "name": "TELCO_5G_UPF_HighPerf_Infra_Profile_RFS"
+    }
+  ],
+  "selected_blueprint": "./blueprints/03-5g-upf-network-slice/terraform",
+  "tf_vars": {
+    "project_id": "gcp-oda-canvas-poc",
+    "region": "us-central1",
+    "tenant_id": "tenant-delta",
+    "order_id": "ORD-2026-TENANT-DELTA",
+    "sgi_subnet_cidr": "10.90.1.0/24",
+    "n3_subnet_cidr": "10.90.2.0/24",
+    "n4_subnet_cidr": "10.90.3.0/24",
+    "latency_tier": "Ultra-Low",
+    "throughput_tier": "10Gbps",
+    "dataplane_mode": "SR-IOV",
+    "cpu_count": 16,
+    "ram_gb": 64,
+    "numa_nodes": 2,
+    "dpdk_enabled": true,
+    "worker_instances": 2
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "id": "rfs-profile-telco-upf",
+  "profileCode": "TELCO-UPF",
+  "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/rfs-profile-telco-upf",
+  "name": "TELCO_5G_UPF_HighPerf_Infra_Profile_RFS",
+  "description": "Flagship RFS Recipe for Carrier-Grade 5G User Plane Function (UPF): N3/N4/N6(SGi) Multi-Network, SR-IOV, DPDK, HugePages, Static CPU/NUMA, 100GbE Tier-1 NIC & Optional SmartNIC/DPU Offload",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "isBundle": false,
+  "@type": "ResourceFacingServiceSpecification",
+  "@baseType": "ServiceSpecification",
+  "deploymentTarget": "GCP Regional C3 Tier-1 GKE Pool or GDC Edge Bare Metal",
+  "serviceSpecCharacteristic": [
+    {
+      "name": "profile_code",
+      "description": "Standardized Wipro Telco Infrastructure Profile Code",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "TELCO-UPF"
+        }
+      ]
+    },
+    {
+      "name": "orchestration_blueprint",
+      "description": "Target Terraform/GKE blueprint path",
+      "valueType": "string",
+      "configurable": false,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "./blueprints/03-5g-upf-network-slice/terraform"
+        }
+      ]
+    },
+    {
+      "name": "compute_acceleration_profile",
+      "description": "Packet acceleration profile",
+      "valueType": "string",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": "ULTRA_LOW_LATENCY_NUMA_DPDK_SRIOV"
+        },
+        {
+          "isDefault": false,
+          "value": "STANDARD_EBPF"
+        }
+      ]
+    },
+    {
+      "name": "subnet_topology",
+      "description": "3GPP 5G UPF Interface Planes",
+      "valueType": "object",
+      "configurable": true,
+      "minCardinality": 1,
+      "maxCardinality": 1,
+      "serviceSpecCharacteristicValue": [
+        {
+          "isDefault": true,
+          "value": {
+            "vpc_count": 1,
+            "subnets": [
+              "SGi/N6-External-Data",
+              "N3-RAN-GTP-U",
+              "N4-SMF-PFCP"
+            ],
+            "worker_instances": 2
+          }
+        }
+      ]
+    }
+  ],
+  "resourceSpecification": [
+    {
+      "id": "res-spec-001",
+      "name": "Telco3gppMultiPlaneVpcSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-002",
+      "name": "TelcoDeterministicComputeNumaCpuSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-003",
+      "name": "TelcoHugePagesMemorySpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-004",
+      "name": "SriovDpdkIommuAccelerationSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-005",
+      "name": "MultusMultiNetworkCniSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-007",
+      "name": "TelcoFecSmartNicDpuCryptoSpec",
+      "version": "2.0",
+      "@referredType": "PhysicalResourceSpecification"
+    },
+    {
+      "id": "res-spec-010",
+      "name": "OdaCanvasMultiTenantSliceSpec",
+      "version": "2.0",
+      "@referredType": "LogicalResourceSpecification"
+    }
+  ]
+}

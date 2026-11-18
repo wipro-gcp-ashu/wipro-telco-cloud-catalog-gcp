@@ -1,0 +1,18 @@
+{
+  "id": "prod-spec-5g-upf-hp-001",
+  "href": "/tmf-api/productCatalogManagement/v4/productSpecification/prod-spec-5g-upf-hp-001",
+  "name": "High-Performance 5G UPF Cloud Infrastructure Slice Specification",
+  "description": "Flagship Self-Provisioned 5G User Plane Function (UPF) Infrastructure on GCP/GDC with N3/N4/N6 Subnets, SR-IOV, DPDK, HugePages & Single-NUMA Pinning",
+  "version": "2.0",
+  "lifecycleStatus": "Active",
+  "@type": "ProductSpecification",
+  "serviceSpecification": [
+    {
+      "id": "cfs-001-5g-upf-connectivity",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/cfs-001-5g-upf-connectivity",
+      "name": "5G_UPF_HighPerformance_Connectivity_CFS",
+      "version": "2.0",
+      "@referredType": "CustomerFacingServiceSpecification"
+    }
+  ]
+}

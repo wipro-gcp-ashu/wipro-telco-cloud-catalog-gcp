@@ -1,0 +1,187 @@
+<svg viewBox="0 0 1200 650" width="1200" height="650" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrow-emerald" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399" />
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24" />
+    </marker>
+  </defs>
+
+  <rect width="1200" height="650" fill="#020617" rx="16" />
+
+  <!-- Column 1: Federated Catalog Hierarchy -->
+  <rect x="16" y="16" width="355" height="618" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="2" />
+  <text x="32" y="44" fill="#38bdf8" font-size="14" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">
+    1. FEDERATED CATALOG HIERARCHY (DESIGN-TIME)
+  </text>
+  <text x="32" y="62" fill="#94a3b8" font-size="12" font-family="Segoe UI, Arial, sans-serif">
+    Published via Workflow 01 (Run #40849135713)
+  </text>
+
+  <!-- Column 2: Day 0 / Day 1 Provisioning Pipeline -->
+  <rect x="392" y="16" width="365" height="618" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="2" />
+  <text x="408" y="44" fill="#fbbf24" font-size="14" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">
+    2. DAY-0 / DAY-1 ORDER PIPELINE (RUN-TIME)
+  </text>
+  <text x="408" y="62" fill="#94a3b8" font-size="12" font-family="Segoe UI, Arial, sans-serif">
+    Executed via Workflow 02 (Run #40849994251 • 92s)
+  </text>
+
+  <!-- Column 3: Live GCP & GKE Provisioned Infrastructure -->
+  <rect x="778" y="16" width="406" height="618" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="2" />
+  <text x="794" y="44" fill="#34d399" font-size="14" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">
+    3. LIVE DEPLOYED GCP &amp; GKE RESOURCES
+  </text>
+  <text x="794" y="62" fill="#94a3b8" font-size="12" font-family="Segoe UI, Arial, sans-serif">
+    Project: gcp-oda-canvas-poc (us-central1)
+  </text>
+
+  <!-- Layer 1: TMF620 -->
+  <rect x="32" y="82" width="323" height="105" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+  <rect x="44" y="94" width="110" height="20" rx="4" fill="#0284c7" />
+  <text x="52" y="108" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">TMF620 • TMFC001</text>
+  <text x="164" y="108" fill="#7dd3fc" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Commercial Product Catalog</text>
+  <text x="44" y="132" fill="#f8fafc" font-size="13" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Enterprise Private Edge Infra Tier 1</text>
+  <text x="44" y="150" fill="#cbd5e1" font-size="12" font-family="Consolas, monospace">ID: prod-offer-enterprise-edge-tier1</text>
+  <text x="44" y="168" fill="#94a3b8" font-size="12" font-family="Segoe UI, Arial, sans-serif">SLA: 99.999% | $4,500/mo + $0.015/GB</text>
+
+  <line x1="193" y1="187" x2="193" y2="215" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-cyan)" />
+  <text x="202" y="205" fill="#7dd3fc" font-size="12" font-family="Segoe UI, Arial, sans-serif">Maps to CFS</text>
+
+  <!-- Layer 2: TMF633 CFS -->
+  <rect x="32" y="218" width="323" height="115" rx="8" fill="#1e293b" stroke="#818cf8" stroke-width="2" />
+  <rect x="44" y="230" width="142" height="20" rx="4" fill="#4f46e5" />
+  <text x="52" y="244" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">TMF633 CFS • TMFC006</text>
+  <text x="194" y="244" fill="#a5b4fc" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Customer-Facing Service</text>
+  <text x="44" y="268" fill="#f8fafc" font-size="13" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Private5G_Edge_Compute_CFS</text>
+  <text x="44" y="286" fill="#cbd5e1" font-size="12" font-family="Consolas, monospace">ID: cfs-spec-private5g-edge-001</text>
+  <text x="44" y="304" fill="#94a3b8" font-size="12" font-family="Segoe UI, Arial, sans-serif">Inputs: latency_tier, throughput_tier, HA</text>
+  <text x="44" y="320" fill="#c7d2fe" font-size="12" font-family="Consolas, monospace">Rules: RULE-LATENCY-01, RULE-THRU-02, HA-03</text>
+
+  <line x1="193" y1="333" x2="193" y2="361" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-cyan)" />
+  <text x="202" y="351" fill="#7dd3fc" font-size="12" font-family="Segoe UI, Arial, sans-serif">Decomposes to RFS</text>
+
+  <!-- Layer 3: TMF633 RFS -->
+  <rect x="32" y="364" width="323" height="110" rx="8" fill="#1e293b" stroke="#c084fc" stroke-width="2" />
+  <rect x="44" y="376" width="142" height="20" rx="4" fill="#7e22ce" />
+  <text x="52" y="390" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">TMF633 RFS • TMFC006</text>
+  <text x="194" y="390" fill="#d8b4fe" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Resource-Facing Service</text>
+  <text x="44" y="414" fill="#f8fafc" font-size="13" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">5G_Core_UPF_Infra_RFS</text>
+  <text x="44" y="432" fill="#cbd5e1" font-size="12" font-family="Consolas, monospace">ID: rfs-spec-upf-infra-001</text>
+  <text x="44" y="450" fill="#94a3b8" font-size="12" font-family="Segoe UI, Arial, sans-serif">Groups: 1 VPC + 3 Subnets (SGi/N3/N4)</text>
+  <text x="44" y="466" fill="#94a3b8" font-size="12" font-family="Segoe UI, Arial, sans-serif">+ 1 SR-IOV Policy + 2 Worker Nodes</text>
+
+  <line x1="193" y1="474" x2="193" y2="502" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-cyan)" />
+  <text x="202" y="492" fill="#7dd3fc" font-size="12" font-family="Segoe UI, Arial, sans-serif">Binds to Primitives</text>
+
+  <!-- Layer 4: TMF634 Resource Catalog -->
+  <rect x="32" y="505" width="323" height="115" rx="8" fill="#1e293b" stroke="#2dd4bf" stroke-width="2" />
+  <rect x="44" y="517" width="115" height="20" rx="4" fill="#0f766e" />
+  <text x="52" y="531" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">TMF634 • TMFC007</text>
+  <text x="167" y="531" fill="#5eead4" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Atomic Resource Catalog</text>
+  <text x="44" y="553" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">• res-spec-vpc-001 (TelcoVpcNetworkSpec)</text>
+  <text x="44" y="571" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">• res-spec-compute-002 (ComputeFlavorSpec)</text>
+  <text x="44" y="589" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">• res-spec-netpol-003 (SriovAndEbpfSpec)</text>
+  <text x="44" y="607" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">• res-spec-storage-004 (StoragePoolSpec)</text>
+
+  <!-- Stage 1: TMF622 Product Order -->
+  <rect x="408" y="82" width="333" height="92" rx="8" fill="#1e293b" stroke="#fbbf24" stroke-width="2" />
+  <rect x="420" y="94" width="115" height="20" rx="4" fill="#b45309" />
+  <text x="428" y="108" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">TMF622 • TMFC002</text>
+  <text x="545" y="108" fill="#fde68a" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Product Order Trigger</text>
+  <text x="420" y="132" fill="#f8fafc" font-size="13" font-weight="bold" font-family="Consolas, monospace">Order: ORD-2026-TENANT-DELTA</text>
+  <text x="420" y="150" fill="#cbd5e1" font-size="12" font-family="Segoe UI, Arial, sans-serif">Tenant: tenant-delta (Delta Mfg Corp)</text>
+  <text x="420" y="166" fill="#94a3b8" font-size="12" font-family="Consolas, monospace">Ultra-Low | 10Gbps | active-standby</text>
+
+  <line x1="574" y1="174" x2="574" y2="202" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrow-amber)" />
+
+  <!-- Stage 2: Order Orchestrator & Rules Engine -->
+  <rect x="408" y="205" width="333" height="115" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
+  <rect x="420" y="217" width="150" height="20" rx="4" fill="#d97706" />
+  <text x="428" y="231" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">TMFC003 Orchestrator</text>
+  <text x="578" y="231" fill="#fde68a" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Policy Rule Evaluation</text>
+  <text x="420" y="253" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">✓ RULE-LATENCY-01 → c3-standard-8, NUMA=2, DPDK</text>
+  <text x="420" y="271" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">✓ RULE-THROUGHPUT-02 → Tier_1 10Gbps NIC</text>
+  <text x="420" y="289" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">✓ RULE-HA-03 → 2 Replicas (zone-a, zone-b)</text>
+  <text x="420" y="307" fill="#94a3b8" font-size="12" font-family="Segoe UI, Arial, sans-serif">Engine: orchestrator/cloud_studio_orchestrator.py</text>
+
+  <line x1="574" y1="320" x2="574" y2="348" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrow-amber)" />
+
+  <!-- Stage 3 & 4: TMF641 Service Order & TMF652 Resource Order -->
+  <rect x="408" y="351" width="333" height="115" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+  <rect x="420" y="363" width="135" height="20" rx="4" fill="#0369a1" />
+  <text x="428" y="377" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">TMF641 &amp; TMF652</text>
+  <text x="564" y="377" fill="#7dd3fc" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Service &amp; Resource Orders</text>
+  <text x="420" y="401" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">• TMF641: SO-2026-TENANT-DELTA (CFS + RFS)</text>
+  <text x="420" y="419" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">• TMF652: RO-2026-TENANT-DELTA (4 Primitives)</text>
+  <text x="420" y="437" fill="#34d399" font-size="12" font-family="Consolas, monospace">→ iac/terraform/generated.auto.tfvars.json</text>
+  <text x="420" y="455" fill="#34d399" font-size="12" font-family="Consolas, monospace">→ build/k8s-upf-slice-manifest.yaml</text>
+
+  <line x1="574" y1="466" x2="574" y2="498" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-emerald)" />
+
+  <!-- Stage 7: TMF638 & TMF639 Active Inventory Synchronization -->
+  <rect x="408" y="501" width="333" height="119" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="2" />
+  <rect x="420" y="513" width="145" height="20" rx="4" fill="#059669" />
+  <text x="428" y="527" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">TMF638 &amp; TMF639</text>
+  <text x="574" y="527" fill="#a7f3d0" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Active Inventory Sync</text>
+  <text x="420" y="551" fill="#ecfdf5" font-size="12" font-weight="bold" font-family="Consolas, monospace">● TMF638 Service Inventory: state = ACTIVE</text>
+  <text x="420" y="569" fill="#d1fae5" font-size="12" font-family="Consolas, monospace">  CFS-INST-TENANT-DELTA &amp; RFS-INST-TENANT-DELTA</text>
+  <text x="420" y="587" fill="#ecfdf5" font-size="12" font-weight="bold" font-family="Consolas, monospace">● TMF639 Resource Inventory: state = ACTIVE</text>
+  <text x="420" y="605" fill="#d1fae5" font-size="12" font-family="Consolas, monospace">  Populated with real GCP selfLinks &amp; Pod UIDs</text>
+
+  <!-- Box 3A: GKE Cluster oda-canvas-mt-gke -->
+  <rect x="794" y="82" width="374" height="230" rx="8" fill="#1e293b" stroke="#34d399" stroke-width="2" />
+  <rect x="806" y="94" width="150" height="20" rx="4" fill="#059669" />
+  <text x="814" y="108" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">GKE: oda-canvas-mt-gke</text>
+  <text x="965" y="108" fill="#6ee7b7" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">4 Nodes • v1.36.4-gke</text>
+
+  <rect x="808" y="124" width="346" height="82" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" />
+  <text x="818" y="143" fill="#38bdf8" font-size="12" font-weight="bold" font-family="Consolas, monospace">● Deployment: tmf-federated-catalog-api (2/2 OK)</text>
+  <text x="818" y="161" fill="#cbd5e1" font-size="12" font-family="Consolas, monospace">Namespace: tmf-federated-catalog</text>
+  <text x="818" y="179" fill="#94a3b8" font-size="12" font-family="Segoe UI, Arial, sans-serif">Serves Live TMF620 / TMF633 / TMF634 / TMF638 / TMF639</text>
+  <text x="818" y="196" fill="#7dd3fc" font-size="12" font-family="Consolas, monospace">Service: tmf-federated-catalog-svc:8080</text>
+
+  <rect x="808" y="216" width="346" height="84" rx="6" fill="#0f172a" stroke="#34d399" stroke-width="1.5" />
+  <text x="818" y="235" fill="#34d399" font-size="12" font-weight="bold" font-family="Consolas, monospace">● Deployment: upf-userplane-workers (2/2 OK)</text>
+  <text x="818" y="253" fill="#cbd5e1" font-size="12" font-family="Consolas, monospace">Namespace: upf-tenant-delta (Active-Standby HA)</text>
+  <text x="818" y="271" fill="#94a3b8" font-size="12" font-family="Consolas, monospace">Profile: c3-standard-8 | NUMA=2 | DPDK=true | SR-IOV=4</text>
+  <text x="818" y="288" fill="#6ee7b7" font-size="12" font-family="Consolas, monospace">Service: upf-gtpu-pfcp-svc (UDP 2152 / 8805)</text>
+
+  <!-- Box 3B: Provisioned GCP VPC & 3GPP Subnets -->
+  <rect x="794" y="328" width="374" height="175" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+  <rect x="806" y="340" width="165" height="20" rx="4" fill="#0284c7" />
+  <text x="814" y="354" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">GCP VPC: vpc-upf-tenant-delta</text>
+  <text x="980" y="354" fill="#7dd3fc" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Terraform Managed</text>
+
+  <rect x="808" y="368" width="346" height="28" rx="4" fill="#0f172a" stroke="#334155" />
+  <text x="818" y="386" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">Subnet 1 (SGi/N6): sgi-subnet-tenant-delta (10.210.1.0/24)</text>
+
+  <rect x="808" y="402" width="346" height="28" rx="4" fill="#0f172a" stroke="#334155" />
+  <text x="818" y="420" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">Subnet 2 (3GPP N3): n3-subnet-tenant-delta  (10.210.2.0/24)</text>
+
+  <rect x="808" y="436" width="346" height="28" rx="4" fill="#0f172a" stroke="#334155" />
+  <text x="818" y="454" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">Subnet 3 (3GPP N4): n4-subnet-tenant-delta  (10.210.3.0/24)</text>
+
+  <text x="812" y="488" fill="#fbbf24" font-size="12" font-family="Consolas, monospace">Firewall: fw-upf-gtpu-pfcp-tenant-delta (UDP 2152, 8805)</text>
+
+  <!-- Box 3C: Provisioned GCP IAM, Secret Manager & GCS State -->
+  <rect x="794" y="518" width="374" height="102" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="2" />
+  <rect x="806" y="530" width="165" height="20" rx="4" fill="#7e22ce" />
+  <text x="814" y="544" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">IAM, Secret &amp; TF State</text>
+  <text x="980" y="544" fill="#d8b4fe" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Security &amp; Governance</text>
+  <text x="812" y="568" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">• SA: upf-tenant-delta-sa@gcp-oda-canvas-poc...</text>
+  <text x="812" y="586" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">• Secret: tmf652-upf-slice-tenant-delta (us-central1)</text>
+  <text x="812" y="604" fill="#cbd5e1" font-size="12" font-family="Consolas, monospace">• State: gs://gcp-oda-canvas-poc-tfstate/tmf-fed...</text>
+
+  <!-- Cross-Column Connector Lines -->
+  <line x1="355" y1="128" x2="408" y2="128" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-amber)" />
+  <line x1="355" y1="265" x2="408" y2="265" stroke="#818cf8" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-cyan)" />
+  <line x1="355" y1="550" x2="408" y2="425" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-cyan)" />
+  <line x1="741" y1="395" x2="794" y2="255" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-emerald)" />
+  <line x1="741" y1="415" x2="794" y2="415" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-cyan)" />
+  <line x1="794" y1="565" x2="741" y2="565" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-emerald)" />
+</svg>
