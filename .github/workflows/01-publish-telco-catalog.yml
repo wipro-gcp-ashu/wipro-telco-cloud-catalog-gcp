@@ -19,7 +19,7 @@ permissions:
   id-token: write
 
 env:
-  PROJECT_ID: ${{ vars.GCP_PROJECT_ID || 'gcp-oda-canvas-poc' }}
+  PROJECT_ID: ${{ vars.GCP_PROJECT_ID || 'wipro-telco-cloud-catalog1' }}
   REGION: ${{ vars.GCP_REGION || 'us-central1' }}
   CLUSTER_NAME: ${{ vars.GKE_CLUSTER_NAME || 'oda-canvas-mt-gke' }}
 
@@ -46,8 +46,8 @@ jobs:
         if: ${{ github.event_name == 'push' || inputs.deploy_to_gke == true }}
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: ${{ vars.WIF_PROVIDER || 'projects/616603279554/locations/global/workloadIdentityPools/github-actions-pool/providers/github-oidc-provider' }}
-          service_account: ${{ vars.WIF_SERVICE_ACCOUNT || 'github-oda-deployer@gcp-oda-canvas-poc.iam.gserviceaccount.com' }}
+          workload_identity_provider: ${{ vars.WIF_PROVIDER || 'projects/481157998097/locations/global/workloadIdentityPools/github-actions-pool/providers/github-oidc-provider' }}
+          service_account: ${{ vars.WIF_SERVICE_ACCOUNT || 'github-oda-deployer@wipro-telco-cloud-catalog1.iam.gserviceaccount.com' }}
 
       - name: Set up Cloud SDK & GKE Auth Plugin
         if: ${{ github.event_name == 'push' || inputs.deploy_to_gke == true }}
