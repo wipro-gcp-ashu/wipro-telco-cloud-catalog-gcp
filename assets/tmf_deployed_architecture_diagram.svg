@@ -37,7 +37,7 @@
     3. LIVE DEPLOYED GCP &amp; GKE RESOURCES
   </text>
   <text x="794" y="62" fill="#94a3b8" font-size="12" font-family="Segoe UI, Arial, sans-serif">
-    Project: gcp-oda-canvas-poc (us-central1)
+    Project: wipro-telco-cloud-catalog1 (us-central1)
   </text>
 
   <!-- Layer 1: TMF620 -->
@@ -173,9 +173,9 @@
   <rect x="806" y="530" width="165" height="20" rx="4" fill="#7e22ce" />
   <text x="814" y="544" fill="#ffffff" font-size="12" font-weight="bold" font-family="Consolas, monospace">IAM, Secret &amp; TF State</text>
   <text x="980" y="544" fill="#d8b4fe" font-size="12" font-weight="bold" font-family="Segoe UI, Arial, sans-serif">Security &amp; Governance</text>
-  <text x="812" y="568" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">• SA: upf-tenant-delta-sa@gcp-oda-canvas-poc...</text>
+  <text x="812" y="568" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">• SA: upf-tenant-delta-sa@wipro-telco-cloud-catalog1...</text>
   <text x="812" y="586" fill="#f8fafc" font-size="12" font-family="Consolas, monospace">• Secret: tmf652-upf-slice-tenant-delta (us-central1)</text>
-  <text x="812" y="604" fill="#cbd5e1" font-size="12" font-family="Consolas, monospace">• State: gs://gcp-oda-canvas-poc-tfstate/tmf-fed...</text>
+  <text x="812" y="604" fill="#cbd5e1" font-size="12" font-family="Consolas, monospace">• State: gs://wipro-telco-cloud-catalog1-tfstate/tmf-fed...</text>
 
   <!-- Cross-Column Connector Lines -->
   <line x1="355" y1="128" x2="408" y2="128" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-amber)" />

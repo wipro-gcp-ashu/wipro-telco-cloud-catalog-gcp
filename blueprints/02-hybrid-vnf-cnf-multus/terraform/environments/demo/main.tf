@@ -7,8 +7,8 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket = "telco-poc-511505-tfstate"
-    prefix = "hybrid-orchestration/telco-poc"
+    bucket = "wipro-telco-cloud-catalog1-tfstate"
+    prefix = "hybrid-orchestration/wipro-telco-cloud-catalog"
   }
 }
 

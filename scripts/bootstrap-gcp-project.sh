@@ -4,13 +4,13 @@
 # ==============================================================================
 # Works seamlessly in TWO modes:
 #   Mode A (Default): Authorize 'wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp'
-#                     against existing consolidated project 'gcp-oda-canvas-poc'
+#                     against existing consolidated project 'wipro-telco-cloud-catalog1'
 #   Mode B (Fresh):   Bootstrap any brand-new GCP project from scratch
 #                     (APIs + GCS State Bucket + Keyless GitHub OIDC WIF Pool)
 # ==============================================================================
 set -euo pipefail
 
-PROJECT_ID="${1:-gcp-oda-canvas-poc}"
+PROJECT_ID="${1:-wipro-telco-cloud-catalog1}"
 GITHUB_REPO="${2:-wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp}"
 REGION="${3:-us-central1}"
 CLUSTER_NAME="${4:-oda-canvas-mt-gke}"

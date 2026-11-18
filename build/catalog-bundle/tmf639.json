@@ -1,5 +1,5 @@
 {
-  "synchronizedAt": "2026-11-17T13:30:45.473Z",
+  "synchronizedAt": "2026-11-18T08:58:20.440Z",
   "healthCheckStatus": "PASS",
   "resources": [
     {
@@ -17,11 +17,11 @@
       "resourceCharacteristic": [
         {
           "name": "gcp_project_id",
-          "value": "gcp-oda-canvas-poc"
+          "value": "wipro-telco-cloud-catalog1"
         },
         {
           "name": "vpc_self_link",
-          "value": "projects/gcp-oda-canvas-poc/global/networks/vpc-upf-tenant-delta"
+          "value": "projects/wipro-telco-cloud-catalog1/global/networks/vpc-upf-tenant-delta"
         },
         {
           "name": "sgi_subnet_cidr",
@@ -52,7 +52,7 @@
       "resourceCharacteristic": [
         {
           "name": "gke_cluster_uri",
-          "value": "projects/gcp-oda-canvas-poc/locations/us-central1/clusters/oda-canvas-mt-gke"
+          "value": "projects/wipro-telco-cloud-catalog1/locations/us-central1/clusters/oda-canvas-mt-gke"
         },
         {
           "name": "k8s_namespace",

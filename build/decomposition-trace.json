@@ -14,7 +14,7 @@
   ],
   "selected_blueprint": "./blueprints/03-5g-upf-network-slice/terraform",
   "tf_vars": {
-    "project_id": "gcp-oda-canvas-poc",
+    "project_id": "wipro-telco-cloud-catalog1",
     "region": "us-central1",
     "tenant_id": "tenant-delta",
     "order_id": "ORD-2026-TENANT-DELTA",

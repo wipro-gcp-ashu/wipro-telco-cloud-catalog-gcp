@@ -1,5 +1,5 @@
 param(
-  [string]$ProjectId = "gcp-oda-canvas-poc",
+  [string]$ProjectId = "wipro-telco-cloud-catalog1",
   [string]$GitHubRepo = "wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp",
   [string]$Region = "us-central1",
   [string]$ClusterName = "oda-canvas-mt-gke"

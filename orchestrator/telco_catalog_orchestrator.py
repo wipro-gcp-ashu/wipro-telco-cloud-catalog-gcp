@@ -899,7 +899,7 @@ def main() -> None:
     parser.add_argument("--throughput-tier", type=str, default="10Gbps")
     parser.add_argument("--redundancy", type=str, default="active-standby")
     parser.add_argument("--region", type=str, default="us-central1")
-    parser.add_argument("--project-id", type=str, default="gcp-oda-canvas-poc")
+    parser.add_argument("--project-id", type=str, default="wipro-telco-cloud-catalog1")
     parser.add_argument("--tf-outputs-json", type=str, default="build/tf-outputs.json")
     parser.add_argument("--k8s-namespace-uid", type=str, default="ns-telco-verified-uid")
     parser.add_argument("--k8s-pod-uids", type=str, default="pod-cnf-0,pod-cnf-1")

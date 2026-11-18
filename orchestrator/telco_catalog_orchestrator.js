@@ -157,7 +157,7 @@ function validateCatalogs() {
   return report;
 }
 
-function decomposeOrder(orderData, projectId = 'gcp-oda-canvas-poc') {
+function decomposeOrder(orderData, projectId = 'wipro-telco-cloud-catalog1') {
   const cat = loadFederatedCatalogs();
   const orderId = orderData.externalId || 'ORD-2026-TELCO-9001';
   const item = orderData.productOrderItem[0];
@@ -510,7 +510,7 @@ if (require.main === module) {
     console.log(validateCatalogs());
   } else if (mode === 'decompose') {
     const orderFile = getArg('--order-file', path.join(REPO_ROOT, 'orders', 'order-01-5g-upf-hp-tenant-delta.json'));
-    const trace = decomposeOrder(loadJson(path.resolve(orderFile)), getArg('--project-id', 'gcp-oda-canvas-poc'));
+    const trace = decomposeOrder(loadJson(path.resolve(orderFile)), getArg('--project-id', 'wipro-telco-cloud-catalog1'));
     console.log(`[OK] Decomposed ${trace.order_id} -> CFS: ${trace.cfs_id} -> RFS: ${trace.rfs_profiles.map(p => p.profileCode).join(', ')} -> Blueprint: ${trace.selected_blueprint}`);
   } else if (mode === 'sync-inventory') {
     console.log(syncInventory());

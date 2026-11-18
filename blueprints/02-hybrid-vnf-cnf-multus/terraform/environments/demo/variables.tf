@@ -1,6 +1,6 @@
 variable "project_id" {
   type        = string
-  default     = "gcp-oda-canvas-poc"
+  default     = "wipro-telco-cloud-catalog1"
   description = "Target GCP Project ID"
 }
 

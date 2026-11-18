@@ -2,7 +2,7 @@
 
 **Wipro Google Cloud (GCP) Practice — Telecom Cloud Studio**  
 **Standards Alignment:** TM Forum Open Digital Architecture (`IG1228`), Shared Information & Data Model (`SID GB922`), 3GPP Rel-17 5G SBA & O-RAN WG6 Cloudification  
-**Live Executive Demo Portal (Cloud Run):** https://tmf-consolidated-dashboard-616603279554.us-central1.run.app/
+**Live Executive Demo Portal (Cloud Run):** https://tmf-consolidated-dashboard-481157998097.us-central1.run.app/
 
 ---
 
@@ -90,7 +90,7 @@ wipro-telco-cloud-catalog-gcp/
 ├── docs/
 │   └── index.html                           # 5-Page Executive Demo Portal (served on Cloud Run)
 ├── scripts/
-│   ├── bootstrap-gcp-project.sh             # 1-command setup for gcp-oda-canvas-poc OR any new project
+│   ├── bootstrap-gcp-project.sh             # 1-command setup for wipro-telco-cloud-catalog1 OR any new project
 │   └── bootstrap-gcp-project.ps1            # PowerShell equivalent for Windows workstations
 └── .github/workflows/                       # 5 Automated GitOps CI/CD Pipelines (01..04 + 99 Teardown)
 ```
@@ -110,7 +110,7 @@ node orchestrator/telco_catalog_orchestrator.js --mode validate-catalogs
 node orchestrator/telco_catalog_orchestrator.js --mode decompose --order-file orders/order-01-5g-upf-hp-tenant-delta.json
 ```
 
-### Authorize Consolidated GCP Project (`gcp-oda-canvas-poc`) or Bootstrap a New Project
+### Authorize Consolidated GCP Project (`wipro-telco-cloud-catalog1`) or Bootstrap a New Project
 ```bash
-bash scripts/bootstrap-gcp-project.sh gcp-oda-canvas-poc wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp us-central1 oda-canvas-mt-gke
+bash scripts/bootstrap-gcp-project.sh wipro-telco-cloud-catalog1 wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp us-central1 oda-canvas-mt-gke
 ```

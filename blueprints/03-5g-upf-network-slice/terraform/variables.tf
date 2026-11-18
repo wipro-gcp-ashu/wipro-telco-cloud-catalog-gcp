@@ -1,7 +1,7 @@
 variable "project_id" {
   description = "GCP Project ID hosting the TM Forum Federated Catalog & ODA Canvas PoC"
   type        = string
-  default     = "gcp-oda-canvas-poc"
+  default     = "wipro-telco-cloud-catalog1"
 }
 
 variable "region" {

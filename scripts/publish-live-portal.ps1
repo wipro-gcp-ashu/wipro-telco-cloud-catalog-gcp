@@ -1,5 +1,5 @@
 param(
-  [string]$ProjectId = "gcp-oda-canvas-poc",
+  [string]$ProjectId = "wipro-telco-cloud-catalog1",
   [string]$Region = "us-central1",
   [string]$ServiceName = "tmf-consolidated-dashboard"
 )
