@@ -1,0 +1,79 @@
+name: "01 - Publish & Validate Wipro Telco Cloud Catalog (TMF620 -> CFS -> RFS Profiles -> TMF634)"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "catalogs/**"
+      - "orchestrator/**"
+  workflow_dispatch:
+    inputs:
+      deploy_to_gke:
+        description: "Publish validated catalog bundle to live GKE cluster (oda-canvas-mt-gke)?"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  PROJECT_ID: ${{ vars.GCP_PROJECT_ID || 'gcp-oda-canvas-poc' }}
+  REGION: ${{ vars.GCP_REGION || 'us-central1' }}
+  CLUSTER_NAME: ${{ vars.GKE_CLUSTER_NAME || 'oda-canvas-mt-gke' }}
+
+jobs:
+  publish-telco-catalog:
+    name: "Validate SID (GB922) Hierarchy + 16-Capability HW Matrix & Publish to GKE"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Unified Telco Cloud Catalog Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: "Validate 4-Layer Telco Cloud Catalog & 16-Capability Hardware Matrix"
+        run: |
+          python3 orchestrator/telco_catalog_orchestrator.py --mode validate-catalogs
+          cat build/catalog-validation-report.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        if: ${{ github.event_name == 'push' || inputs.deploy_to_gke == true }}
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER || 'projects/616603279554/locations/global/workloadIdentityPools/github-actions-pool/providers/github-oidc-provider' }}
+          service_account: ${{ vars.WIF_SERVICE_ACCOUNT || 'github-oda-deployer@gcp-oda-canvas-poc.iam.gserviceaccount.com' }}
+
+      - name: Set up Cloud SDK & GKE Auth Plugin
+        if: ${{ github.event_name == 'push' || inputs.deploy_to_gke == true }}
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          install_components: "gke-gcloud-auth-plugin"
+
+      - name: Publish Federated Telco Catalog Bundle to GKE (TMFC001, TMFC006, TMFC007)
+        if: ${{ github.event_name == 'push' || inputs.deploy_to_gke == true }}
+        run: |
+          if gcloud container clusters describe "${CLUSTER_NAME}" --region "${REGION}" --project "${PROJECT_ID}" >/dev/null 2>&1; then
+            gcloud container clusters get-credentials "${CLUSTER_NAME}" --region "${REGION}" --project "${PROJECT_ID}"
+            kubectl apply -f orchestrator/k8s-tmf-federated-api-gateway.yaml
+
+            kubectl create configmap tmf-federated-catalog-store \
+              -n tmf-federated-catalog \
+              --from-file=build/catalog-bundle/ \
+              --dry-run=client -o yaml | kubectl apply -f -
+
+            kubectl rollout restart deployment/tmf-federated-catalog-api -n tmf-federated-catalog
+            kubectl rollout status deployment/tmf-federated-catalog-api -n tmf-federated-catalog --timeout=120s
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### ☸️ Live GKE Federated Telco Catalog Endpoints (`namespace: tmf-federated-catalog`)" >> $GITHUB_STEP_SUMMARY
+            echo '```text' >> $GITHUB_STEP_SUMMARY
+            kubectl get pods,svc -n tmf-federated-catalog >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "GKE cluster ${CLUSTER_NAME} is not active; standalone SID GB922 validation succeeded."
+          fi

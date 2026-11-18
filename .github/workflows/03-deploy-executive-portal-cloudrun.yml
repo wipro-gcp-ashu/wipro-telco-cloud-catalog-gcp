@@ -1,0 +1,55 @@
+name: "03 - Deploy Executive Telco Catalog Portal to Cloud Run (tmf-consolidated-dashboard)"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "docs/index.html"
+      - ".github/workflows/03-deploy-executive-portal-cloudrun.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  PROJECT_ID: ${{ vars.GCP_PROJECT_ID || 'gcp-oda-canvas-poc' }}
+  REGION: ${{ vars.GCP_REGION || 'us-central1' }}
+  SERVICE_NAME: "tmf-consolidated-dashboard"
+  TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET || 'gcp-oda-canvas-poc-tfstate' }}
+
+jobs:
+  deploy-portal:
+    name: "Publish Executive Telco Cloud Catalog Portal to Cloud Run"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER || 'projects/616603279554/locations/global/workloadIdentityPools/github-actions-pool/providers/github-oidc-provider' }}
+          service_account: ${{ vars.WIF_SERVICE_ACCOUNT || 'github-oda-deployer@gcp-oda-canvas-poc.iam.gserviceaccount.com' }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Sync Portal HTML to GCS FUSE Volume & Roll Cloud Run Revision
+        run: |
+          gcloud storage cp docs/index.html "gs://${TF_STATE_BUCKET}/dashboard/index.html" \
+            --project="${PROJECT_ID}" \
+            --cache-control="no-cache,max-age=0" \
+            --quiet
+
+          gcloud storage cp docs/index.html "gs://${TF_STATE_BUCKET}/dashboard/TMF_Consolidated_Deployment_Dashboard.html" \
+            --project="${PROJECT_ID}" \
+            --cache-control="no-cache,max-age=0" \
+            --quiet
+
+          gcloud run services update "${SERVICE_NAME}" \
+            --region="${REGION}" \
+            --project="${PROJECT_ID}" \
+            --update-env-vars="DASHBOARD_VERSION=wipro-telco-catalog-${GITHUB_SHA}" \
+            --quiet
