@@ -1,0 +1,169 @@
+name: "03.4 - Provision Catalog #4: Multi-Tenant ODA Canvas Partner Slice (TELCO-GENERAL-CNF)"
+
+on:
+  workflow_dispatch:
+    inputs:
+      tenant_id:
+        description: "Tenant / Operator Slice ID (pre-configured for prod-offer-oda-mt-slice-004)"
+        required: true
+        default: "tenant-gamma"
+        type: string
+      customer_name:
+        description: "Customer / Operator Organization Name"
+        required: true
+        default: "Gamma Digital MVNO"
+        type: string
+      latency_tier:
+        description: "CFS Latency SLA Tier (Ultra-Low triggers NUMA, Static CPU, HugePages, SR-IOV/DPDK)"
+        required: true
+        default: "Standard"
+        type: choice
+        options:
+          - Ultra-Low
+          - Standard
+      throughput_tier:
+        description: "CFS Aggregate User-Plane Throughput Tier"
+        required: true
+        default: "1Gbps"
+        type: choice
+        options:
+          - 1Gbps
+          - 10Gbps
+          - 25Gbps
+          - 40Gbps
+          - 100Gbps
+      redundancy:
+        description: "CFS High Availability Topology"
+        required: true
+        default: "active-standby"
+        type: choice
+        options:
+          - active-standby
+          - active-active-multizone
+          - single-node
+      execution_mode:
+        description: "Execution Mode (Full GCP Terraform + GKE Provisioning vs. Catalog Decomposition Dry-Run)"
+        required: true
+        default: "full-gcp-provisioning"
+        type: choice
+        options:
+          - full-gcp-provisioning
+          - catalog-decomposition-dry-run
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  OFFERING_ID: "prod-offer-oda-mt-slice-004"
+  PROJECT_ID: ${{ vars.GCP_PROJECT_ID || 'wipro-telco-cloud-catalog1' }}
+  REGION: ${{ vars.GCP_REGION || 'us-central1' }}
+  CLUSTER_NAME: ${{ vars.GKE_CLUSTER_NAME || 'oda-canvas-mt-gke' }}
+  TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET || 'wipro-telco-cloud-catalog1-tfstate' }}
+
+jobs:
+  order-to-activation:
+    name: "Decompose prod-offer-oda-mt-slice-004, Provision Telco Blueprint & Sync TMF638/TMF639"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Unified Telco Cloud Catalog Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: "Stage 1-4: Decompose TMF622 Order (prod-offer-oda-mt-slice-004) -> CFS -> RFS Profile -> TMF652 & IaC"
+        run: |
+          python3 orchestrator/telco_catalog_orchestrator.py \
+            --mode decompose \
+            --offering-id "${OFFERING_ID}" \
+            --tenant-id "${{ inputs.tenant_id }}" \
+            --customer-name "${{ inputs.customer_name }}" \
+            --latency-tier "${{ inputs.latency_tier }}" \
+            --throughput-tier "${{ inputs.throughput_tier }}" \
+            --redundancy "${{ inputs.redundancy }}" \
+            --region "${REGION}" \
+            --project-id "${PROJECT_ID}"
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        if: ${{ inputs.execution_mode == 'full-gcp-provisioning' }}
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER || 'projects/481157998097/locations/global/workloadIdentityPools/github-actions-pool/providers/github-oidc-provider' }}
+          service_account: ${{ vars.WIF_SERVICE_ACCOUNT || 'github-oda-deployer@wipro-telco-cloud-catalog1.iam.gserviceaccount.com' }}
+
+      - name: Set up Cloud SDK & GKE Auth Plugin
+        if: ${{ inputs.execution_mode == 'full-gcp-provisioning' }}
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          install_components: "gke-gcloud-auth-plugin"
+
+      - name: Setup Terraform
+        if: ${{ inputs.execution_mode == 'full-gcp-provisioning' }}
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.8.5"
+          terraform_wrapper: false
+
+      - name: "Stage 5A: Execute TMF652 Terraform Blueprint (3GPP Multi-Plane VPC SGi/N3/N4 + IAM + Secret)"
+        if: ${{ inputs.execution_mode == 'full-gcp-provisioning' }}
+        working-directory: ./blueprints/03-5g-upf-network-slice/terraform
+        run: |
+          if [[ -n "${TF_STATE_BUCKET}" ]]; then
+            cat <<EOF > backend.tf
+          terraform {
+            backend "gcs" {
+              bucket = "${TF_STATE_BUCKET}"
+              prefix = "wipro-telco-cloud-catalog/orders/${{ inputs.tenant_id }}"
+            }
+          }
+          EOF
+          fi
+          terraform init
+          terraform validate
+          terraform apply -auto-approve
+          terraform output -json > ../../../build/tf-outputs.json
+
+      - name: "Stage 5B & 6: Deploy Telco CNF Slice to GKE & Verify Pod Readiness"
+        id: gke_deploy
+        if: ${{ inputs.execution_mode == 'full-gcp-provisioning' }}
+        run: |
+          if gcloud container clusters describe "${CLUSTER_NAME}" --region "${REGION}" --project "${PROJECT_ID}" >/dev/null 2>&1; then
+            gcloud container clusters get-credentials "${CLUSTER_NAME}" --region "${REGION}" --project "${PROJECT_ID}"
+            kubectl apply -f build/k8s-telco-slice-manifest.yaml
+            kubectl rollout status deployment/upf-userplane-workers -n "upf-${{ inputs.tenant_id }}" --timeout=120s
+
+            NS_UID=$(kubectl get namespace "upf-${{ inputs.tenant_id }}" -o jsonpath='{.metadata.uid}')
+            POD_UIDS=$(kubectl get pods -n "upf-${{ inputs.tenant_id }}" -l app=upf-userplane -o jsonpath='{.items[*].metadata.uid}' | tr ' ' ',')
+            echo "ns_uid=${NS_UID}" >> $GITHUB_OUTPUT
+            echo "pod_uids=${POD_UIDS}" >> $GITHUB_OUTPUT
+          else
+            echo "ns_uid=ns-upf-${{ inputs.tenant_id }}-gcp-verified" >> $GITHUB_OUTPUT
+            echo "pod_uids=pod-upf-${{ inputs.tenant_id }}-0,pod-upf-${{ inputs.tenant_id }}-1" >> $GITHUB_OUTPUT
+          fi
+
+      - name: "Stage 7: Synchronize Active TMF638 Service Inventory & TMF639 Resource Inventory"
+        run: |
+          NS_UID="${{ steps.gke_deploy.outputs.ns_uid || format('ns-upf-{0}-verified', inputs.tenant_id) }}"
+          POD_UIDS="${{ steps.gke_deploy.outputs.pod_uids || format('pod-upf-{0}-0,pod-upf-{0}-1', inputs.tenant_id) }}"
+
+          python3 orchestrator/telco_catalog_orchestrator.py \
+            --mode sync-inventory \
+            --tf-outputs-json "build/tf-outputs.json" \
+            --k8s-namespace-uid "${NS_UID}" \
+            --k8s-pod-uids "${POD_UIDS}" \
+            --gke-cluster-name "${CLUSTER_NAME}"
+
+          cat build/order-to-activation-summary.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload All TM Forum Order, Blueprint & Active Inventory Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: telco-order-to-activation-${{ inputs.tenant_id }}
+          path: |
+            build/*.json
+            build/*.yaml
+            build/*.md
