@@ -1,0 +1,74 @@
+name: "01 - Day-0 Platform Setup: Private GKE & Multi-Tenant ODA Canvas (Blueprint 01)"
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Terraform platform action (use 'plan' to preview or 'apply' to provision Private GKE + ODA Canvas)"
+        required: true
+        default: "plan"
+        type: choice
+        options:
+          - plan
+          - apply
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  PROJECT_ID: ${{ vars.GCP_PROJECT_ID || 'wipro-telco-cloud-catalog1' }}
+  REGION: ${{ vars.GCP_REGION || 'us-central1' }}
+  CLUSTER_NAME: ${{ vars.GKE_CLUSTER_NAME || 'oda-canvas-mt-gke' }}
+  TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET || 'wipro-telco-cloud-catalog1-tfstate' }}
+
+jobs:
+  platform-oda-canvas:
+    name: "Provision Base Private GKE Standard Cluster & ODA Canvas Foundation"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./blueprints/01-oda-canvas-multitenant/terraform
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER || 'projects/481157998097/locations/global/workloadIdentityPools/github-actions-pool/providers/github-oidc-provider' }}
+          service_account: ${{ vars.WIF_SERVICE_ACCOUNT || 'github-oda-deployer@wipro-telco-cloud-catalog1.iam.gserviceaccount.com' }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.8.5"
+
+      - name: Initialize & Plan Base Telco Platform Infrastructure
+        run: |
+          if [[ -n "${TF_STATE_BUCKET}" ]]; then
+            cat <<EOF > backend.tf
+          terraform {
+            backend "gcs" {
+              bucket = "${TF_STATE_BUCKET}"
+              prefix = "oda-canvas-multitenant-poc/infra"
+            }
+          }
+          EOF
+          fi
+          terraform init
+          terraform validate
+          terraform plan \
+            -var="project_id=${PROJECT_ID}" \
+            -var="region=${REGION}" \
+            -var="cluster_name=${CLUSTER_NAME}" \
+            -out=tfplan
+
+      - name: Apply Base Telco Platform Infrastructure
+        if: ${{ inputs.action == 'apply' }}
+        run: |
+          terraform apply -auto-approve tfplan
