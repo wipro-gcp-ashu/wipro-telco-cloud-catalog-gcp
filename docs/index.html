@@ -1359,13 +1359,13 @@
                class="px-3 py-2 rounded-xl text-xs font-bold bg-sky-500 text-slate-950 hover:bg-sky-400 transition">
               📂 PoC Run Logs ↗
             </a>
-            <a href="https://github.com/wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp/actions/runs/44264016288" target="_blank" rel="noopener noreferrer"
+            <a href="https://github.com/wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp/actions/workflows/02-publish-telco-catalog.yml" target="_blank" rel="noopener noreferrer"
                class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-100 border border-slate-700 hover:bg-slate-700 transition">
-              ✓ Workflow 01 (#40849135713) ↗
+              ✓ Workflow 02 (Catalog) ↗
             </a>
-            <a href="https://github.com/wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp/actions/workflows/02-provision-telco-service-order.yml" target="_blank" rel="noopener noreferrer"
+            <a href="https://github.com/wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp/actions/workflows/03-provision-telco-service-order.yml" target="_blank" rel="noopener noreferrer"
                class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-100 border border-slate-700 hover:bg-slate-700 transition">
-              ✓ Workflow 02 (#40849994251) ↗
+              ✓ Workflow 03 (Order-to-Active) ↗
             </a>
             <a href="https://console.cloud.google.com/kubernetes/workload/overview?project=wipro-telco-cloud-catalog1" target="_blank" rel="noopener noreferrer"
                class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-emerald-400 border border-emerald-500/30 hover:bg-slate-700 transition">
@@ -1584,7 +1584,7 @@
                     2. DAY-0 / DAY-1 ORDER PIPELINE (RUN-TIME)
                   </div>
                   <div class="text-xs text-slate-400 mt-0.5">
-                    Executed via <a href="https://github.com/wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp/actions/workflows/02-provision-telco-service-order.yml" target="_blank" class="text-amber-400 underline hover:text-amber-300">Workflow 02 (#40849994251 • Zero-Touch) ↗</a>
+                    Executed via <a href="https://github.com/wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp/actions/workflows/03-provision-telco-service-order.yml" target="_blank" class="text-amber-400 underline hover:text-amber-300">Workflow 03 (Zero-Touch Order-to-Active) ↗</a>
                   </div>
                 </div>
                 <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 shrink-0">
@@ -1860,18 +1860,18 @@
             </thead>
             <tbody class="divide-y divide-slate-800/80 text-slate-200">
               <tr class="hover:bg-slate-900/60">
-                <td class="py-3 px-3 font-semibold text-white">CI/CD Workflow 01</td>
-                <td class="py-3 px-3 font-mono text-sky-300">01-publish-federated-catalogs.yml</td>
-                <td class="py-3 px-3">Validates SID (GB922 — Shared Information &amp; Data Model Dictionary) &amp; Deploys Catalog Server to GKE</td>
-                <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-semibold">✓ Run #40849135713 (56s)</span></td>
-                <td class="py-3 px-3"><a href="https://github.com/wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp/actions/runs/44264016288" target="_blank" class="text-sky-400 underline font-semibold">Open Run #40849135713 ↗</a></td>
+                <td class="py-3 px-3 font-semibold text-white">CI/CD Workflow 01 &amp; 02</td>
+                <td class="py-3 px-3 font-mono text-sky-300">01-platform-oda-canvas-setup.yml / 02-publish-telco-catalog.yml</td>
+                <td class="py-3 px-3">Provisions Private GKE Platform &amp; Deploys Validated SID (GB922) Catalog Server to GKE</td>
+                <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-semibold">✓ Day-0 Platform &amp; Catalog</span></td>
+                <td class="py-3 px-3"><a href="https://github.com/wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp/actions/workflows/02-publish-telco-catalog.yml" target="_blank" class="text-sky-400 underline font-semibold">Open Workflow 02 ↗</a></td>
               </tr>
               <tr class="hover:bg-slate-900/60">
-                <td class="py-3 px-3 font-semibold text-white">CI/CD Workflow 02</td>
-                <td class="py-3 px-3 font-mono text-amber-300">02-day0-day1-order-to-activation.yml</td>
+                <td class="py-3 px-3 font-semibold text-white">CI/CD Workflow 03</td>
+                <td class="py-3 px-3 font-mono text-amber-300">03-provision-telco-service-order.yml</td>
                 <td class="py-3 px-3">TMF622 → TMF641 → TMF652 → Terraform &amp; GKE → TMF638/639</td>
-                <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-semibold">✓ Run #40849994251 (Zero-Touch)</span></td>
-                <td class="py-3 px-3"><a href="https://github.com/wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp/actions/workflows/02-provision-telco-service-order.yml" target="_blank" class="text-sky-400 underline font-semibold">Open Run #40849994251 ↗</a></td>
+                <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-semibold">✓ Zero-Touch Fulfilment</span></td>
+                <td class="py-3 px-3"><a href="https://github.com/wipro-gcp-ashu/wipro-telco-cloud-catalog-gcp/actions/workflows/03-provision-telco-service-order.yml" target="_blank" class="text-sky-400 underline font-semibold">Open Workflow 03 ↗</a></td>
               </tr>
               <tr class="hover:bg-slate-900/60">
                 <td class="py-3 px-3 font-semibold text-white">GKE Workload (Catalog)</td>
